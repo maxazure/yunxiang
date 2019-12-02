@@ -120,9 +120,6 @@ export default {
           return false
         }
       })
-      // const o = await login({email:'maxazure@gmail.com',password:'11111111'})
-      // console.log(o)
-
     }
   }
 }
