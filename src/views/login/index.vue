@@ -54,7 +54,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-
+import {login} from'@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -74,8 +74,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: 'maxazure@gmail.com',
+        password: '11111111'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -105,7 +105,7 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin() {
+    async handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -120,6 +120,9 @@ export default {
           return false
         }
       })
+      // const o = await login({email:'maxazure@gmail.com',password:'11111111'})
+      // console.log(o)
+
     }
   }
 }

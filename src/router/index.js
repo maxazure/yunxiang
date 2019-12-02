@@ -62,7 +62,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'Pos',
       component: () => import('@/views/members/index'),
-      meta: { title: '收银台', icon: 'example'}
+      meta: { title: '收银台', icon: 'example' }
     }]
   },
   {
@@ -72,19 +72,19 @@ export const constantRoutes = [
       path: 'members',
       name: 'Members',
       component: () => import('@/views/members/index'),
-      meta: { title: '会员管理', icon: 'people'}
+      meta: { title: '会员管理', icon: 'people' }
     }]
   },
   {
     path: '/',
     component: Layout,
     children: [
-    {
-      path: 'seeking',
-      name: 'Seeking',
-      component: () => import('@/views/members/index'),
-      meta: { title: '顾客要货', icon: 'form'}
-    }]
+      {
+        path: 'seeking',
+        name: 'Seeking',
+        component: () => import('@/views/members/index'),
+        meta: { title: '顾客要货', icon: 'form' }
+      }]
   },
 
 
@@ -96,7 +96,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'Distribution',
       component: () => import('@/views/members/index'),
-      meta: { title: '导购分销', icon: 'tree'}
+      meta: { title: '导购分销', icon: 'tree' }
     }]
   },
 
@@ -107,7 +107,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'Production',
       component: () => import('@/views/members/index'),
-      meta: { title: '门店理货', icon: 'nested'}
+      meta: { title: '门店理货', icon: 'nested' }
     }]
   },
 
@@ -118,7 +118,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'Sitting',
       component: () => import('@/views/members/index'),
-      meta: { title: '设置', icon: 'tab'}
+      meta: { title: '设置', icon: 'tab' }
     }]
   },
 
@@ -129,7 +129,7 @@ export const constantRoutes = [
       path: '/yunxiang',
       name: 'Yunxiang',
       component: () => import('@/views/members/index'),
-      meta: { title: '云想尖货', suffixicon: 'el-icon-star-on'}
+      meta: { title: '云想尖货', suffixicon: 'el-icon-star-on' }
     }]
   },
 
@@ -140,11 +140,27 @@ export const constantRoutes = [
       path: '/plugin',
       name: 'Plugin',
       component: () => import('@/views/members/index'),
-      meta: { title: '百宝箱', suffixicon: 'el-icon-star-on'}
+      meta: { title: '百宝箱', suffixicon: 'el-icon-star-on' }
     }]
   },
 
-
+  {
+    path: '/management',
+    component: Layout,
+    meta: { title: '后台管理', icon: 'tab' },
+    children: [{
+      path: '/users',
+      name: 'Users',
+      component: () => import('@/views/management/users'),
+      meta: { title: '用户管理', suffixicon: 'el-icon-star-on' }
+    }, {
+      path: '/user2',
+      name: 'User2',
+      component: () => import('@/views/management/users2'),
+      meta: { title: '用户管理2', suffixicon: 'el-icon-star-on' }
+    }
+    ]
+  },
 
   // {
   //   path: '/form',
