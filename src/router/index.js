@@ -149,15 +149,26 @@ export const constantRoutes = [
     component: Layout,
     meta: { title: '后台管理', icon: 'tab' },
     children: [{
-      path: '/users',
+      path: 'users',
       name: 'Users',
       component: () => import('@/views/management/users'),
       meta: { title: '用户管理', suffixicon: 'el-icon-star-on' }
-    }, {
-      path: '/user2',
+    },
+    {
+      path: 'user2',
       name: 'User2',
-      component: () => import('@/views/management/users2'),
+      component: () => import('@/views/management/users2/users2'),
       meta: { title: '用户管理2', suffixicon: 'el-icon-star-on' }
+    },
+    {
+      path: 'user2/edit',
+      component: () => import('@/views/management/users2/edit'),
+      hidden: true
+    },
+    {
+      path: 'user2/add',
+      component: () => import('@/views/management/users2/add'),
+      hidden: true
     }
     ]
   },
@@ -174,8 +185,6 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
-
-
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

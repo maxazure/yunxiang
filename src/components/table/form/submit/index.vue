@@ -18,7 +18,7 @@ export default {
     submit() {
       console.log("submit");
       console.log(this.submitObj);
-      console.log(this.formList);
+      this.$emit('submit')
     }
   }
 };

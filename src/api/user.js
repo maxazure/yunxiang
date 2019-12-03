@@ -22,3 +22,53 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getUsers(params) {
+  return request({
+    url: '/api/users',
+    method: 'get',
+    params
+  })
+}
+export function putUser(params, username) {
+  return request({
+    url: '/api/users/' + username,
+    method: 'put',
+    params
+  })
+}
+
+export function getUser(username) {
+  return request({
+    url: '/api/users/' + username,
+    method: 'get'
+  })
+}
+
+export function addUser(params) {
+  return request({
+    url: '/api/users',
+    method: 'post',
+    data: params
+  })
+}
+export function delUser(username) {
+  return request({
+    url: '/api/users/' + username,
+    method: 'delete'
+  })
+}
+export function getRoles(params) {
+  return request({
+    url: '/api/',
+    method: 'get',
+    params
+  })
+}
+export function untitle(params) {
+  return request({
+    url: '/api/',
+    method: 'get',
+    params
+  })
+}

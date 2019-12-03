@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, getUsers } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -80,6 +80,16 @@ const actions = {
       resolve()
     })
   }
+  //   getUsersList() {
+  //     return new Promise((resolve, reject) => {
+  //       getUsers().then((response) => {
+  //         console.log(response)
+  //         resolve()
+  //       }).catch(error => {
+  //         reject(error)
+  //       })
+  //     })
+  //   }
 }
 
 export default {

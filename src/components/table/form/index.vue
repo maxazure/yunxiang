@@ -5,7 +5,10 @@
         <m-input :inputObj="o"></m-input>
       </div>
       <div v-if="o.type==='submit'">
-        <m-submit :submitObj="o" :formList="formList"></m-submit>
+        <m-submit :submitObj="o" v-on="$listeners"></m-submit>
+      </div>
+      <div v-if="o.type==='button'">
+        <el-button type="primary">{{o.value}}</el-button>
       </div>
     </div>
   </div>
@@ -23,11 +26,15 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {
-    init() {}
-  }
+  methods: {}
 };
 </script>
 
 <style scoped lang="scss">
+.form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
 </style>
