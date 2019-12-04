@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button @click="add">新建用户</el-button>
+    <el-button @click="add">新用户</el-button>
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="name" label="姓名" width="180"></el-table-column>
       <el-table-column prop="username" label="用户名"></el-table-column>
@@ -11,6 +11,8 @@
         </template>
       </el-table-column>
     </el-table>
+  
+
     <el-pagination
       background
       :layout="pageObj.layout"
@@ -57,9 +59,27 @@ export default {
       this.$router.push({ path: "user2/edit", query: { username: username } });
     },
     del(username) {
-      delUser(username).then(response => {
-        this.getList();
-      });
+      this.$confirm("是否删除?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          // method
+          delUser(username).then(response => {
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            });
+            this.getList();
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
 
     changePage(page) {
@@ -70,11 +90,11 @@ export default {
       this.pageObj.pageSize = val;
       this.getList();
     },
-    add(){
-      this.$router.push({path:'user2/add'})
+    add() {
+      this.$router.push({ path: "user2/add" });
     }
   }
 };
 </script>
-<style lang='scss'>
+<style lang='scss' scope>
 </style>

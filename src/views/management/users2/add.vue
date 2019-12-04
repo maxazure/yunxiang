@@ -1,75 +1,194 @@
 <template>
-  <div class="app-container">
-    <div class="container">
-      <div class="title">
-        <div>
-          <span class="text">name</span>
-        </div>
-        <div>
-          <el-input v-model="user.name" placeholder="name" />
-        </div>
-        <div>
-          <el-input v-model="user.username" placeholder="username" />
-        </div>
-        <div>
-          <el-input v-model="user.email" placeholder="email" />
-        </div>
-        <div>
-          <el-input v-model="user.password" placeholder="password" />
-        </div>
-        <div>
-          <el-input v-model="user.password_confirmation" placeholder="password_confirmation" />
-        </div>
-        <div>
-          <el-input v-model="user.phone" placeholder="phone" />
-        </div>
-        <div>
-          <el-input v-model="user.role_id" placeholder="role_id" />
-        </div>
-        <div>
-          <el-input v-model="user.company_id" placeholder="company_id" />
-        </div>
-      </div>
-      <div>
-        <el-button @click="submit">提交</el-button>
-      </div>
-    </div>
+  <div class="card-container">
+    <el-card class="box-card">
+      <h3>新用户</h3>
+      <el-form
+        class="userForm"
+        ref="userForm"
+        :model="userForm"
+        :rules="rules"
+        label-width="100px"
+        style="width:500px;"
+      >
+        <el-form-item label="用户名:" prop="username">
+          <el-input v-model="userForm.username" />
+        </el-form-item>
+        <el-form-item label="姓名:" prop="name">
+          <el-input v-model="userForm.name" />
+        </el-form-item>
+        <el-form-item label="邮箱:" prop="email">
+          <el-input v-model="userForm.email" />
+        </el-form-item>
+        <el-form-item label="密码:" prop="password">
+          <el-input v-model="userForm.password" />
+        </el-form-item>
+        <el-form-item label="确认密码:" prop="password_confirmation">
+          <el-input v-model="userForm.password_confirmation" />
+        </el-form-item>
+        <el-form-item label="手机号码:" prop="phone">
+          <el-input v-model="userForm.phone" />
+        </el-form-item>
+        <el-form-item label="角色:" prop="role_name">
+          <el-select v-model="userForm.role_id" placeholder="请选择">
+            <el-option
+              v-for="item in roles"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="公司:" prop="company_name">
+          <el-select v-model="userForm.company_id" placeholder="请选择">
+            <el-option
+              v-for="item in companies"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="submit('userForm')">提交</el-button>
+          <el-button @click="back">返回</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
 <script>
-import { getUser, addUser } from "@/api/user";
+import { getUser, addUser, selectCompanies, selectRoles } from "@/api/user";
+import mSelect from "@/components/table/form/select";
 export default {
+  components: { mSelect },
   data() {
+    const checkPassword2 = (rule, value, callback) => {
+      if (value && value !== this.userForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+
     return {
-      user: { username: "", name: "" }
+      userForm: { company_id: "", role_id: "" },
+      companies: [],
+      roles: [],
+      rules: {
+        name: [
+          {
+            required: true,
+            message: "请输入姓名",
+            trigger: "blur"
+          }
+        ],
+        username: [
+          {
+            required: true,
+            message: "请输入用户名",
+            trigger: "blur"
+          }
+        ],
+        email: [
+          {
+            required: true,
+            trigger: "blur",
+            message: "请输入邮箱"
+          },
+          {
+            pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
+            message: "请输入正确邮箱格式"
+          }
+        ],
+        password: [
+          {
+            min: 6,
+            required: true,
+            message: "密码长度不少于6个字符",
+            trigger: "blur"
+          }
+        ],
+        password_confirmation: [
+          {
+            required: true,
+            trigger: "blur",
+            validator: checkPassword2
+          }
+        ],
+        phone: [
+          {
+            required: true,
+            message: "请输入手机号码",
+            trigger: "blur"
+          },
+          {
+            pattern: /^1[3456789]\d{9}/,
+            message: "请输入正确的手机号码",
+            trigger: "blur"
+          }
+        ],
+        role_id: [
+          {
+            required: true,
+            message: "请选择角色",
+            trigger: "blur"
+          }
+        ],
+        company_id: [
+          {
+            required: true,
+            message: "请选择公司",
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
-  created() {},
-  mounted() {
+  created() {
+    this.selectCompanies();
+    this.selectRoles();
   },
+  mounted() {},
   methods: {
-    async submit() {
-      const res = await addUser(this.user);
+    async api() {
+      this.$router.push({ path: "/management/user2" });
+      const res = await addUser(this.userForm);
+    },
+    async submit(userForm) {
+      this.$refs.userForm.validate(valid => {
+        if (valid) {
+          this.api();
+        } else {
+          return false;
+        }
+      });
+    },
+    async selectCompanies() {
+      const res = await selectCompanies();
+      res.data.forEach(item => {
+        this.companies.push({ value: item.id, label: item.name });
+      });
+    },
+    async selectRoles() {
+      const res = await selectRoles();
+      res.data.forEach(item => {
+        this.roles.push({ value: item.id, label: item.name });
+      });
+    },
+    back() {
       this.$router.push({ path: "/management/user2" });
     }
   }
 };
 </script>
-<style lang='scss'>
-.app-container {
-  .container {
-    .title {
-      //   display: flex;
-      //   justify-content: space-between;
-      //   align-items: center;
-      width: 400px;
-      margin: 10px 10px;
-      input {
-        width: 300px;
-        margin: 10px;
-      }
-    }
+<style lang='scss' scope>
+.card-container {
+  background-color: #f0f2f5;
+  padding: 30px;
+  min-height: 100vh;
+  .box-card {
+    width: 600px;
   }
 }
 </style>

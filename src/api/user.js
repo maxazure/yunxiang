@@ -65,9 +65,16 @@ export function getRoles(params) {
     params
   })
 }
-export function untitle(params) {
+export function selectCompanies(params) {
   return request({
-    url: '/api/',
+    url: '/api/siteconfig/companies',
+    method: 'get',
+    params
+  })
+}
+export function selectRoles(params) {
+  return request({
+    url: '/api/siteconfig/roles',
     method: 'get',
     params
   })

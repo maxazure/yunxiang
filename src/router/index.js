@@ -87,8 +87,6 @@ export const constantRoutes = [
       }]
   },
 
-
-
   {
     path: '/distribution',
     component: Layout,
@@ -163,12 +161,14 @@ export const constantRoutes = [
     {
       path: 'user2/edit',
       component: () => import('@/views/management/users2/edit'),
-      hidden: true
+      hidden: true,
+      meta: { title: '修改' }
     },
     {
       path: 'user2/add',
       component: () => import('@/views/management/users2/add'),
-      hidden: true
+      hidden: true,
+      meta: { title: '新用户' }
     }
     ]
   },
