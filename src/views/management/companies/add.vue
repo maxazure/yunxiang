@@ -28,7 +28,7 @@
         <el-form-item label="手机号码:" prop="phone">
           <el-input v-model="userForm.phone" />
         </el-form-item>
-        <el-form-item label="角色:" prop="role_name">
+        <el-form-item label="角色:" prop="role_id">
           <el-select v-model="userForm.role_id" placeholder="请选择">
             <el-option
               v-for="item in roles"
@@ -38,7 +38,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="公司:" prop="company_name">
+        <el-form-item label="公司:" prop="company_id">
           <el-select v-model="userForm.company_id" placeholder="请选择">
             <el-option
               v-for="item in companies"
@@ -59,9 +59,8 @@
 
 <script>
 import { getUser, addUser, selectCompanies, selectRoles } from "@/api/user";
-import mSelect from "@/components/table/form/select";
 export default {
-  components: { mSelect },
+  components: {},
   data() {
     const checkPassword2 = (rule, value, callback) => {
       if (value && value !== this.userForm.password) {
@@ -152,13 +151,17 @@ export default {
   mounted() {},
   methods: {
     async api() {
-      this.$router.push({ path: "/management/user2" });
+      this.$router.push({ path: "/management/users" });
       const res = await addUser(this.userForm);
     },
     async submit(userForm) {
       this.$refs.userForm.validate(valid => {
         if (valid) {
           this.api();
+          this.$message({
+            message: "添加成功",
+            type: "success"
+          });
         } else {
           return false;
         }
@@ -177,7 +180,7 @@ export default {
       });
     },
     back() {
-      this.$router.push({ path: "/management/user2" });
+      this.$router.push({ path: "/management/users" });
     }
   }
 };

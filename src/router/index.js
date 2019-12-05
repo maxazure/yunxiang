@@ -32,6 +32,11 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
+    path: '/test',
+    component: () => import('@/views/test/index'),
+    hidden: true
+  },
+  {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -150,25 +155,37 @@ export const constantRoutes = [
       path: 'users',
       name: 'Users',
       component: () => import('@/views/management/users'),
-      meta: { title: '用户管理', suffixicon: 'el-icon-star-on' }
+      meta: { title: '用户管理' }
     },
     {
-      path: 'user2',
-      name: 'User2',
-      component: () => import('@/views/management/users2/users2'),
-      meta: { title: '用户管理2', suffixicon: 'el-icon-star-on' }
-    },
-    {
-      path: 'user2/edit',
-      component: () => import('@/views/management/users2/edit'),
+      path: 'users/edit',
+      component: () => import('@/views/management/users/edit'),
       hidden: true,
       meta: { title: '修改' }
     },
     {
-      path: 'user2/add',
-      component: () => import('@/views/management/users2/add'),
+      path: 'users/add',
+      component: () => import('@/views/management/users/add'),
       hidden: true,
       meta: { title: '新用户' }
+    },
+    {
+      path: 'companies',
+      name: 'Companies',
+      component: () => import('@/views/management/companies'),
+      meta: { title: '公司管理' }
+    },
+    {
+      path: 'companies/edit',
+      component: () => import('@/views/management/companies/edit'),
+      hidden: true,
+      meta: { title: '修改' }
+    },
+    {
+      path: 'companies/add',
+      component: () => import('@/views/management/companies/add'),
+      hidden: true,
+      meta: { title: '添加' }
     }
     ]
   },

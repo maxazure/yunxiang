@@ -4,11 +4,11 @@
     <y-table :tableData="tableData" :pagination="pagination" @changePage4List="getList">
       <template>
         <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="username" label="用户名"></el-table-column>
+        <el-table-column prop="id" label="用户名"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="{row}">
-            <el-button type="text" size="small" @click="edit(row.username)">修改</el-button>
-            <el-button type="text" size="small" @click="del(row.username)">删除</el-button>
+            <el-button type="text" size="small" @click="edit(row.id)">修改</el-button>
+            <el-button type="text" size="small" @click="del(row.id)">删除</el-button>
           </template>
         </el-table-column>
       </template>
@@ -44,19 +44,19 @@ export default {
     },
 
     add() {
-      this.$router.push({ path: "users/add" });
+      this.$router.push({ path: "companies/add" });
     },
-    edit(username) {
-      this.$router.push({ path: "users/edit", query: { username: username } });
+    edit(id) {
+      this.$router.push({ path: "companies/edit", query: { id: id } });
     },
-    del(username) {
+    del(id) {
       this.$confirm("是否删除?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          delUser(username).then(response => {
+          delUser(id).then(response => {
             this.$message({
               type: "success",
               message: "删除成功!"

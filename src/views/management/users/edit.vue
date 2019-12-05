@@ -3,7 +3,6 @@
     <el-card class="box-card">
       <h3>修改用户信息</h3>
       <el-form
-        class="userForm"
         ref="userForm"
         :model="userForm"
         :rules="rules"
@@ -62,9 +61,8 @@ import {
   selectRoles,
   putUser
 } from "@/api/user";
-import mSelect from "@/components/table/form/select";
 export default {
-  components: { mSelect },
+  components: {},
   data() {
     return {
       userForm: { company_id: "", role_id: "" },
@@ -127,10 +125,15 @@ export default {
       this.userForm = user.data;
     },
     async api() {
-      const res = await putUser(this.userForm, this.userForm.username);
-      this.$router.push({ path: "/management/user2" });
+      const res = await putUser(this.userForm.username, this.userForm);
+      this.$message({
+        message: "添加成功",
+        type: "success"
+      });
+      this.$router.push({ path: "/management/users" });
     },
     async submit(userForm) {
+      console.log(this.$refs.userForm)
       this.$refs.userForm.validate(valid => {
         if (valid) {
           this.api();
@@ -152,7 +155,7 @@ export default {
       });
     },
     back() {
-      this.$router.push({ path: "/management/user2" });
+      this.$router.push({ path: "/management/users" });
     }
   }
 };

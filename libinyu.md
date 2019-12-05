@@ -99,8 +99,42 @@ method:{
 * slot插槽、具名插槽、作用域插槽 
 * elementUI  form/card/container 
   
-## 2019/12/04
+## 2019/12/05
 ### 任务
 * 表格组件封装
+* 自定义组件文档编写
 * 公司管理、角色管理接口对接
-### 目标
+### 总结
+ * slot插槽的使用与传参
+```javascript
+//  父组件
+ <template>
+  <div>
+    <child :data=fatherData >
+    <template slot-scpoe='childData'>
+      {{childData}}
+    </tempale>
+    </child>
+</div>
+</template>
+```
+```javascript
+//子组件
+ <template>
+  <div>
+    <slot :childData='childData'></slot>
+</div>
+</template>
+ //props: {data:{}}
+```
+
+ * 插槽中父组件获取子组件数据slot-scope、v-slot
+*  子组件获取父组件数据：props{}
+* 父组件调用子组件方法this.$refs.child.childMethod()
+* 子组件调用父组件方法this.$emit('methodName', val)
+* 子组件方法无法调用----命名冲突(this.$refs.form.validate)
+  
+## 2019/12/06
+ * 公司管理、角色管理接口对接
+ * 需求确定
+ * 模板引擎

@@ -30,31 +30,33 @@ export function getUsers(params) {
     params
   })
 }
-export function putUser(params, username) {
+
+export function getUser(id) {
   return request({
-    url: '/api/users/' + username,
+    url: '/api/users/' + id,
+    method: 'get'
+  })
+}
+
+export function addUser(data) {
+  return request({
+    url: '/api/users',
+    method: 'post',
+    data
+  })
+}
+
+export function putUser(id, params ) {
+  return request({
+    url: '/api/users/' + id,
     method: 'put',
     params
   })
 }
 
-export function getUser(username) {
+export function delUser(id) {
   return request({
-    url: '/api/users/' + username,
-    method: 'get'
-  })
-}
-
-export function addUser(params) {
-  return request({
-    url: '/api/users',
-    method: 'post',
-    data: params
-  })
-}
-export function delUser(username) {
-  return request({
-    url: '/api/users/' + username,
+    url: '/api/users/' + id,
     method: 'delete'
   })
 }
