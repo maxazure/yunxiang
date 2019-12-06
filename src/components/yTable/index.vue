@@ -1,6 +1,6 @@
 <template>
-  <div class="mTable">
-    <el-table :data="tableData" style="width: 100%">
+  <div class="yTable">
+    <el-table :data="tableData" border style="width: 100%" :header-row-style="tableHeaderColor">
       <slot></slot>
     </el-table>
     <el-pagination
@@ -40,9 +40,52 @@ export default {
         this.pagination.layout = "total, prev, pager, next, jumper, sizes";
       }
       if (!this.pagination.pageSizes) {
-        this.pageSize.pageSizes = [10, 20, 30, 40, 50];
+        this.pagination.pageSizes = [10, 20, 30, 40, 50];
+      }
+    },
+    tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex === 0) {
+        return "color: rgb(245, 245,245);font-weight: 300;height:20px";
       }
     }
   }
 };
 </script>
+<style lang='scss' >
+$border: #9bc2db;
+
+.yTable {
+  padding: 10px 0;
+  // 设置边框
+  .el-table--border:after,
+  .el-table--group:after,
+  .el-table:before {
+    background-color: $border;
+  }
+  .el-table--border,
+  .el-table--group {
+    border-color: $border;
+  }
+  .el-table {
+    font-size: 12px;
+    border-color: $border;
+
+    td {
+      padding: 0;
+      border-color: $border;
+    }
+    th {
+      padding: 4px 0;
+      border-color: $border;
+      background-color: #448cbb;
+    }
+    .el-button {
+      color: #448cbb;
+    }
+  }
+
+  .el-pagination {
+    padding: 10px 0;
+  }
+}
+</style>

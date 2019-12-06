@@ -46,11 +46,11 @@ export function addUser(data) {
   })
 }
 
-export function putUser(id, params ) {
+export function putUser(id, data ) {
   return request({
     url: '/api/users/' + id,
     method: 'put',
-    params
+    data
   })
 }
 

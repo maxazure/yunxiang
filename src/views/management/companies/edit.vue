@@ -1,51 +1,28 @@
 <template>
   <div class="card-container">
     <el-card class="box-card">
-      <h3>修改用户信息</h3>
+      <h3>修改公司信息</h3>
       <el-form
         ref="yForm"
-        :model="userForm"
+        :model="companyForm"
         :rules="rules"
         label-width="100px"
         style="width:500px;"
       >
-        <el-form-item label="用户名:">
-          <el-input v-model="userForm.username" />
+        <el-form-item label="公司名:" prop="name">
+          <el-input v-model="companyForm.name" />
         </el-form-item>
-        <el-form-item label="姓名:" prop="name">
-          <el-input v-model="userForm.name" />
+        <el-form-item label="手机:" prop="phone">
+          <el-input v-model="companyForm.phone" />
         </el-form-item>
-        <el-form-item label="邮箱:" prop="email">
-          <el-input v-model="userForm.email" />
+        <el-form-item label="邮编:" prop="postcode">
+          <el-input v-model="companyForm.postcode" />
         </el-form-item>
-        <el-form-item label="密码:" prop="password">
-          <el-input v-model="userForm.password" />
-        </el-form-item>
-        <el-form-item label="手机号码:" prop="phone">
-          <el-input v-model="userForm.phone" />
-        </el-form-item>
-        <el-form-item label="角色:">
-          <el-select v-model="userForm.role_id" placeholder="请选择">
-            <el-option
-              v-for="item in roles"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="公司:">
-          <el-select v-model="userForm.company_id" placeholder="请选择">
-            <el-option
-              v-for="item in companies"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+        <el-form-item label="地址:" prop="address">
+          <el-input v-model="companyForm.address" />
         </el-form-item>
         <el-form-item>
-          <el-button @click="submit('userForm')">提交</el-button>
+          <el-button @click="submit('companyForm')">提交</el-button>
           <el-button @click="back">返回</el-button>
         </el-form-item>
       </el-form>
@@ -54,22 +31,12 @@
 </template>
 
 <script>
-import {
-  getUser,
-  addUser,
-  selectCompanies,
-  selectRoles,
-  putUser
-} from "@/api/user";
+import { getCompany, addCompany, putCompany } from "@/api/company";
 export default {
   components: {},
   data() {
     return {
-      userForm: { company_id: "", role_id: "" },
-
-      companies: [],
-      roles: [],
-
+      companyForm: {},
       rules: {
         name: [
           {
@@ -89,14 +56,6 @@ export default {
             message: "请输入正确邮箱格式"
           }
         ],
-        password: [
-          {
-            min: 6,
-            message: "密码长度不少于6个字符",
-            trigger: "blur"
-          }
-        ],
-
         phone: [
           {
             required: true,
@@ -113,26 +72,22 @@ export default {
     };
   },
   created() {
-    this.selectCompanies();
-    this.selectRoles();
-  },
-  mounted() {
     this.get();
   },
   methods: {
     async get() {
-      const user = await getUser(this.$route.query.username);
-      this.userForm = user.data;
+      const response = await getCompany(this.$route.query.id);
+      this.companyForm = response.data;
     },
     async api() {
-      const res = await putUser(this.userForm.username, this.userForm);
+      const res = await putCompany(this.companyForm.id, this.companyForm);
       this.$message({
-        message: "添加成功",
+        message: "修改成功",
         type: "success"
       });
-      this.$router.push({ path: "/management/users" });
+      this.$router.push({ path: "/management/companies" });
     },
-    async submit(userForm) {
+    async submit(companyForm) {
       this.$refs.yForm.validate(valid => {
         if (valid) {
           this.api();
@@ -141,20 +96,8 @@ export default {
         }
       });
     },
-    async selectCompanies() {
-      const res = await selectCompanies();
-      res.data.forEach(item => {
-        this.companies.push({ value: item.id, label: item.name });
-      });
-    },
-    async selectRoles() {
-      const res = await selectRoles();
-      res.data.forEach(item => {
-        this.roles.push({ value: item.id, label: item.name });
-      });
-    },
     back() {
-      this.$router.push({ path: "/management/users" });
+      this.$router.push({ path: "/management/companies" });
     }
   }
 };

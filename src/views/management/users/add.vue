@@ -48,7 +48,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button @click="submit('userForm')">提交</el-button>
+          <el-button @click="api('userForm')">提交</el-button>
           <el-button @click="back">返回</el-button>
         </el-form-item>
       </el-form>

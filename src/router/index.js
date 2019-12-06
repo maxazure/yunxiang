@@ -80,17 +80,6 @@ export const constantRoutes = [
       meta: { title: '会员管理', icon: 'people' }
     }]
   },
-  {
-    path: '/',
-    component: Layout,
-    children: [
-      {
-        path: 'seeking',
-        name: 'Seeking',
-        component: () => import('@/views/members/index'),
-        meta: { title: '顾客要货', icon: 'form' }
-      }]
-  },
 
   {
     path: '/distribution',
@@ -100,17 +89,6 @@ export const constantRoutes = [
       name: 'Distribution',
       component: () => import('@/views/members/index'),
       meta: { title: '导购分销', icon: 'tree' }
-    }]
-  },
-
-  {
-    path: '/production',
-    component: Layout,
-    children: [{
-      path: 'index',
-      name: 'Production',
-      component: () => import('@/views/members/index'),
-      meta: { title: '门店理货', icon: 'nested' }
     }]
   },
 
@@ -125,27 +103,6 @@ export const constantRoutes = [
     }]
   },
 
-  {
-    path: '/',
-    component: Layout,
-    children: [{
-      path: '/yunxiang',
-      name: 'Yunxiang',
-      component: () => import('@/views/members/index'),
-      meta: { title: '云想尖货', suffixicon: 'el-icon-star-on' }
-    }]
-  },
-
-  {
-    path: '/',
-    component: Layout,
-    children: [{
-      path: '/plugin',
-      name: 'Plugin',
-      component: () => import('@/views/members/index'),
-      meta: { title: '百宝箱', suffixicon: 'el-icon-star-on' }
-    }]
-  },
 
   {
     path: '/management',
@@ -184,6 +141,24 @@ export const constantRoutes = [
     {
       path: 'companies/add',
       component: () => import('@/views/management/companies/add'),
+      hidden: true,
+      meta: { title: '添加' }
+    },
+    {
+      path: 'roles',
+      name: 'roles',
+      component: () => import('@/views/management/roles'),
+      meta: { title: '角色管理' }
+    },
+    {
+      path: 'roles/edit',
+      component: () => import('@/views/management/roles/edit'),
+      hidden: true,
+      meta: { title: '修改' }
+    },
+    {
+      path: 'roles/add',
+      component: () => import('@/views/management/roles/add'),
       hidden: true,
       meta: { title: '添加' }
     }

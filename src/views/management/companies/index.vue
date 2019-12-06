@@ -1,11 +1,14 @@
 <template>
   <div class="app-container">
-    <el-button @click="add">新用户</el-button>
+    <el-button @click="add">新公司</el-button>
     <y-table :tableData="tableData" :pagination="pagination" @changePage4List="getList">
       <template>
-        <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="id" label="用户名"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column prop="name" label="公司名"></el-table-column>
+        <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table-column prop="phone" label="电话" width="100px"></el-table-column>
+        <el-table-column prop="postcode" label="邮编" width="100px"></el-table-column>
+
+        <el-table-column label="操作" width="100px">
           <template slot-scope="{row}">
             <el-button type="text" size="small" @click="edit(row.id)">修改</el-button>
             <el-button type="text" size="small" @click="del(row.id)">删除</el-button>
@@ -17,7 +20,8 @@
 </template>
 
 <script>
-import { getUsers, delUser } from "@/api/user";
+import { getCompanies, delCompany } from "@/api/company";
+import { getUsers } from "@/api/user";
 import yTable from "@/components/yTable";
 export default {
   components: { yTable },
@@ -35,7 +39,7 @@ export default {
   },
   methods: {
     async getList() {
-      const response = await getUsers({
+      const response = await getCompanies({
         page: this.pagination.pageNumber,
         pagesize: this.pagination.pageSize
       });
@@ -56,7 +60,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          delUser(id).then(response => {
+          delCompany(id).then(response => {
             this.$message({
               type: "success",
               message: "删除成功!"

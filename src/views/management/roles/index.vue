@@ -1,19 +1,14 @@
 <template>
   <div class="app-container">
-    <el-button @click="add">新用户</el-button>
+    <el-button @click="add">新角色</el-button>
     <y-table :tableData="tableData" :pagination="pagination" @changePage4List="getList">
       <template>
-        <el-table-column prop="name" label="姓名" width="100px"></el-table-column>
-        <el-table-column prop="username" label="用户名" width="140px"></el-table-column>
-        <el-table-column prop="phone" label="电话" width="100px"></el-table-column>
-        <el-table-column prop="email" label="邮箱" width="200px"></el-table-column>
-        <el-table-column prop="role_name" label="角色" width="100px"></el-table-column>
-        <el-table-column prop="company_name" label="公司"></el-table-column>
-
+        <el-table-column prop="key" label="编号" width="100px"></el-table-column>
+        <el-table-column prop="name" label="角色名称"></el-table-column>
         <el-table-column label="操作" width="100px">
           <template slot-scope="{row}">
-            <el-button type="text" size="small" @click="edit(row.username)">修改</el-button>
-            <el-button type="text" size="small" @click="del(row.username)">删除</el-button>
+            <el-button type="text" size="small" @click="edit(row.id)">修改</el-button>
+            <el-button type="text" size="small" @click="del(row.id)">删除</el-button>
           </template>
         </el-table-column>
       </template>
@@ -22,7 +17,7 @@
 </template>
 
 <script>
-import { getUsers, delUser } from "@/api/user";
+import { getRoles, delRole } from "@/api/role";
 import yTable from "@/components/yTable";
 export default {
   components: { yTable },
@@ -40,7 +35,7 @@ export default {
   },
   methods: {
     async getList() {
-      const response = await getUsers({
+      const response = await getRoles({
         page: this.pagination.pageNumber,
         pagesize: this.pagination.pageSize
       });
@@ -49,19 +44,19 @@ export default {
     },
 
     add() {
-      this.$router.push({ path: "users/add" });
+      this.$router.push({ path: "roles/add" });
     },
-    edit(username) {
-      this.$router.push({ path: "users/edit", query: { username: username } });
+    edit(id) {
+      this.$router.push({ path: "roles/edit", query: { id: id } });
     },
-    del(username) {
+    del(id) {
       this.$confirm("是否删除?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          delUser(username).then(response => {
+          delRole(id).then(response => {
             this.$message({
               type: "success",
               message: "删除成功!"
@@ -80,7 +75,5 @@ export default {
 };
 </script>
 
-<style lang='scss' scope>
-.app-container {
-}
+<style scope>
 </style>

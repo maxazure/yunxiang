@@ -1,55 +1,28 @@
 <template>
   <div class="card-container">
     <el-card class="box-card">
-      <h3>新用户</h3>
+      <h3>新公司</h3>
       <el-form
-        class="userForm"
-        ref="userForm"
-        :model="userForm"
+        ref="companyForm"
+        :model="companyForm"
         :rules="rules"
         label-width="100px"
         style="width:500px;"
       >
-        <el-form-item label="用户名:" prop="username">
-          <el-input v-model="userForm.username" />
+        <el-form-item label="公司名:" prop="name">
+          <el-input v-model="companyForm.name" />
         </el-form-item>
-        <el-form-item label="姓名:" prop="name">
-          <el-input v-model="userForm.name" />
+        <el-form-item label="手机:" prop="phone">
+          <el-input v-model="companyForm.phone" />
         </el-form-item>
-        <el-form-item label="邮箱:" prop="email">
-          <el-input v-model="userForm.email" />
+        <el-form-item label="邮编:" prop="postcode">
+          <el-input v-model="companyForm.postcode" />
         </el-form-item>
-        <el-form-item label="密码:" prop="password">
-          <el-input v-model="userForm.password" />
-        </el-form-item>
-        <el-form-item label="确认密码:" prop="password_confirmation">
-          <el-input v-model="userForm.password_confirmation" />
-        </el-form-item>
-        <el-form-item label="手机号码:" prop="phone">
-          <el-input v-model="userForm.phone" />
-        </el-form-item>
-        <el-form-item label="角色:" prop="role_id">
-          <el-select v-model="userForm.role_id" placeholder="请选择">
-            <el-option
-              v-for="item in roles"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="公司:" prop="company_id">
-          <el-select v-model="userForm.company_id" placeholder="请选择">
-            <el-option
-              v-for="item in companies"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+        <el-form-item label="地址:" prop="address">
+          <el-input v-model="companyForm.address" />
         </el-form-item>
         <el-form-item>
-          <el-button @click="submit('userForm')">提交</el-button>
+          <el-button @click="submit('companyForm')">提交</el-button>
           <el-button @click="back">返回</el-button>
         </el-form-item>
       </el-form>
@@ -58,22 +31,12 @@
 </template>
 
 <script>
-import { getUser, addUser, selectCompanies, selectRoles } from "@/api/user";
+import { addCompany } from "@/api/company";
 export default {
   components: {},
   data() {
-    const checkPassword2 = (rule, value, callback) => {
-      if (value && value !== this.userForm.password) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
-        callback();
-      }
-    };
-
     return {
-      userForm: { company_id: "", role_id: "" },
-      companies: [],
-      roles: [],
+      companyForm: {},
       rules: {
         name: [
           {
@@ -82,7 +45,7 @@ export default {
             trigger: "blur"
           }
         ],
-        username: [
+        companyname: [
           {
             required: true,
             message: "请输入用户名",
@@ -100,21 +63,6 @@ export default {
             message: "请输入正确邮箱格式"
           }
         ],
-        password: [
-          {
-            min: 6,
-            required: true,
-            message: "密码长度不少于6个字符",
-            trigger: "blur"
-          }
-        ],
-        password_confirmation: [
-          {
-            required: true,
-            trigger: "blur",
-            validator: checkPassword2
-          }
-        ],
         phone: [
           {
             required: true,
@@ -126,36 +74,18 @@ export default {
             message: "请输入正确的手机号码",
             trigger: "blur"
           }
-        ],
-        role_id: [
-          {
-            required: true,
-            message: "请选择角色",
-            trigger: "blur"
-          }
-        ],
-        company_id: [
-          {
-            required: true,
-            message: "请选择公司",
-            trigger: "blur"
-          }
         ]
       }
     };
   },
-  created() {
-    this.selectCompanies();
-    this.selectRoles();
-  },
-  mounted() {},
+  created() {},
   methods: {
     async api() {
-      this.$router.push({ path: "/management/users" });
-      const res = await addUser(this.userForm);
+      this.$router.push({ path: "/management/companies" });
+      const res = await addCompany(this.companyForm);
     },
-    async submit(userForm) {
-      this.$refs.userForm.validate(valid => {
+    async submit(companyForm) {
+      this.$refs.companyForm.validate(valid => {
         if (valid) {
           this.api();
           this.$message({
@@ -167,20 +97,8 @@ export default {
         }
       });
     },
-    async selectCompanies() {
-      const res = await selectCompanies();
-      res.data.forEach(item => {
-        this.companies.push({ value: item.id, label: item.name });
-      });
-    },
-    async selectRoles() {
-      const res = await selectRoles();
-      res.data.forEach(item => {
-        this.roles.push({ value: item.id, label: item.name });
-      });
-    },
     back() {
-      this.$router.push({ path: "/management/users" });
+      this.$router.push({ path: "/management/companies" });
     }
   }
 };

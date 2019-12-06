@@ -10,7 +10,7 @@
         style="width:500px;"
       >
         <el-form-item label="用户名:">
-          <el-input v-model="userForm.username" />
+          <el-input v-model="userForm.username" :disabled="true" />
         </el-form-item>
         <el-form-item label="姓名:" prop="name">
           <el-input v-model="userForm.name" />
@@ -127,13 +127,13 @@ export default {
     async api() {
       const res = await putUser(this.userForm.username, this.userForm);
       this.$message({
-        message: "添加成功",
+        message: "修改成功",
         type: "success"
       });
       this.$router.push({ path: "/management/users" });
     },
     async submit(userForm) {
-      console.log(this.$refs.userForm)
+      console.log(this.$refs.userForm);
       this.$refs.userForm.validate(valid => {
         if (valid) {
           this.api();
