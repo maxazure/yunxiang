@@ -1,0 +1,50 @@
+文本输入框
+<el-form-item label="标签:" prop="validateName">
+  <el-input v-model="input" placeholder="请输入内容"></el-input>
+</el-form-item>
+
+文本域输入框
+<el-form-item label="标签:" prop="validateName">
+  <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+</el-form-item>
+
+下拉选择框（固定值、api取值、搜索框）
+<el-form-item label="标签:" prop="validateName">
+  <el-select v-model="value" placeholder="请选择">
+    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+  </el-select>
+</el-form-item>
+data()return{}
+options: [{
+value: '',
+label: ''
+}]
+
+下拉级联选择（省市区）
+
+
+选项按钮
+<el-form-item label="标签:" prop="validateName">
+
+</el-form-item>
+
+数字增减
+<el-form-item label="标签:" prop="validateName">
+  <el-input-number v-model="num" controls-position="right" @change="handleChange" :min="1" :max="10"></el-input-number>
+</el-form-item>
+
+带搜索图标的输入框
+<el-form-item label="标签:" prop="validateName">
+  <el-input placeholder="搜索" suffix-icon="el-icon-search" v-model="input1"></el-input>
+  <el-input placeholder="搜索" v-model="input3"><i slot="suffix" @click="search"></i></el-input>
+</el-form-item>
+
+日期（日期选择、区间选择）
+<el-form-item label="标签:" prop="validateName">
+</el-form-item>
+
+上传文件
+<el-form-item label="标签:" prop="validateName">
+</el-form-item>
+
+回车换行
