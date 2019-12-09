@@ -1,14 +1,24 @@
 <template>
   <div class="app-container">
-    <el-button @click="add">新member </el-button>
+    <el-button @click="add">新blog </el-button>
     <y-table :tableData="tableData" :pagination="pagination" @changePage4List="getList">
       <template>
 
- <el-table-column prop="fullname" label="姓名" ></el-table-column>
+ <el-table-column prop="title" label="标题" ></el-table-column>
 
- <el-table-column prop="phone" label="手机" ></el-table-column>
+ <el-table-column prop="body" label="正文" ></el-table-column>
 
- <el-table-column prop="address" label="地址" ></el-table-column>
+ <el-table-column prop="author" label="作者" ></el-table-column>
+
+ <el-table-column prop="url" label="SEO路径" ></el-table-column>
+
+ <el-table-column prop="thumbnail" label="缩略图" ></el-table-column>
+
+ <el-table-column prop="catalog_id" label="类别ID" ></el-table-column>
+
+ <el-table-column prop="url2" label="测试字段" ></el-table-column>
+
+ <el-table-column prop="duzhe" label="读者" ></el-table-column>
 
         <el-table-column label="操作" width="100px">
           <template slot-scope="{row}">
@@ -21,7 +31,7 @@
   </div>
 </template>
 <script>
-import { getMembers, delMember} from "@/api/member";
+import { getBlogs, delBlog} from "@/api/blog";
 import yTable from "@/components/yTable";
 export default {
   components: { yTable },
@@ -39,7 +49,7 @@ export default {
   },
   methods: {
     async getList() {
-      const response = await getMembers({
+      const response = await getBlogs({
         page: this.pagination.pageNumber,
         pagesize: this.pagination.pageSize
       });
@@ -48,10 +58,10 @@ export default {
     },
 
     add() {
-      this.$router.push({ path: "members/add" });
+      this.$router.push({ path: "blogs/add" });
     },
     edit(id) {
-      this.$router.push({ path: "members/edit", query: { id: id } });
+      this.$router.push({ path: "blogs/edit", query: { id: id } });
     },
     del(id) {
       this.$confirm("是否删除?", "提示", {
@@ -60,7 +70,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          delMember(id).then(response => {
+          delBlog(id).then(response => {
             this.$message({
               type: "success",
               message: "删除成功!"

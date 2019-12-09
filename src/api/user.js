@@ -46,7 +46,7 @@ export function addUser(data) {
   })
 }
 
-export function putUser(id, data ) {
+export function putUser(id, data) {
   return request({
     url: '/api/users/' + id,
     method: 'put',
@@ -68,11 +68,13 @@ export function getRoles(params) {
   })
 }
 export function selectCompanies(params) {
+  const url = '/api/siteconfig/companies'
+
   return request({
-    url: '/api/siteconfig/companies',
+    url,
     method: 'get',
     params
-  })
+  }, url)
 }
 export function selectRoles(params) {
   return request({

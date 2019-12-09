@@ -165,6 +165,42 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/members',
+    name: 'members',
+    component: () => import('@/views/members'),
+    meta: { title: '会员表管理' }
+  },
+  {
+    path: '/members/edit',
+    component: () => import('@/views/members/edit'),
+    hidden: true,
+    meta: { title: '修改' }
+  },
+  {
+    path: '/members/add',
+    component: () => import('@/views/members/add'),
+    hidden: true,
+    meta: { title: '添加' }
+  },
+  {
+    path: '/blogs',
+    name: 'blogs',
+    component: () => import('@/views/blogs'),
+    meta: { title: '文章表1管理' }
+  },
+  {
+    path: '/blogs/edit',
+    component: () => import('@/views/blogs/edit'),
+    hidden: true,
+    meta: { title: '修改' }
+  },
+  {
+    path: '/blogs/add',
+    component: () => import('@/views/blogs/add'),
+    hidden: true,
+    meta: { title: '添加' }
+  },
   // {
   //   path: '/form',
   //   component: Layout,

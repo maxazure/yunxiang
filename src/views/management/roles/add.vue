@@ -15,7 +15,6 @@
               <el-form-item label="配置:" prop="config">
           <el-input v-model="roleForm.config"  type="textarea" />
         </el-form-item>
-        </el-form-item>
         <el-form-item>
           <el-button @click="submit('roleForm')">提交</el-button>
           <el-button @click="back">返回</el-button>

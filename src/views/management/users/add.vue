@@ -1,5 +1,6 @@
 <template>
   <div class="card-container">
+    {{rules}}
     <el-card class="box-card">
       <h3>新用户</h3>
       <el-form
@@ -95,7 +96,7 @@ export default {
             message: "请输入邮箱"
           },
           {
-            pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
+            pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/,
             message: "请输入正确邮箱格式"
           }
         ],

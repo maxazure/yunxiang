@@ -42,7 +42,6 @@ service.interceptors.request.use(
   config => {
     // do something before request is sent
     console.log(config)
-    ajaxBefore()
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -73,9 +72,9 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    ajaxAfter()
     console.log(res)
     // if the custom code is not 20000, it is judged as an error.
+    ajaxAfter()
 
     if (res.code !== 200) {
       Message({
@@ -102,7 +101,6 @@ service.interceptors.response.use(
     }
   },
   error => {
-    ajaxAfter()
     console.log('err' + error) // for debug
     Message({
       message: error.message,
@@ -113,4 +111,11 @@ service.interceptors.response.use(
   }
 )
 
-export default service
+async function http(params = {}) {
+  ajaxBefore()
+  const data = await service(params)
+  ajaxAfter()
+
+  return data
+}
+export default http
