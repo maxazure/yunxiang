@@ -1,6 +1,5 @@
 <template>
   <div class="card-container">
-    {{rules}}
     <el-card class="box-card">
       <h3>新用户</h3>
       <el-form
@@ -35,7 +34,7 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="公司:" prop="company_id">
@@ -45,7 +44,7 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -58,132 +57,132 @@
 </template>
 
 <script>
-import { getUser, addUser, selectCompanies, selectRoles } from "@/api/user";
+import { getUser, addUser, selectCompanies, selectRoles } from '@/api/user'
 export default {
   components: {},
   data() {
     const checkPassword2 = (rule, value, callback) => {
       if (value && value !== this.userForm.password) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error('两次输入密码不一致!'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
 
     return {
-      userForm: { company_id: "", role_id: "" },
+      userForm: { company_id: '', role_id: '' },
       companies: [],
       roles: [],
       rules: {
         name: [
           {
             required: true,
-            message: "请输入姓名",
-            trigger: "blur"
+            message: '请输入姓名',
+            trigger: 'blur'
           }
         ],
         username: [
           {
             required: true,
-            message: "请输入用户名",
-            trigger: "blur"
+            message: '请输入用户名',
+            trigger: 'blur'
           }
         ],
         email: [
           {
             required: true,
-            trigger: "blur",
-            message: "请输入邮箱"
+            trigger: 'blur',
+            message: '请输入邮箱'
           },
           {
             pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/,
-            message: "请输入正确邮箱格式"
+            message: '请输入正确邮箱格式'
           }
         ],
         password: [
           {
             min: 6,
             required: true,
-            message: "密码长度不少于6个字符",
-            trigger: "blur"
+            message: '密码长度不少于6个字符',
+            trigger: 'blur'
           }
         ],
         password_confirmation: [
           {
             required: true,
-            trigger: "blur",
+            trigger: 'blur',
             validator: checkPassword2
           }
         ],
         phone: [
           {
             required: true,
-            message: "请输入手机号码",
-            trigger: "blur"
+            message: '请输入手机号码',
+            trigger: 'blur'
           },
           {
             pattern: /^1[3456789]\d{9}/,
-            message: "请输入正确的手机号码",
-            trigger: "blur"
+            message: '请输入正确的手机号码',
+            trigger: 'blur'
           }
         ],
         role_id: [
           {
             required: true,
-            message: "请选择角色",
-            trigger: "blur"
+            message: '请选择角色',
+            trigger: 'blur'
           }
         ],
         company_id: [
           {
             required: true,
-            message: "请选择公司",
-            trigger: "blur"
+            message: '请选择公司',
+            trigger: 'blur'
           }
         ]
       }
-    };
+    }
   },
   created() {
-    this.selectCompanies();
-    this.selectRoles();
+    this.selectCompanies()
+    this.selectRoles()
   },
   mounted() {},
   methods: {
     async api() {
-      this.$router.push({ path: "/management/users" });
-      const res = await addUser(this.userForm);
+      this.$router.push({ path: '/management/users' })
+      const res = await addUser(this.userForm)
     },
     async submit(userForm) {
       this.$refs.yForm.validate(valid => {
         if (valid) {
-          this.api();
+          this.api()
           this.$message({
-            message: "添加成功",
-            type: "success"
-          });
+            message: '添加成功',
+            type: 'success'
+          })
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
     async selectCompanies() {
-      const res = await selectCompanies();
+      const res = await selectCompanies()
       res.data.forEach(item => {
-        this.companies.push({ value: item.id, label: item.name });
-      });
+        this.companies.push({ value: item.id, label: item.name })
+      })
     },
     async selectRoles() {
-      const res = await selectRoles();
+      const res = await selectRoles()
       res.data.forEach(item => {
-        this.roles.push({ value: item.id, label: item.name });
-      });
+        this.roles.push({ value: item.id, label: item.name })
+      })
     },
     back() {
-      this.$router.push({ path: "/management/users" });
+      this.$router.push({ path: '/management/users' })
     }
   }
-};
+}
 </script>
 <style lang='scss' scope>
 .card-container {

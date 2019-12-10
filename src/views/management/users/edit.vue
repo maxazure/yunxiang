@@ -31,7 +31,7 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="公司:" prop="company_name">
@@ -41,7 +41,7 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -56,16 +56,16 @@
 <script>
 import {
   getUser,
-  addUser,
   selectCompanies,
   selectRoles,
   putUser
-} from "@/api/user";
+} from '@/api/user'
+
 export default {
   components: {},
   data() {
     return {
-      userForm: { company_id: "", role_id: "" },
+      userForm: { company_id: '', role_id: '' },
 
       companies: [],
       roles: [],
@@ -74,100 +74,100 @@ export default {
         name: [
           {
             required: true,
-            message: "请输入姓名",
-            trigger: "blur"
+            message: '请输入姓名',
+            trigger: 'blur'
           }
         ],
         email: [
           {
             required: true,
-            trigger: "blur",
-            message: "请输入邮箱"
+            trigger: 'blur',
+            message: '请输入邮箱'
           },
           {
             pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
-            message: "请输入正确邮箱格式"
+            message: '请输入正确邮箱格式'
           }
         ],
         password: [
           {
             min: 6,
-            message: "密码长度不少于6个字符",
-            trigger: "blur"
+            message: '密码长度不少于6个字符',
+            trigger: 'blur'
           }
         ],
 
         phone: [
           {
             required: true,
-            message: "请输入手机号码",
-            trigger: "blur"
+            message: '请输入手机号码',
+            trigger: 'blur'
           },
           {
             pattern: /^1[3456789]\d{9}/,
-            message: "请输入正确的手机号码",
-            trigger: "blur"
+            message: '请输入正确的手机号码',
+            trigger: 'blur'
           }
         ]
       }
-    };
+    }
   },
   created() {
-    this.selectCompanies();
-    this.selectRoles();
+    this.selectCompanies()
+    this.selectRoles()
   },
   mounted() {
-    this.get();
+    this.get()
   },
   methods: {
     async get() {
-      const user = await getUser(this.$route.query.username);
-      this.userForm = user.data;
+      const user = await getUser(this.$route.query.username)
+      this.userForm = user.data
     },
     async api() {
-      const res = await putUser(this.userForm.username, this.userForm);
+      await putUser(this.userForm.username, this.userForm)
       this.$message({
-        message: "修改成功",
-        type: "success"
-      });
-      this.$router.push({ path: "/management/users" });
+        message: '修改成功',
+        type: 'success'
+      })
+      this.$router.push({ path: '/management/users' })
     },
     async submit(userForm) {
-      console.log(this.$refs.userForm);
+      console.log(this.$refs.userForm)
       this.$refs.userForm.validate(valid => {
         if (valid) {
-          this.api();
+          this.api()
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
     async selectCompanies() {
-      const res = await selectCompanies();
+      const res = await selectCompanies()
       res.data.forEach(item => {
-        this.companies.push({ value: item.id, label: item.name });
-      });
+        this.companies.push({ value: item.id, label: item.name })
+      })
     },
     async selectRoles() {
-      const res = await selectRoles();
+      const res = await selectRoles()
       res.data.forEach(item => {
-        this.roles.push({ value: item.id, label: item.name });
-      });
+        this.roles.push({ value: item.id, label: item.name })
+      })
     },
     back() {
-      this.$router.push({ path: "/management/users" });
+      this.$router.push({ path: '/management/users' })
     }
   }
-};
+}
 </script>
 <style lang='scss' scope>
-.card-container {
-  background-color: #f0f2f5;
-  padding: 30px;
-  min-height: 100vh;
-  .box-card {
-    width: 600px;
+  .card-container {
+    background-color: #f0f2f5;
+    padding: 30px;
+    min-height: 100vh;
+
+    .box-card {
+      width: 600px;
+    }
   }
-}
 </style>
- 

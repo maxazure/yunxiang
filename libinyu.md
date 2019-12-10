@@ -170,3 +170,7 @@ method:{
 ### 任务
 * 模板bug修复
 * * router：layout、icon
+### 总结
+* * 模板语法的使用
+* * 父子通信（v-model=v-bind+v-on）
+* * * 父组件v-model,子组件@input="$emit('input', $event.target.value)" 

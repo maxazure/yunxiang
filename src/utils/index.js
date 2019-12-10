@@ -37,7 +37,9 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -97,11 +99,37 @@ export function param2Obj(url) {
   }
   return JSON.parse(
     '{"' +
-      decodeURIComponent(search)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"')
-        .replace(/\+/g, ' ') +
-      '"}'
+    decodeURIComponent(search)
+      .replace(/"/g, '\\"')
+      .replace(/&/g, '","')
+      .replace(/=/g, '":"')
+      .replace(/\+/g, ' ') +
+    '"}'
   )
+}
+
+export function dataPrepared(data) {
+  changeGender(data)
+}
+
+export function changeGender(data) {
+  if (data.data.list && data.data.list[0].gender) {
+    data.data.list.map((x) => {
+      if (x.gender === 1) {
+        x.gender = '男'
+      }
+      if (x.gender === 0) {
+        x.gender = '女'
+      }
+    })
+    return
+  }
+  if (data.data.gender) {
+    if (data.data.gender === 1) {
+      data.data.gender = '男'
+    }
+    if (data.data.gender === 0) {
+      data.data.gender = '女'
+    }
+  }
 }

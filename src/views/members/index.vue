@@ -1,14 +1,24 @@
 <template>
   <div class="app-container">
-    <el-button @click="add">新member </el-button>
-    <y-table :tableData="tableData" :pagination="pagination" @changePage4List="getList">
+    <el-button @click="add">新会员</el-button>
+    <y-table :table-data="tableData" :pagination="pagination" @changePage4List="getList">
       <template>
 
- <el-table-column prop="fullname" label="姓名" ></el-table-column>
+        <el-table-column prop="name" label="姓名" width="100px" />
 
- <el-table-column prop="phone" label="手机" ></el-table-column>
+        <el-table-column prop="enname" label="英文名" width="100px" />
 
- <el-table-column prop="address" label="地址" ></el-table-column>
+        <el-table-column prop="mobile" label="手机" width="100px" />
+
+        <el-table-column prop="gender" label="性别" width="50px" />
+
+        <el-table-column prop="birthday" label="生日" width="100px" />
+
+        <el-table-column prop="vipid" label="会员卡号" width="100px" />
+
+        <el-table-column prop="wechatid" label="微信号" width="160px" />
+
+        <el-table-column prop="address" label="地址" />
 
         <el-table-column label="操作" width="100px">
           <template slot-scope="{row}">
@@ -21,8 +31,9 @@
   </div>
 </template>
 <script>
-import { getMembers, delMember} from "@/api/member";
-import yTable from "@/components/yTable";
+import { getMembers, delMember } from '@/api/member'
+import yTable from '@/components/yTable'
+
 export default {
   components: { yTable },
   data() {
@@ -32,54 +43,54 @@ export default {
         pageNumber: 1,
         pageSize: 10
       }
-    };
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     async getList() {
       const response = await getMembers({
         page: this.pagination.pageNumber,
         pagesize: this.pagination.pageSize
-      });
-      this.tableData = response.data.list;
-      this.pagination.total = response.data.pagination.total;
+      })
+      this.tableData = response.data.list
+      this.pagination.total = response.data.pagination.total
     },
 
     add() {
-      this.$router.push({ path: "members/add" });
+      this.$router.push({ path: 'add' })
     },
     edit(id) {
-      this.$router.push({ path: "members/edit", query: { id: id } });
+      this.$router.push({ path: 'edit', query: { id: id }})
     },
     del(id) {
-      this.$confirm("是否删除?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('是否删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           delMember(id).then(response => {
             this.$message({
-              type: "success",
-              message: "删除成功!"
-            });
-            this.getList();
-          });
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.getList()
+          })
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     }
   }
-};
+}
 </script>
 
 <style lang='scss' scope>
-.app-container {
-}
+  .app-container {
+  }
 </style>

@@ -3,6 +3,7 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import { Loading } from 'element-ui'
+import { dataPrepared } from './index'
 
 let loading = null
 let loadTotal = 0
@@ -63,7 +64,7 @@ service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
-  */
+   */
 
   /**
    * Determine the request status by custom code
@@ -114,8 +115,9 @@ service.interceptors.response.use(
 async function http(params = {}) {
   ajaxBefore()
   const data = await service(params)
+  dataPrepared(data)
   ajaxAfter()
-
   return data
 }
+
 export default http
