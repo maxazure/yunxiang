@@ -173,4 +173,12 @@ method:{
 ### 总结
 * * 模板语法的使用
 * * 父子通信（v-model=v-bind+v-on）
-* * * 父组件v-model,子组件@input="$emit('input', $event.target.value)" 
+* * * 父组件v-model
+* * * 子组件@input="$emit('input', $event.target.value)" 
+## 2019/12/11
+### 任务
+* 两种布局方式
+* 代码生成系统
+### 总结
+* element 单独使用el-col布局导致表单无法选中编辑
+* * 必须结合el-row一起使用

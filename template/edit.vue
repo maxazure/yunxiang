@@ -7,17 +7,22 @@
         :model='<%= @brick[:name]%>Form'
         :rules='rules'
         label-width='100px'
-        style='width:500px;'
       >
+        <el-row>
       <% @brick.dfields.order('sort').each do |f|%>
+          <el-col :span="12">
          <el-form-item label='<%= f[:cnname] %>:' prop='<%= f[:field_ame] %>'>
           <el-input v-model='<%= @brick[:name]%>Form.<%= f[:field_ame] %>' />
         </el-form-item>
+          </el-col>
 <%end%>
+          <el-col :span="24">
         <el-form-item>
           <el-button @click="submit('<%= @brick[:name]%>Form')">提交</el-button>
           <el-button @click='back'>返回</el-button>
         </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
     </el-card>
   </div>
@@ -76,7 +81,6 @@ export default {
   padding: 30px;
   min-height: 100vh;
   .box-card {
-    width: 600px;
   }
 }
 </style>
