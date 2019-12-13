@@ -204,5 +204,10 @@ method:{
 * element自带样式：
 * * el-button:margin-left:5px
 * 父组件v-model，子组件data(){return: value:''};   @change()=>{  this.$emit('input', this.value) }
-## 2019/12-2  每周总结
-* 
+* 拖拽vuedragable
+* * 同一个groub之间才可以互相拖拽
+*  v-html
+*  动态组件的使用 
+```
+<component v-bind:is="currentTabComponent"></component>
+```
