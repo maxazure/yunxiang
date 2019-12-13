@@ -187,4 +187,22 @@ method:{
 * 字段CRUD
 * 拖拽生成json
 ### 总结
+* vuedragable拖拽插件使用
+* :class="A?B:C"三元表达式
+* el-table 不显示布尔类型
+* el-table: slot通过插槽自定义数据显示
+* 设置默认值直接设置data
+* computed 计算
+## 2019/12/13
+### 任务
+* 拖拽生成页的布局改动
+* 数据迁移
+### 总结
+* 居中 margin:0 auto; width
+* 标签回车后会产生一个空格
+* * font-size:0 
+* element自带样式：
+* * el-button:margin-left:5px
+* 父组件v-model，子组件data(){return: value:''};   @change()=>{  this.$emit('input', this.value) }
+## 2019/12-2  每周总结
 * 

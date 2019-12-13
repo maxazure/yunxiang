@@ -1,27 +1,22 @@
 <template>
   <div class="test2">
-    <y-tab>
-      <template>
-        <el-tab-pane label="配置管理" name="first">
-          <add></add>
-        </el-tab-pane>
-        <el-tab-pane label="配置管理2" name="second">
-          配置管理2
-        </el-tab-pane>
-      </template>
-    </y-tab>
-
+    {{ test2 }}
+    <y-radio v-model="test2" :url="url" />
   </div>
 </template>
 <script>
 import yTab from '@/components/yTab'
 import add from '@/views/members/add'
 import edit from '@/views/members/edit'
+import YRadio from '../../components/yRadio/yRadio'
 
 export default {
-  components: { yTab ,add},
+  components: { YRadio, yTab, add },
   data() {
-    return { test2: '标题' }
+    return {
+      test2: '标题',
+      url: 'api/siteconfig/companies'
+    }
   },
   computed: {},
   watch: {},

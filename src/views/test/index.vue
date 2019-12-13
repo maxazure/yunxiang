@@ -86,13 +86,13 @@
           </el-select>
           {{ formData }}
           <el-form-item>
-            {{value2}}
-            <child v-model="value2"></child>
+            {{ value2 }}
+            <child v-model="value2" />
           </el-form-item>
         </el-form-item>
-        {{value}}
+        {{ value }}
         <el-form-item label="API取值">
-          <ySelect :url="selectRoles" v-model="formData.select_id" />
+          <ySelect v-model="formData.select_id" :url="selectRoles" />
         </el-form-item>
         <el-form-item>
           <el-button @click="submit('formData')">提交</el-button>
@@ -111,7 +111,7 @@ import yForm from '@/components/yForm'
 import ySelect from '@/components/ySelect'
 import child from '@/views/test/child'
 export default {
-  components: { yForm, ySelect ,child},
+  components: { yForm, ySelect, child },
   data() {
     return {
       radio: '',

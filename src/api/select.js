@@ -1,4 +1,4 @@
-const selectCompanies = '/api/siteconfig/companie'
+const selectCompanies = '/api/siteconfig/companies'
 
 const selectRoles = '/api/siteconfig/roles'
 
