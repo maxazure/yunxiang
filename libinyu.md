@@ -211,3 +211,21 @@ method:{
 ```
 <component v-bind:is="currentTabComponent"></component>
 ```
+## 2019/12/16
+### 总结
+* 防抖与节流lodash
+* * 防抖：_.debounce(func, [wait=0], [options={}])  
+* * 节流：_.throttle(func, [wait=0], [options={}])
+
+## 2019/12/16
+### 任务
+* 拖拽插件
+### 总结
+* vuedragable同一列内无法移动----->field.id undefine---->拖拽事件获取的element为空----------->？？？
+* * 更换插件Sortable.js--->拖拽子组件变成父组件---->阻止pinterdown事件传播.stop ---->子组件拖拽不触发---->？？？
+* * Sortable.js--->样式改变数组不改变---->update事件不触发-----？？？
+* * 更换插件vuedragable.nested
+* chrome调试：事件
+* * monitorEvents(document.querySelector(".field-item"), 'click' )事件监听
+* * unmonitorEvents(document.querySelector(".el-card"))取消监听
+* * getEventListeners(document.querySelector(".col0"))获取监听的事件
