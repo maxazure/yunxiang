@@ -203,7 +203,7 @@ method:{
 * * font-size:0 
 * element自带样式：
 * * el-button:margin-left:5px
-* 父组件v-model，子组件data(){return: value:''};   @change()=>{  this.$emit('input', this.value) }
+* 组建通信：单向下行绑定，父组件v-model，子组件prop:{value:String } + data(){return{result: this.value}}  +watch:{value(val){this.result = val}//通知外部 } @change()=>{  this.$emit('input', this.value) }
 * 拖拽vuedragable
 * * 同一个groub之间才可以互相拖拽
 *  v-html
@@ -229,3 +229,12 @@ method:{
 * * monitorEvents(document.querySelector(".field-item"), 'click' )事件监听
 * * unmonitorEvents(document.querySelector(".el-card"))取消监听
 * * getEventListeners(document.querySelector(".col0"))获取监听的事件
+## 2019/12/17
+### 任务
+* 拖拽
+### 总结
+* vuedraggable 拖拽后修改新列表影响原列表---->引用类型---->clone函数(stackoverflow+github issue+文档)---->浅拷贝----->深拷贝---->  JSON.parse(JSON.stringify(o))
+* Vue传递给子组件的属性带类型+IDEA自动补全html属性中其他类型为字符串= 传递失败 =>无法区分数字与字符串
+```
+ :default-openeds="['1','2']"
+```
