@@ -233,7 +233,8 @@ method:{
 ### 任务
 * 拖拽
 ### 总结
-* vuedraggable 拖拽后修改新列表影响原列表---->引用类型---->clone函数(stackoverflow+github issue+文档)---->浅拷贝----->深拷贝---->  JSON.parse(JSON.stringify(o))
+* vuedraggable 拖拽后修改新列表影响原列表---->引用类型---->clone函数(stackoverflow+github issue+文档)---->
+* 浅拷贝（拓展运算符：[...a]、{...b}可解决一层引用，无法解决多层对象的引用）----->深拷贝（json转换、递归、。。）->  JSON.parse(JSON.stringify(o))
 * Vue传递给子组件的属性带类型+IDEA自动补全html属性中其他类型为字符串= 传递失败 =>无法区分数字与字符串
 ```
  :default-openeds="['1','2']"
