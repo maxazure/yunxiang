@@ -31,8 +31,25 @@
 
 <script>
 import { add<%=titleize(@brick[:name])%> } from '@/api/<%= @brick[:name]%>';
+
+
+import dragInput from '@/components/drag-component/drag-input'
+import dragSelect from '@/components/drag-component/drag-select'
+import dragCheckbox from '@/components/drag-component/drag-checkbox'
+import dragDatepicker from '@/components/drag-component/drag-datepicker'
+import dragNumber from '@/components/drag-component/drag-number'
+import dragRadio from '@/components/drag-component/drag-radio'
+import dragTextarea from '@/components/drag-component/drag-textarea'
+import request from '../../utils/request'
+
 export default {
-  components: {},
+  components: {
+    dragSelect,
+    dragCheckbox,
+    dragDatepicker,
+    dragNumber,
+    dragRadio,
+    dragTextarea},
   data() {
     return {
       <%= @brick[:name]%>Form: {  },

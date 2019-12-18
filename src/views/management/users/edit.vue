@@ -133,7 +133,6 @@ export default {
       this.$router.push({ path: '/management/users' })
     },
     async submit(userForm) {
-      console.log(this.$refs.userForm)
       this.$refs.userForm.validate(valid => {
         if (valid) {
           this.api()

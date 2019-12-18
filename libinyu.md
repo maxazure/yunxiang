@@ -203,7 +203,9 @@ method:{
 * * font-size:0 
 * element自带样式：
 * * el-button:margin-left:5px
-* 组建通信：单向下行绑定，父组件v-model，子组件prop:{value:String } + data(){return{result: this.value}}  +watch:{value(val){this.result = val}//通知外部 } @change()=>{  this.$emit('input', this.value) }
+* 组建通信：单向下行绑定，父组件v-model，子组件<input v-model='result'>+prop:{value:String } + data(){return{result: this.value}}  + @change()=>{  this.$emit('input', this.value) }
+* * Ajax延迟导致父组件修改了value而子组件不知道：watch:{value(val){this.result = val}//监听value、通知子组件修改 }
+* * 避免在子组件中修改父组件的数据（v-model绑定prop）=> 会导致数据错乱
 * 拖拽vuedragable
 * * 同一个groub之间才可以互相拖拽
 *  v-html
@@ -239,3 +241,24 @@ method:{
 ```
  :default-openeds="['1','2']"
 ```
+## 2019/12/18
+### 任务
+* 表单事件封装
+### 总结
+1.  @input与@change 的区别
+* * input 连续触发
+* * change 失去焦点时触发
+2.  Vue数组数据改变，视图不更新--->
+* * Vue 不能检测对象属性的添加或删除
+* * Vue 不能检测以下数组的变动：
+* * * 当你利用索引直接设置一个数组项时，例如：vm.items[indexOfItem] = newValue
+* * * 当你修改数组的长度时，例如：vm.items.length = newLength
+*  Vue 将被侦听的数组的变异方法进行了包裹，所以它们也将会触发视图更新。这些被包裹过的方法包括：
+    push()
+    pop()
+    shift()
+    unshift()
+    splice()
+    sort()
+    reverse()
+* * * 在被监听的对象上新增的数组对象是不被监听的=>变异方法未被包裹=>视图不更新----=>新增能被监听的属性this.$set(field, 'options', [])

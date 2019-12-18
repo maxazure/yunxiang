@@ -12,7 +12,7 @@
       <% @brick.dfields.order('sort').each do |f|%>
           <el-col :span="12">
          <el-form-item label='<%= f[:cnname] %>:' prop='<%= f[:field_ame] %>'>
-          <el-input v-model='<%= @brick[:name]%>Form.<%= f[:field_ame] %>' />
+          <component  :is='<%= @brick[:name]%>Form.<%= f[:ctype] %>'  v-model='<%= @brick[:name]%>Form.<%= f[:field_ame] %>' :options="<%= @brick[:name]%>Form.options"/>
         </el-form-item>
           </el-col>
 <%end%>
@@ -30,8 +30,24 @@
 
 <script>
 import { get<%=titleize(@brick[:name])%>, put<%=titleize(@brick[:name])%> } from '@/api/<%= @brick[:name]%>';
+
+import dragInput from '@/components/drag-component/drag-input'
+import dragSelect from '@/components/drag-component/drag-select'
+import dragCheckbox from '@/components/drag-component/drag-checkbox'
+import dragDatepicker from '@/components/drag-component/drag-datepicker'
+import dragNumber from '@/components/drag-component/drag-number'
+import dragRadio from '@/components/drag-component/drag-radio'
+import dragTextarea from '@/components/drag-component/drag-textarea'
+import request from '../../utils/request'
+
 export default {
-  components: {},
+  components: {
+    dragSelect,
+    dragCheckbox,
+    dragDatepicker,
+    dragNumber,
+    dragRadio,
+    dragTextarea},
   data() {
     return {
     <%= @brick[:name]%>Form: {  },
@@ -51,6 +67,15 @@ export default {
     async get() {
       const response = await get<%=titleize(@brick[:name])%>(this.$route.query.id);
       this.<%= @brick[:name]%>Form = response.data;
+      this.<%= @brick[:name]%>Form.map(async (item)=>{
+        if (item.api){
+          this.$set(item, 'options', [])
+          const res = await request({ url: item.api, method: 'get' })
+          res.data.map((option) => {
+            item.options.push({ value: option.id, label: option.name })
+          })
+        }
+      })
     },
     async api() {
       this.$router.push({ path: '/<%= @brick[:name_plural]%>' });
