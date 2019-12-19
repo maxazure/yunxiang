@@ -3,7 +3,6 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import { Loading } from 'element-ui'
-import { dataPrepared } from './index'
 
 let loading = null
 let loadTotal = 0
@@ -115,7 +114,6 @@ service.interceptors.response.use(
 async function http(params = {}) {
   ajaxBefore()
   const data = await service(params)
-  dataPrepared(data)
   ajaxAfter()
   return data
 }

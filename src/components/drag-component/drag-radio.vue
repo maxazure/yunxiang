@@ -7,16 +7,16 @@
 
 export default {
   props: {
-    value: String,
+    value: Number,
     options:
         {
           type: Array,
           require: false,
           default: () =>
             [
-              { value: '1', label: '选项1' },
-              { value: '2', label: '选项2' },
-              { value: '3', label: '选项3' }
+              { value: 1, label: '选项1' },
+              { value: 2, label: '选项2' },
+              { value: 3, label: '选项3' }
             ]
         }
   },
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     change() {
-      this.$emit('input', this.result.toString())
+      this.$emit('input', this.result)
     }
   }
 }

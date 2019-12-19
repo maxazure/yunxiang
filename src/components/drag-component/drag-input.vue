@@ -1,5 +1,5 @@
 <template>
-  <el-input  v-model="result" placeholder="请输入"  @input="input" />
+  <el-input v-model="result" placeholder="请输入" @input="input" />
 </template>
 <script>
 export default {
@@ -12,6 +12,9 @@ export default {
   },
   computed: {},
   watch: {
+    value(val) {
+      this.result = val
+    }
   },
   created() {
   },

@@ -1,16 +1,14 @@
 <template>
   <el-date-picker
     v-model="result"
-    type="daterange"
-    range-separator="至"
-    start-placeholder="开始日期"
-    end-placeholder="结束日期"
+    type="date"
+    placeholder="选择日期"
     @change="change"
   />
 </template>
 <script>
 export default {
-  props: { value: Array },
+  props: { value: Date },
   data() {
     return { result: this.value }
   },

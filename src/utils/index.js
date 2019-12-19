@@ -109,7 +109,6 @@ export function param2Obj(url) {
 }
 
 export function dataPrepared(data) {
-  changeGender(data)
 }
 
 export function changeGender(data) {

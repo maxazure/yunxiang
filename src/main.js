@@ -28,6 +28,25 @@ if (process.env.NODE_ENV === 'production') {
   mockXHR()
 }
 
+
+
+// 自定义组件
+import dragInput from '@/components/drag-component/drag-input'
+import dragSelect from '@/components/drag-component/drag-select'
+import dragCheckbox from '@/components/drag-component/drag-checkbox'
+import dragDatepicker from '@/components/drag-component/drag-datepicker'
+import dragNumber from '@/components/drag-component/drag-number'
+import dragRadio from '@/components/drag-component/drag-radio'
+import dragTextarea from '@/components/drag-component/drag-textarea'
+
+Vue.component('dragRadio', dragRadio)
+Vue.component('dragInput', dragInput)
+Vue.component('dragSelect', dragSelect)
+Vue.component('dragCheckbox', dragCheckbox)
+Vue.component('dragDatepicker', dragDatepicker)
+Vue.component('dragNumber', dragNumber)
+Vue.component('dragTextarea', dragTextarea)
+
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
