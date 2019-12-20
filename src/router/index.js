@@ -5,6 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import productRouter from "@/router/productRouter";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -187,30 +188,7 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: '/products',
-    name: 'products',
-    redirect: '/products/index',
-    component: Layout,
-    children: [{
-      path: 'index',
-      name: 'products',
-      component: () => import('@/views/products'),
-      meta: { title: '产品表管理', icon: 'tree' }
-    }, {
-      path: 'edit',
-      component: () => import('@/views/products/edit'),
-      hidden: true,
-      meta: { title: '修改产品表' }
-    },
-      {
-        path: 'add',
-        component: () => import('@/views/products/add'),
-        hidden: true,
-        meta: { title: '添加产品表' }
-      }
-    ]
-  },
+  productRouter,
 
   // {
   //   path: '/form',

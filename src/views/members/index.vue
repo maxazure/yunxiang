@@ -1,6 +1,17 @@
 <template>
   <div class="app-container">
-    <el-button @click="add">新会员</el-button>
+    <div class="oprate">
+      <el-button @click="add">新会员</el-button>
+    </div>
+    {{ searchForm }}
+    <y-table-form class="searchForm">
+      <template>
+        <el-input v-model="searchForm.value" placeholder="placeholder" />
+        <dragInput></dragInput>
+        <el-button type="text" @click="log">搜索</el-button>
+      </template>
+    </y-table-form>
+
     <y-table :table-data="tableData" :pagination="pagination" @changePage4List="getList">
       <template>
 
@@ -31,18 +42,20 @@
   </div>
 </template>
 <script>
-import { getMembers, delMember } from '@/api/member'
-import yTable from '@/components/yTable'
+import { getMembers, delMember } from '../../api/member'
+import yTable from '../../components/yTable'
+import yTableForm from '../../components/yTableForm'
 
 export default {
-  components: { yTable },
+  components: { yTable, yTableForm },
   data() {
     return {
       tableData: [],
       pagination: {
         pageNumber: 1,
         pageSize: 10
-      }
+      },
+      searchForm: {}
     }
   },
   created() {
@@ -85,6 +98,9 @@ export default {
             message: '已取消删除'
           })
         })
+    },
+    log() {
+      console.log('searchForm', this.searchForm)
     }
   }
 }
