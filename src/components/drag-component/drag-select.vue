@@ -35,7 +35,11 @@ export default {
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    value(val) {
+      this.result = val
+    }
+  },
   created() {
   },
   mounted() {

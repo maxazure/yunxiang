@@ -133,15 +133,17 @@ export function changeGender(data) {
   }
 }
 
-const test = { name: 'name', age: 2, child: { name: 'child', age: 2 }}
-// 类型转换
+// 类型转换,将对象中属性值为数字类型转化为字符串
 export function numberToString(obj) {
-  obj = test
-  console.log(Object.keys(obj))
-  Object.keys(obj).forEach((item) => {
-    console.log(obj[item])
-    if (typeof obj[item] === Number) {
-      console.log(obj[item])
-    }
-  })
+  if (obj) {
+    Object.keys(obj).forEach((item) => {
+      if (typeof obj[item] === 'number') {
+        obj[item] = obj[item].toString()
+      }
+      if (typeof obj[item] === 'object') {
+        numberToString(obj[item])
+      }
+    })
+    console.log('numberToString', obj)
+  }
 }

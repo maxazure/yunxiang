@@ -3,6 +3,7 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import { Loading } from 'element-ui'
+import {numberToString} from "@/utils/index";
 
 let loading = null
 let loadTotal = 0
@@ -72,7 +73,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    console.log(res)
+    console.log('response',res)
     // if the custom code is not 20000, it is judged as an error.
     ajaxAfter()
 
@@ -116,6 +117,7 @@ service.interceptors.response.use(
 async function http(params = {}) {
   ajaxBefore()
   const data = await service(params)
+  numberToString(data)
   ajaxAfter()
   return data
 }
