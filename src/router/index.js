@@ -38,7 +38,7 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/',
+    path: '/test2',
     component: Layout,
     children: [{
       path: 'test2',
@@ -76,7 +76,7 @@ export const constantRoutes = [
     children: [{
       path: 'index',
       name: 'Pos',
-      component: () => import('@/views/members/index'),
+      component: () => import('@/views/pos/index'),
       meta: { title: '收银台', icon: 'example' }
     }]
   },

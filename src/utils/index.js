@@ -132,3 +132,16 @@ export function changeGender(data) {
     }
   }
 }
+
+const test = { name: 'name', age: 2, child: { name: 'child', age: 2 }}
+// 类型转换
+export function numberToString(obj) {
+  obj = test
+  console.log(Object.keys(obj))
+  Object.keys(obj).forEach((item) => {
+    console.log(obj[item])
+    if (typeof obj[item] === Number) {
+      console.log(obj[item])
+    }
+  })
+}

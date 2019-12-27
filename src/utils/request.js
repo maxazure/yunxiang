@@ -84,8 +84,9 @@ service.interceptors.response.use(
       })
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 401 || res.code === 5000) {
+        const map = new Map([[401, '没有授权'], [5000, '登录已过期']])
         // to re-login
-        MessageBox.confirm('没授权异常', '前往登录', {
+        MessageBox.confirm(map.get(res.code), '前往登录', {
           confirmButtonText: 'Re-Login',
           cancelButtonText: 'Cancel',
           type: 'warning'

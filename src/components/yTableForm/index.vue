@@ -10,7 +10,7 @@ export default {
     searchForm: Object
   },
   data() {
-    return {  }
+    return {
   },
   methods: {}
 }

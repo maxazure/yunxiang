@@ -3,14 +3,38 @@
     <div class="oprate">
       <el-button @click="add">新会员</el-button>
     </div>
-    {{ searchForm }}
-    <y-table-form class="searchForm">
-      <template>
-        <el-input v-model="searchForm.value" placeholder="placeholder" />
-        <dragInput></dragInput>
-        <el-button type="text" @click="log">搜索</el-button>
-      </template>
-    </y-table-form>
+    <!--    todo 搜索表单模板-->
+    <el-form
+      ref="searchForm"
+      class="searchForm"
+      :model="searchForm"
+      :rules="rules"
+      label-width="100px"
+    >
+      <el-row type="flex">
+        <el-col>
+          <el-row type="flex">
+            <el-form-item label="活动名称1">
+              <el-input v-model="searchForm.name1" />
+            </el-form-item>
+            <el-form-item label="活动名称">
+              <el-input v-model="searchForm.name2" />
+            </el-form-item>
+            <el-form-item label="活动名称">
+              <el-input v-model="searchForm.name3" />
+            </el-form-item>
+          </el-row>
+        </el-col>
+        <el-col :span="4">
+          <el-row type="flex" justify="end">
+            <el-form-item>
+              <el-button type="text" @click="log">搜索</el-button>
+            </el-form-item>
+          </el-row>
+        </el-col>
+      </el-row>
+
+    </el-form>
 
     <y-table :table-data="tableData" :pagination="pagination" @changePage4List="getList">
       <template>
@@ -44,10 +68,9 @@
 <script>
 import { getMembers, delMember } from '../../api/member'
 import yTable from '../../components/yTable'
-import yTableForm from '../../components/yTableForm'
 
 export default {
-  components: { yTable, yTableForm },
+  components: { yTable },
   data() {
     return {
       tableData: [],
