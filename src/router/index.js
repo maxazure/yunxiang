@@ -5,6 +5,10 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import catalogsRouter from "@/router/catalogs";
+import inventoriesRouter from "@/router/inventories";
+import productsRouter from "@/router/products";
+import sales_ordersRouter from "@/router/sales_orders";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -35,15 +39,6 @@ export const constantRoutes = [
     path: '/test',
     component: () => import('@/views/test/index'),
     hidden: true
-  },
-  {
-    path: '/',
-    component: Layout,
-    children: [{
-      path: 'test2',
-      component: () => import('@/views/test/test2')
-
-    }]
   },
   {
     path: '/login',
@@ -186,31 +181,10 @@ export const constantRoutes = [
     }
     ]
   },
-
-  {
-    path: '/products',
-    name: 'products',
-    redirect: '/products/index',
-    component: Layout,
-    children: [{
-      path: 'index',
-      name: 'products',
-      component: () => import('@/views/products'),
-      meta: { title: '产品表管理', icon: 'tree' }
-    }, {
-      path: 'edit',
-      component: () => import('@/views/products/edit'),
-      hidden: true,
-      meta: { title: '修改产品表' }
-    },
-      {
-        path: 'add',
-        component: () => import('@/views/products/add'),
-        hidden: true,
-        meta: { title: '添加产品表' }
-      }
-    ]
-  },
+  catalogsRouter,
+  productsRouter,
+  inventoriesRouter,
+  sales_ordersRouter,
 
   // {
   //   path: '/form',
