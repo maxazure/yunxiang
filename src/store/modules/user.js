@@ -44,6 +44,7 @@ const actions = {
         const { data } = response
 
         if (!data) {
+        // if (data.code === 5000) {
           reject('Verification failed, please Login again.')
         }
 

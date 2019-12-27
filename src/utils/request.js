@@ -83,7 +83,7 @@ service.interceptors.response.use(
         duration: 5 * 1000
       })
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 401) {
+      if (res.code === 401 || res.code === 5000) {
         // to re-login
         MessageBox.confirm('没授权异常', '前往登录', {
           confirmButtonText: 'Re-Login',
@@ -95,6 +95,7 @@ service.interceptors.response.use(
           })
         })
       }
+
       return Promise.reject(new Error(res.message || 'Error '))
     } else {
       return res
