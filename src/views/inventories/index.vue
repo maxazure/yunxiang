@@ -1,30 +1,20 @@
 <template>
   <div class='app-container'>
-    <el-button @click='add'>新产品信息 </el-button>
+    <el-button @click='add'>新库存 </el-button>
     <y-table :tableData='tableData' :pagination='pagination' @changePage4List='getList'>
       <template>
         
-        <el-table-column prop='product_name' label='商品名称'  ></el-table-column>
+        <el-table-column prop='sn' label='sn（sku）'  ></el-table-column>
         
-        <el-table-column prop='brand' label='品牌'  ></el-table-column>
+        <el-table-column prop='num' label='数量'  ></el-table-column>
         
-        <el-table-column prop='product_gender' label='商品性别'  ></el-table-column>
+        <el-table-column prop='color_id' label='颜色编号'  ></el-table-column>
         
-        <el-table-column prop='category_id' label='品类编号'  ></el-table-column>
+        <el-table-column prop='product_id' label='产品编号'  ></el-table-column>
         
-        <el-table-column prop='goods_year' label='商品年份'  ></el-table-column>
+        <el-table-column prop='size' label='尺码'  ></el-table-column>
         
-        <el-table-column prop='goods_season' label='商品季'  ></el-table-column>
-        
-        <el-table-column prop='fabric' label='面料'  ></el-table-column>
-        
-        <el-table-column prop='characteristic' label='造型特点'  ></el-table-column>
-        
-        <el-table-column prop='edition_type' label='版型'  ></el-table-column>
-        
-        <el-table-column prop='barcode' label='原款号'  ></el-table-column>
-        
-        <el-table-column prop='shortno' label='款式编号'  ></el-table-column>
+        <el-table-column prop='retail_price' label='零售价'  ></el-table-column>
         
         <el-table-column label='操作' width='100px'>
           <template slot-scope='{row}'>
@@ -37,7 +27,7 @@
   </div>
 </template>
 <script>
-  import { getProducts, delProduct} from '@/api/product';
+  import { getInventories, delInventory} from '@/api/inventory';
   import yTable from '@/components/yTable';
 
   export default {
@@ -56,7 +46,7 @@
     },
     methods: {
       async getList() {
-        const response = await getProducts({
+        const response = await getInventories({
           page: this.pagination.pageNumber,
           pagesize: this.pagination.pageSize
         });
@@ -77,7 +67,7 @@
           type: 'warning'
         })
           .then(() => {
-            delProduct(id).then(response => {
+            delInventory(id).then(response => {
               this.$message({
                 type: 'success',
                 message: '删除成功!'
