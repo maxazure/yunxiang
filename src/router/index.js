@@ -5,14 +5,10 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-<<<<<<< HEAD
-import catalogsRouter from "@/router/catalogs";
-import inventoriesRouter from "@/router/inventories";
-import productsRouter from "@/router/products";
-import sales_ordersRouter from "@/router/sales_orders";
-=======
-import productRouter from "@/router/productRouter";
->>>>>>> f38decf8875bb5050b88a25ec1810769fc1c587b
+import catalogsRouter from '@/router/catalogs'
+import inventoriesRouter from '@/router/inventories'
+import productsRouter from '@/router/products'
+import sales_ordersRouter from '@/router/sales_orders'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -74,7 +70,7 @@ export const constantRoutes = [
     children: [{
       path: 'index',
       name: 'Pos',
-      component: () => import('@/views/members/index'),
+      component: () => import('@/views/pos/index'),
       meta: { title: '收银台', icon: 'example' }
     }]
   },
@@ -185,15 +181,10 @@ export const constantRoutes = [
     }
     ]
   },
-<<<<<<< HEAD
   catalogsRouter,
   productsRouter,
   inventoriesRouter,
   sales_ordersRouter,
-=======
-
-  productRouter,
->>>>>>> f38decf8875bb5050b88a25ec1810769fc1c587b
 
   // {
   //   path: '/form',
