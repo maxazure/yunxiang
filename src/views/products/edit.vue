@@ -9,7 +9,7 @@
         label-width="100px"
       >
         <el-row>
-
+          <!--todo 1. push code 2. ：is componennt 3. global 4.widget   5. test data sort -->
           <el-col :span="12">
             <el-form-item label="商品名称:" prop="product_name">
               <component
@@ -138,7 +138,7 @@ import global from '@/assets/global'
 import request from '../../utils/request'
 
 export default {
-  components: {global},
+  components: { global },
   data() {
     return {
       productForm: {},
