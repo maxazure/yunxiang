@@ -135,10 +135,10 @@
 <script>
 import { addProduct } from '@/api/product'
 import request from '../../utils/request'
-import global from '@/assets/global'
+import global from '../../utils/global'
 
 export default {
-  components: { global },
+  components: { },
   data() {
     return {
       productForm: {},
