@@ -1,7 +1,7 @@
 <template>
   <div class="yTable">
     <el-table :data="tableData" border style="width: 100%" :header-row-style="tableHeaderColor">
-      <slot></slot>
+      <slot />
     </el-table>
     <el-pagination
       background
@@ -16,40 +16,40 @@
 </template>
 <script>
 export default {
-  data() {
-    return {};
-  },
   props: {
     tableData: Array,
     pagination: Object
   },
+  data() {
+    return {}
+  },
   created() {
-    this.setPaginationDefault();
+    this.setPaginationDefault()
   },
   methods: {
     changePage(page) {
-      this.pagination.pageNumber = page;
-      this.$emit("changePage4List");
+      this.pagination.pageNumber = page
+      this.$emit('changePage4List')
     },
     changePageSize(val) {
-      this.pagination.pageSize = val;
-      this.$emit("changePage4List");
+      this.pagination.pageSize = val
+      this.$emit('changePage4List')
     },
     setPaginationDefault() {
       if (!this.pagination.layout) {
-        this.pagination.layout = "total, prev, pager, next, jumper, sizes";
+        this.pagination.layout = 'total, prev, pager, next, jumper, sizes'
       }
       if (!this.pagination.pageSizes) {
-        this.pagination.pageSizes = [10, 20, 30, 40, 50];
+        this.pagination.pageSizes = [10, 20, 30, 40, 50]
       }
     },
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
-        return "color: rgb(245, 245,245);font-weight: 300;height:20px";
+        return 'color: rgb(245, 245,245);font-weight: 300;height:20px'
       }
     }
   }
-};
+}
 </script>
 <style lang='scss' >
 $border: #9bc2db;

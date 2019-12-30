@@ -28,24 +28,32 @@ if (process.env.NODE_ENV === 'production') {
   mockXHR()
 }
 
-
-
 // 自定义组件
-import dragInput from '@/components/drag-component/drag-input'
-import dragSelect from '@/components/drag-component/drag-select'
-import dragCheckbox from '@/components/drag-component/drag-checkbox'
-import dragDatepicker from '@/components/drag-component/drag-datepicker'
-import dragNumber from '@/components/drag-component/drag-number'
-import dragRadio from '@/components/drag-component/drag-radio'
-import dragTextarea from '@/components/drag-component/drag-textarea'
+import YInput from '@/components/yComponent/yInput'
+import YSelect from '@/components/yComponent/ySelect'
+import YSelectInput from '@/components/yComponent/ySelectInput'
+import YCheckbox from '@/components/yComponent/yCheckbox'
+import YDatepicker from '@/components/yComponent/yDatepicker'
+import YNumber from '@/components/yComponent/yNumber'
+import YRadio from '@/components/yComponent/yRadio'
+import YTextarea from '@/components/yComponent/yTextarea'
+import YText from '@/components/yComponent/yText'
+import YSlider from '@/components/yComponent/ySlider'
+import YUpload from '@/components/yComponent/yUpload'
+import YSwitch from '@/components/yComponent/ySwitch'
 
-Vue.component('dragRadio', dragRadio)
-Vue.component('dragInput', dragInput)
-Vue.component('dragSelect', dragSelect)
-Vue.component('dragCheckbox', dragCheckbox)
-Vue.component('dragDatepicker', dragDatepicker)
-Vue.component('dragNumber', dragNumber)
-Vue.component('dragTextarea', dragTextarea)
+Vue.component('YRadio', YRadio)
+Vue.component('YInput', YInput)
+Vue.component('YSelect', YSelect)
+Vue.component('YSelectInput', YSelectInput)
+Vue.component('YCheckbox', YCheckbox)
+Vue.component('YDatepicker', YDatepicker)
+Vue.component('YNumber', YNumber)
+Vue.component('YTextarea', YTextarea)
+Vue.component('YText', YText)
+Vue.component('YSlider', YSlider)
+Vue.component('YUpload', YUpload)
+Vue.component('YSwitch', YSwitch)
 
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
@@ -53,10 +61,12 @@ Vue.component('dragTextarea', dragTextarea)
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+import global from '@/utils/global'
 
 new Vue({
   el: '#app',
   router,
   store,
+  global,
   render: h => h(App)
 })

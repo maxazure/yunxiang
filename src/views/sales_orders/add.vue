@@ -10,49 +10,49 @@
 
       >
         <el-row>
-          
+
           <el-col :span="12">
             <el-form-item label='会员编号:' prop='member_id'>
-              <component  is='dragInput'  v-model='sales_orderForm.member_id'
+              <component  is='YInput'  v-model='sales_orderForm.member_id'
                />
             </el-form-item>
           </el-col>
-          
+
           <el-col :span="12">
             <el-form-item label='实付金额:' prop='price'>
-              <component  is='dragInput'  v-model='sales_orderForm.price'
+              <component  is='YInput'  v-model='sales_orderForm.price'
                />
             </el-form-item>
           </el-col>
-          
+
           <el-col :span="12">
             <el-form-item label='零售价:' prop='retail_price'>
-              <component  is='dragInput'  v-model='sales_orderForm.retail_price'
+              <component  is='YInput'  v-model='sales_orderForm.retail_price'
                />
             </el-form-item>
           </el-col>
-          
+
           <el-col :span="12">
             <el-form-item label='支付凭证:' prop='payment_code'>
-              <component  is='dragInput'  v-model='sales_orderForm.payment_code'
+              <component  is='YInput'  v-model='sales_orderForm.payment_code'
                />
             </el-form-item>
           </el-col>
-          
+
           <el-col :span="12">
             <el-form-item label='关联库存编号:' prop='inventory_id'>
-              <component  is='dragSelect'  v-model='sales_orderForm.inventory_id'
+              <component  is='YSelect'  v-model='sales_orderForm.inventory_id'
               :options="inventory_idOptions"  />
             </el-form-item>
           </el-col>
-          
+
           <el-col :span="12">
             <el-form-item label='优惠金额:' prop='discounted_price'>
-              <component  is='dragInput'  v-model='sales_orderForm.discounted_price'
+              <component  is='YInput'  v-model='sales_orderForm.discounted_price'
                />
             </el-form-item>
           </el-col>
-          
+
         <el-col :span="24">
         <el-form-item>
           <el-button @click="submit('sales_orderForm')">提交</el-button>
@@ -76,15 +76,15 @@ export default {
     return {
       sales_orderForm: {  },
     //  apiList
-  
-     
-     
-     
-     
-    
+
+
+
+
+
+
   inventory_idOptions:[],
-   
-     
+
+
 
       rules: {member_id:[
         {required:true,
@@ -121,15 +121,15 @@ export default {
   },
   created() {
     //    getApiList
-  
-     
-     
-     
-     
-    
+
+
+
+
+
+
     this.getinventory_idList()
-     
-     
+
+
 
   },
   mounted() {},

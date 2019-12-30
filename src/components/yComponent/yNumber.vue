@@ -1,19 +1,20 @@
 <template>
-  <el-date-picker
+  <el-input-number
     v-model="result"
-    type="date"
-    placeholder="选择日期"
-    @change="change"
+    controls-position="right"
+    :min="1"
+    :max="100"
+    @change="handleChange"
   />
 </template>
 <script>
 export default {
-  props: { value: Date },
+  props: { value: Number },
   data() {
     return { result: this.value }
   },
   methods: {
-    change() {
+    handleChange() {
       this.$emit('input', this.result)
     }
   }
@@ -21,6 +22,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .drag-datepicker {
+  .ynumber {
   }
 </style>

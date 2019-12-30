@@ -302,3 +302,12 @@ method:{
 * * 删除scoped；
 * * 使用类选择器+elment组件名（自定义类名无效），
 * elment时间选择器：只选择年份  value-format="yyyy" format="yyyy"
+## 2019/12/30
+### 任务
+* 调整产品资料模块
+* 调整收银台模块
+* 修改组件命名规范
+* 款号自动生成
+### 总结
+* element 下拉框可编辑  filterable  +  @blur（tab键无效）
+* 添加属性$set(obj,name,value)

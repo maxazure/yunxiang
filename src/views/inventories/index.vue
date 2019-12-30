@@ -3,19 +3,19 @@
     <el-button @click='add'>新库存 </el-button>
     <y-table :tableData='tableData' :pagination='pagination' @changePage4List='getList'>
       <template>
-        
+
         <el-table-column prop='sn' label='sn（sku）'  ></el-table-column>
-        
+
         <el-table-column prop='num' label='数量'  ></el-table-column>
-        
+
         <el-table-column prop='color_id' label='颜色编号'  ></el-table-column>
-        
+
         <el-table-column prop='product_id' label='产品编号'  ></el-table-column>
-        
+
         <el-table-column prop='size' label='尺码'  ></el-table-column>
-        
+
         <el-table-column prop='retail_price' label='零售价'  ></el-table-column>
-        
+
         <el-table-column label='操作' width='100px'>
           <template slot-scope='{row}'>
             <el-button type='text' size='small' @click='edit(row.id)'>修改</el-button>
@@ -51,7 +51,7 @@
           pagesize: this.pagination.pageSize
         });
         this.tableData = response.data.list;
-        this.pagination.total = response.data.pagination.total;
+        this.pagination.total = parseInt(response.data.pagination.total);
       },
 
       add() {

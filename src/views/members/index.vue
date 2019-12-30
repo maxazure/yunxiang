@@ -91,7 +91,7 @@ export default {
         pagesize: this.pagination.pageSize
       })
       this.tableData = response.data.list
-      this.pagination.total = response.data.pagination.total
+      this.pagination.total = parseInt(response.data.pagination.total)
     },
 
     add() {

@@ -19,24 +19,11 @@
 <script>
 import yForm from '@/components/yForm'
 
-import dragInput from '@/components/drag-component/drag-input'
-import dragSelect from '@/components/drag-component/drag-select'
-import dragCheckbox from '@/components/drag-component/drag-checkbox'
-import dragDatepicker from '@/components/drag-component/drag-datepicker'
-import dragNumber from '@/components/drag-component/drag-number'
-import dragRadio from '@/components/drag-component/drag-radio'
-import dragTextarea from '@/components/drag-component/drag-textarea'
 import request from '../../utils/request'
 
 export default {
   components: {
-    yForm, dragInput,
-    dragSelect,
-    dragCheckbox,
-    dragDatepicker,
-    dragNumber,
-    dragRadio,
-    dragTextarea
+    yForm
   },
   data() {
     return {
@@ -47,7 +34,7 @@ export default {
         'field_type': 'string',
         'api': null,
         'sort': null,
-        'ctype': 'dragRadio'
+        'ctype': 'YRadio'
       }, {
         'id': 26,
         'name': 'email',
@@ -55,7 +42,7 @@ export default {
         'field_type': 'string',
         'api': null,
         'sort': null,
-        'ctype': 'dragCheckbox'
+        'ctype': 'YCheckbox'
       }, {
         'id': 26,
         'name': 'email',
@@ -63,7 +50,7 @@ export default {
         'field_type': 'string',
         'api': null,
         'sort': null,
-        'ctype': 'dragDatepicker'
+        'ctype': 'YDatepicker'
       }, {
         'id': 26,
         'name': 'email',
@@ -71,7 +58,7 @@ export default {
         'field_type': 'string',
         'api': null,
         'sort': null,
-        'ctype': 'dragNumber'
+        'ctype': 'YNumber'
       }, {
         'id': 26,
         'name': 'email',
@@ -79,7 +66,7 @@ export default {
         'field_type': 'string',
         'api': '/api/siteconfig/companies',
         'sort': null,
-        'ctype': 'dragSelect'
+        'ctype': 'YSelect'
       }
       ],
       rules: null,

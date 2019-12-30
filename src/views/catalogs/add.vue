@@ -10,28 +10,35 @@
 
       >
         <el-row>
-          
+
           <el-col :span="12">
             <el-form-item label='分类名称:' prop='name'>
-              <component  is='dragInput'  v-model='catalogForm.name'
+              <component  is='YInput'  v-model='catalogForm.name'
                />
             </el-form-item>
           </el-col>
-          
+
           <el-col :span="12">
             <el-form-item label='备注:' prop='remark'>
-              <component  is='dragInput'  v-model='catalogForm.remark'
+              <component  is='YInput'  v-model='catalogForm.remark'
                />
             </el-form-item>
           </el-col>
-          
+
           <el-col :span="12">
             <el-form-item label='上级ID:' prop='pid'>
-              <component  is='dragInput'  v-model='catalogForm.pid'
+              <component  is='YInput'  v-model='catalogForm.pid'
                />
             </el-form-item>
           </el-col>
-          
+
+          <el-col :span="12">
+            <el-form-item label='品类编码:' prop='catalog_id'>
+              <component  is='YInput'  v-model='catalogForm.catalog_id'
+               />
+            </el-form-item>
+          </el-col>
+
         <el-col :span="24">
         <el-form-item>
           <el-button @click="submit('catalogForm')">提交</el-button>
@@ -55,10 +62,11 @@ export default {
     return {
       catalogForm: {  },
     //  apiList
-  
-     
-     
-     
+
+
+
+
+
 
       rules: {name:[
         {required:true,
@@ -75,15 +83,21 @@ export default {
           message:'请输入上级ID',
           trigger:'blur'},
       ],
+      catalog_id:[
+        {required:true,
+          message:'请输入品类编码',
+          trigger:'blur'},
+      ],
       }
     };
   },
   created() {
     //    getApiList
-  
-     
-     
-     
+
+
+
+
+
 
   },
   mounted() {},
@@ -107,6 +121,8 @@ export default {
     },
 
 //    getApiList
+
+
 
 
 

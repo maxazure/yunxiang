@@ -9,45 +9,45 @@
         label-width='100px'
       >
         <el-row>
-          
+
           <el-col :span="12">
          <el-form-item label='sn（sku）:' prop='sn'>
-          <component  is='dragSelect'  v-model='inventoryForm.sn'
+          <component  is='YSelect'  v-model='inventoryForm.sn'
            :options="snOptions"  />
         </el-form-item>
           </el-col>
 
           <el-col :span="12">
          <el-form-item label='数量:' prop='num'>
-          <component  is='dragInput'  v-model='inventoryForm.num'
+          <component  is='YInput'  v-model='inventoryForm.num'
             />
         </el-form-item>
           </el-col>
 
           <el-col :span="12">
          <el-form-item label='颜色编号:' prop='color_id'>
-          <component  is='dragInput'  v-model='inventoryForm.color_id'
+          <component  is='YInput'  v-model='inventoryForm.color_id'
             />
         </el-form-item>
           </el-col>
 
           <el-col :span="12">
          <el-form-item label='产品编号:' prop='product_id'>
-          <component  is='dragInput'  v-model='inventoryForm.product_id'
+          <component  is='YInput'  v-model='inventoryForm.product_id'
             />
         </el-form-item>
           </el-col>
 
           <el-col :span="12">
          <el-form-item label='尺码:' prop='size'>
-          <component  is='dragInput'  v-model='inventoryForm.size'
+          <component  is='YInput'  v-model='inventoryForm.size'
             />
         </el-form-item>
           </el-col>
 
           <el-col :span="12">
          <el-form-item label='零售价:' prop='retail_price'>
-          <component  is='dragInput'  v-model='inventoryForm.retail_price'
+          <component  is='YInput'  v-model='inventoryForm.retail_price'
             />
         </el-form-item>
           </el-col>
@@ -76,15 +76,15 @@ export default {
     return {
     inventoryForm: {},
   //  apiList
-  
-    
+
+
   snOptions:[],
-   
-     
-     
-     
-     
-     
+
+
+
+
+
+
     //  rules
     rules: {sn:[
       {required:true,
@@ -122,15 +122,15 @@ export default {
   created() {
     this.get()
   //    getApiList
-  
-  
+
+
     this.getsnList()
-   
-   
-   
-   
-   
-   
+
+
+
+
+
+
 
   },
   mounted() {},
@@ -141,24 +141,24 @@ export default {
     },
 //    getApiList
 
-          
+
           async getsnList(){
                 const response = await request({url:'/api/siteconfig/sns',method:'get'})
                 response.data.map((option) => {
                   this.snOptions.push({ value: option.id, label: option.name })
                 })
           },
-          
 
-          
 
-          
 
-          
 
-          
 
-          
+
+
+
+
+
+
 
     async api() {
       this.$router.push({ path: '/inventories' });

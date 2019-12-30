@@ -54,7 +54,15 @@
               />
               <el-table-column
                 prop="date"
-                label="零售价"
+                label="年份"
+              />
+              <el-table-column
+                prop="date"
+                label="季节"
+              />
+              <el-table-column
+                prop="date"
+                label="吊牌价"
               />
               <el-table-column
                 prop="date"
@@ -62,7 +70,11 @@
               />
               <el-table-column
                 prop="date"
-                label="现价"
+                label="折率"
+              />
+              <el-table-column
+                prop="date"
+                label="零售价"
               />
             </el-table>
           </el-card>

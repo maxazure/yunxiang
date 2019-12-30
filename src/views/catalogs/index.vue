@@ -3,13 +3,15 @@
     <el-button @click='add'>新品类 </el-button>
     <y-table :tableData='tableData' :pagination='pagination' @changePage4List='getList'>
       <template>
-        
-        <el-table-column prop='name' label='分类名称'  ></el-table-column>
-        
+        <el-table-column prop='catalog_id' label='品类编码'  ></el-table-column>
+
+        <el-table-column prop='name' label='品类名称'  ></el-table-column>
+
         <el-table-column prop='remark' label='备注'  ></el-table-column>
-        
+
         <el-table-column prop='pid' label='上级ID'  ></el-table-column>
-        
+
+
         <el-table-column label='操作' width='100px'>
           <template slot-scope='{row}'>
             <el-button type='text' size='small' @click='edit(row.id)'>修改</el-button>
@@ -45,7 +47,7 @@
           pagesize: this.pagination.pageSize
         });
         this.tableData = response.data.list;
-        this.pagination.total = response.data.pagination.total;
+        this.pagination.total =parseInt(response.data.pagination.total);
       },
 
       add() {

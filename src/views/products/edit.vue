@@ -9,56 +9,96 @@
         label-width="100px"
       >
         <el-row>
+
+          <el-col :span="8">
+            <el-form-item label="品牌:" prop="brand">
+              <component
+                is="YSelect"
+                v-model="productForm.brand"
+              />
+            </el-form-item>
+          </el-col>  <el-col :span="8">
+            <el-form-item label="商品性别:" prop="product_gender">
+              <component is="YSelect" v-model="productForm.product_gender" :options="product_gender_options" />
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="8">
+            <el-form-item label="品类:" prop="catalog_id">
+              <component
+                is="YSelect"
+                v-model="productForm.catalog_id"
+                :options="catalog_idOptions"
+                :filterable="true"
+              />
+            </el-form-item>
+          </el-col>
+
           <el-col :span="12">
             <el-form-item label="商品名称:" prop="product_name">
               <component
-                is="dragInput"
+                is="YInput"
                 v-model="productForm.product_name"
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="品牌:" prop="brand">
+            <el-form-item label="款号:" prop="shortno">
               <component
-                is="dragInput"
-                v-model="productForm.brand"
+                is="YInput"
+                v-model="productForm.shortno"
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="商品性别:" prop="product_gender">
-              <component is="dragRadio" v-model="productForm.product_gender" :options="product_gender_options" />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="品类编号:" prop="category_id">
+            <el-form-item label="采购模式:" prop="purcash_model">
               <component
-                is="dragSelect"
-                v-model="productForm.category_id"
-                :options="category_idOptions"
+                is="YSelect"
+                v-model="productForm.purcash_model"
+                :options="product_purcash_model_options"
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="商品年份:" prop="goods_year">
+            <el-form-item label="原条码:" prop="barcode">
               <component
-                is="el-date-picker"
-                v-model="productForm.goods_year"
-                type="year"
-                format="yyyy"
-                value-format="yyyy"
+                is="YInput"
+                v-model="productForm.barcode"
               />
             </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="商品年份:" prop="goods_year">
+                  <component
+                    is="el-date-picker"
+                    v-model="productForm.goods_year"
+                    type="year"
+                    format="yyyy"
+                    value-format="yyyy"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="经典常年:" prop="perennial">
+                  <component
+                    is="YSwitch"
+                    v-model="productForm.perennial"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label="商品季:" prop="goods_season">
               <component
-                is="dragCheckbox"
+                is="YSelect"
                 v-model="productForm.goods_season"
                 :options="product_season_options"
               />
@@ -68,53 +108,8 @@
           <el-col :span="12">
             <el-form-item label="面料:" prop="fabric">
               <component
-                is="dragInput"
+                is="YSelectInput"
                 v-model="productForm.fabric"
-              />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="款式细节:" prop="detail">
-              <component
-                is="dragInput"
-                v-model="productForm.detail"
-              />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="造型特点:" prop="characteristic">
-              <component
-                is="dragInput"
-                v-model="productForm.characteristic"
-              />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="版型:" prop="edition_type">
-              <component
-                is="dragInput"
-                v-model="productForm.edition_type"
-              />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="原款号:" prop="barcode">
-              <component
-                is="dragInput"
-                v-model="productForm.barcode"
-              />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="款式编号:" prop="shortno">
-              <component
-                is="dragInput"
-                v-model="productForm.shortno"
               />
             </el-form-item>
           </el-col>
@@ -133,64 +128,79 @@
 
 <script>
 import { getProduct, putProduct } from '@/api/product'
-import global from '../../utils/global'
+
 import request from '../../utils/request'
+import global from '../../utils/global'
 
 export default {
-  components: { },
+  components: {
+  },
   data() {
     return {
       productForm: {},
       //  apiList
 
-      category_idOptions: [],
+      catalog_idOptions: [],
 
       //  rules
-      rules: {
-        product_name: [
-          {
-            required: true,
-            message: '请输入商品名称',
-            trigger: 'blur'
-          }
-        ],
-        brand: [],
-        product_gender: [],
-        category_id: [
-          {
-            required: true,
-            message: '请输入品类编号',
-            trigger: 'blur'
-          }
-        ],
-        goods_year: [],
-        goods_season: [],
-        fabric: [],
-        detail: [],
-        characteristic: [],
-        edition_type: [],
-        barcode: [],
-        shortno: [
-          {
-            required: true,
-            message: '请输入款式编号',
-            trigger: 'blur'
-          }
-        ]
+      rules: { product_name: [
+        { required: true,
+          message: '请输入商品名称',
+          trigger: 'blur' }
+      ],
+      brand: [
+      ],
+      product_gender: [
+      ],
+      catalog_id: [
+        { required: true,
+          message: '请输入品类',
+          trigger: 'blur' }
+      ],
+      goods_year: [
+      ],
+      goods_season: [
+      ],
+      fabric: [
+      ],
+      detail: [
+      ],
+      characteristic: [
+      ],
+      edition_type: [
+      ],
+      barcode: [
+      ],
+      shortno: [
+        { required: true,
+          message: '请输入款式编号',
+          trigger: 'blur' }
+      ],
+      purcash_model: [
+        { required: true,
+          message: '请输入采购模式',
+          trigger: 'blur' }
+      ],
+      perennial: [
+      ],
+      description: [
+        { required: true,
+          message: '请输入描述',
+          trigger: 'blur' }
+      ]
       },
-      product_gender_options: global.product.gender,
-      product_season_options: global.product.season
-
-    }
+      product_gender_options: global.product.product_gender,
+      product_season_options: global.product.goods_season,
+      product_purcash_model_options: global.product.purcash_model }
   },
   created() {
     this.get()
     //    getApiList
 
-    this.getcategory_idList()
+    this.getcatalog_idList()
   },
-  mounted() {
-  },
+  mounted() {},
+
   methods: {
     async get() {
       const response = await getProduct(this.$route.query.id)
@@ -198,10 +208,10 @@ export default {
     },
     //    getApiList
 
-    async getcategory_idList() {
+    async getcatalog_idList() {
       const response = await request({ url: '/api/siteconfig/catalogs', method: 'get' })
       response.data.map((option) => {
-        this.category_idOptions.push({ value: option.id, label: option.name })
+        this.catalog_idOptions.push({ value: option.id, label: option.name })
       })
     },
 
@@ -233,7 +243,6 @@ export default {
     background-color: #f0f2f5;
     padding: 30px;
     min-height: 100vh;
-
     .box-card {
     }
   }

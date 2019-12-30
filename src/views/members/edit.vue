@@ -12,56 +12,56 @@
 
           <el-col :span="12">
             <el-form-item label='姓名:' prop='name'>
-              <component  is='dragInput'  v-model='memberForm.name'
+              <component  is='YInput'  v-model='memberForm.name'
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label='英文名:' prop='enname'>
-              <component  is='dragInput'  v-model='memberForm.enname'
+              <component  is='YInput'  v-model='memberForm.enname'
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label='手机:' prop='mobile'>
-              <component  is='dragInput'  v-model='memberForm.mobile'
+              <component  is='YInput'  v-model='memberForm.mobile'
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label='性别:' prop='gender'>
-              <component  is='dragRadio'  v-model='memberForm.gender'
+              <component  is='YRadio'  v-model='memberForm.gender'
                           :options="genderOptions"  />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label='生日:' prop='birthday'>
-              <component  is='dragDatepicker'  v-model='memberForm.birthday'
+              <component  is='YDatepicker'  v-model='memberForm.birthday'
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label='会员卡号:' prop='vipid'>
-              <component  is='dragInput'  v-model='memberForm.vipid'
+              <component  is='YInput'  v-model='memberForm.vipid'
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label='微信号:' prop='wechatid'>
-              <component  is='dragInput'  v-model='memberForm.wechatid'
+              <component  is='YInput'  v-model='memberForm.wechatid'
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label='地址:' prop='address'>
-              <component  is='dragInput'  v-model='memberForm.address'
+              <component  is='YInput'  v-model='memberForm.address'
               />
             </el-form-item>
           </el-col>

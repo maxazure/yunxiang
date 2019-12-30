@@ -110,7 +110,7 @@ export function param2Obj(url) {
 
 export function dataPrepared(data) {
 }
-
+// 弃用
 export function changeGender(data) {
   if (data.data.list && data.data.list[0].gender) {
     data.data.list.map((x) => {
@@ -146,4 +146,14 @@ export function numberToString(obj) {
     })
     console.log('numberToString', obj)
   }
+}
+
+// 返回汉字拼音大写首字母
+export function chineseToTitleCase(str) {
+  const pinyin = require('tiny-pinyin')
+  let result = ''
+  for (let i = 0; i < str.length; i++) {
+    result = result + pinyin.convertToPinyin(str[i])[0]
+  }
+  return result
 }
