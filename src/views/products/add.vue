@@ -9,7 +9,6 @@
         label-width="100px"
       >
         <el-row>
-
           <el-col :span="8">
             <el-form-item label="品牌:" prop="brand">
               <component
@@ -17,9 +16,10 @@
                 v-model="productForm.brand"
               />
             </el-form-item>
-          </el-col>  <el-col :span="8">
+          </el-col>
+          <el-col :span="8">
             <el-form-item label="商品性别:" prop="product_gender">
-              <component is="YSelect" v-model="productForm.product_gender" :options="product_gender_options" />
+              <component is="YSelect" v-model="productForm.product_gender" :options="product_genderOptions" />
             </el-form-item>
           </el-col>
 
@@ -57,13 +57,13 @@
               <component
                 is="YSelect"
                 v-model="productForm.purcash_model"
-                :options="product_purcash_model_options"
+                :options="product_purcash_modelOptions"
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="原条码:" prop="barcode">
+            <el-form-item label="原款号:" prop="barcode">
               <component
                 is="YInput"
                 v-model="productForm.barcode"
@@ -81,6 +81,7 @@
                     type="year"
                     format="yyyy"
                     value-format="yyyy"
+                    :disabled="goodsYearDisable"
                   />
                 </el-form-item>
               </el-col>
@@ -89,6 +90,7 @@
                   <component
                     is="YSwitch"
                     v-model="productForm.perennial"
+                    @input="changePerennial"
                   />
                 </el-form-item>
               </el-col>
@@ -100,7 +102,7 @@
               <component
                 is="YSelect"
                 v-model="productForm.goods_season"
-                :options="product_season_options"
+                :options="product_seasonOptions"
               />
             </el-form-item>
           </el-col>
@@ -142,13 +144,7 @@ export default {
       catalog_idOptions: [],
 
       rules: {
-        product_name: [
-          {
-            required: true,
-            message: '请输入商品名称',
-            trigger: 'blur'
-          }
-        ],
+        product_name: [],
         brand: [],
         product_gender: [],
         catalog_id: [
@@ -165,18 +161,13 @@ export default {
         characteristic: [],
         edition_type: [],
         barcode: [],
-        shortno: [
-          {
-            required: true,
-            message: '请输入款式编号',
-            trigger: 'blur'
-          }
-        ]
+        shortno: []
 
       },
-      product_gender_options: global.product.product_gender,
-      product_season_options: global.product.goods_season,
-      product_purcash_model_options: global.product.purcash_model
+      product_genderOptions: global.product.product_gender,
+      product_seasonOptions: global.product.goods_season,
+      product_purcash_modelOptions: global.product.purcash_model,
+      goodsYearDisable: false
     }
   },
   computed: {
@@ -184,11 +175,10 @@ export default {
       get() {
         const brand = this.productForm.brand ? chineseToTitleCase(this.productForm.brand) : ''
         const gender = this.productForm.product_gender ? this.productForm.product_gender : ''
-        const catalog = this.productForm.catalog_id ? this.prefixInteger(this.productForm.catalog_id, 2) : ''
-        // todo   1. 默认值  2. getLabelById 3. 自动完成校验不通过
         const no = '000'
-        const result =
-          `${brand}${gender}${catalog}${no}`
+        const catalog = this.productForm.catalog_id ? this.prefixInteger(this.productForm.catalog_id, 2) + no : ''
+        const result = `${brand}${gender}${catalog}`
+        this.$set(this.productForm, 'shortno', result)
         return result
       },
       set(val) {
@@ -197,10 +187,22 @@ export default {
     },
     sugProductName: {
       get() {
+        // todo set brand select
         const brand = this.productForm.brand ? this.productForm.brand : ''
-        const gender = this.productForm.product_gender ? this.product_gender_options[this.productForm.product_gender].label : ''
-        const catalog = this.productForm.catalog_id ? this.catalog_idOptions[this.productForm.catalog_id].label : ''
-        const result = `${brand}${gender}款${catalog}`
+        let gender = ''
+        if (this.productForm.product_gender) {
+          gender = this.product_genderOptions.find(item =>
+            item.value === this.productForm.product_gender
+          ).label + '款'
+        }
+        let catalog = ''
+        if (this.productForm.catalog_id) {
+          catalog = this.catalog_idOptions.find(item =>
+            item.value === this.productForm.catalog_id
+          ).label
+        }
+        const result = `${brand}${gender}${catalog}`
+        this.$set(this.productForm, 'product_name', result)
         return result
       },
       set(val) {
@@ -217,8 +219,10 @@ export default {
   },
   methods: {
     async api() {
-      this.$router.push({ path: '/products' })
       const res = await addProduct(this.productForm)
+      if (res.code === '200') {
+        this.$router.push({ path: '/infoManagement/products' })
+      }
     },
     async submit(productForm) {
       this.$refs.yForm.validate(valid => {
@@ -243,11 +247,20 @@ export default {
     },
 
     back() {
-      this.$router.push({ path: '/products' })
+      this.$router.push({ path: '/infoManagement/products' })
     },
-    // 数字前补全0
+    /**
+       * num前补全0
+       * @param num
+       * @param length
+       * @returns {string}
+       */
     prefixInteger(num, length) {
       return (Array(length).join('0') + num).slice(-length)
+    },
+    changePerennial(val) {
+      this.goodsYearDisable = val
+      this.productForm.goods_year = null
     }
   }
 }

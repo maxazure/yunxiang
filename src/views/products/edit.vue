@@ -9,7 +9,6 @@
         label-width="100px"
       >
         <el-row>
-
           <el-col :span="8">
             <el-form-item label="品牌:" prop="brand">
               <component
@@ -17,9 +16,10 @@
                 v-model="productForm.brand"
               />
             </el-form-item>
-          </el-col>  <el-col :span="8">
+          </el-col>
+          <el-col :span="8">
             <el-form-item label="商品性别:" prop="product_gender">
-              <component is="YSelect" v-model="productForm.product_gender" :options="product_gender_options" />
+              <component is="YSelect" v-model="productForm.product_gender" :options="product_genderOptions" />
             </el-form-item>
           </el-col>
 
@@ -38,7 +38,7 @@
             <el-form-item label="商品名称:" prop="product_name">
               <component
                 is="YInput"
-                v-model="productForm.product_name"
+                v-model="sugProductName"
               />
             </el-form-item>
           </el-col>
@@ -47,7 +47,7 @@
             <el-form-item label="款号:" prop="shortno">
               <component
                 is="YInput"
-                v-model="productForm.shortno"
+                v-model="sugShortno"
               />
             </el-form-item>
           </el-col>
@@ -57,7 +57,7 @@
               <component
                 is="YSelect"
                 v-model="productForm.purcash_model"
-                :options="product_purcash_model_options"
+                :options="product_purcash_modelOptions"
               />
             </el-form-item>
           </el-col>
@@ -81,6 +81,7 @@
                     type="year"
                     format="yyyy"
                     value-format="yyyy"
+                    :disabled="goodsYearDisable"
                   />
                 </el-form-item>
               </el-col>
@@ -89,6 +90,7 @@
                   <component
                     is="YSwitch"
                     v-model="productForm.perennial"
+                    @input="changePerennial"
                   />
                 </el-form-item>
               </el-col>
@@ -100,7 +102,7 @@
               <component
                 is="YSelect"
                 v-model="productForm.goods_season"
-                :options="product_season_options"
+                :options="product_seasonOptions"
               />
             </el-form-item>
           </el-col>
@@ -133,8 +135,7 @@ import request from '../../utils/request'
 import global from '../../utils/global'
 
 export default {
-  components: {
-  },
+  components: {},
   data() {
     return {
       productForm: {},
@@ -143,55 +144,46 @@ export default {
       catalog_idOptions: [],
 
       //  rules
-      rules: { product_name: [
-        { required: true,
-          message: '请输入商品名称',
-          trigger: 'blur' }
-      ],
-      brand: [
-      ],
-      product_gender: [
-      ],
-      catalog_id: [
-        { required: true,
-          message: '请输入品类',
-          trigger: 'blur' }
-      ],
-      goods_year: [
-      ],
-      goods_season: [
-      ],
-      fabric: [
-      ],
-      detail: [
-      ],
-      characteristic: [
-      ],
-      edition_type: [
-      ],
-      barcode: [
-      ],
-      shortno: [
-        { required: true,
-          message: '请输入款式编号',
-          trigger: 'blur' }
-      ],
-      purcash_model: [
-        { required: true,
-          message: '请输入采购模式',
-          trigger: 'blur' }
-      ],
-      perennial: [
-      ],
-      description: [
-        { required: true,
-          message: '请输入描述',
-          trigger: 'blur' }
-      ]
+      rules: {
+        product_name: [],
+        brand: [],
+        product_gender: [],
+        catalog_id: [
+          {
+            required: true,
+            message: '请输入品类',
+            trigger: 'blur'
+          }
+        ],
+        goods_year: [],
+        goods_season: [],
+        fabric: [],
+        detail: [],
+        characteristic: [],
+        edition_type: [],
+        barcode: [],
+        shortno: [],
+        purcash_model: [
+          {
+            required: true,
+            message: '请输入采购模式',
+            trigger: 'blur'
+          }
+        ],
+        perennial: [],
+        description: [
+          {
+            required: true,
+            message: '请输入描述',
+            trigger: 'blur'
+          }
+        ]
       },
-      product_gender_options: global.product.product_gender,
-      product_season_options: global.product.goods_season,
-      product_purcash_model_options: global.product.purcash_model }
+      product_genderOtions: global.product.product_gender,
+      product_seasonOtions: global.product.goods_season,
+      product_purcash_modelOtions: global.product.purcash_model,
+      goodsYearDisable: false
+    }
   },
   created() {
     this.get()
@@ -199,7 +191,8 @@ export default {
 
     this.getcatalog_idList()
   },
-  mounted() {},
+  mounted() {
+  },
 
   methods: {
     async get() {
@@ -216,8 +209,8 @@ export default {
     },
 
     async api() {
-      this.$router.push({ path: '/products' })
       const res = await putProduct(this.productForm.id, this.productForm)
+      this.$router.push({ path: '/infoManagement/products' })
     },
     async submit(productForm) {
       this.$refs.yForm.validate(valid => {
@@ -233,7 +226,11 @@ export default {
       })
     },
     back() {
-      this.$router.push({ path: '/products' })
+      this.$router.push({ path: '/infoManagement/products' })
+    },
+    changePerennial(val) {
+      this.goodsYearDisable = val
+      this.productForm.goods_year = null
     }
   }
 }
@@ -243,6 +240,7 @@ export default {
     background-color: #f0f2f5;
     padding: 30px;
     min-height: 100vh;
+
     .box-card {
     }
   }

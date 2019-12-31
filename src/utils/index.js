@@ -110,7 +110,12 @@ export function param2Obj(url) {
 
 export function dataPrepared(data) {
 }
-// 弃用
+
+/**
+ * 01与男女的转换
+ * 弃用
+ * @param data
+ */
 export function changeGender(data) {
   if (data.data.list && data.data.list[0].gender) {
     data.data.list.map((x) => {
@@ -133,7 +138,10 @@ export function changeGender(data) {
   }
 }
 
-// 类型转换,将对象中属性值为数字类型转化为字符串
+/**
+ * 类型转换,将对象中属性值为数字类型转化为字符串
+ * @param obj
+ */
 export function numberToString(obj) {
   if (obj) {
     Object.keys(obj).forEach((item) => {
@@ -148,7 +156,11 @@ export function numberToString(obj) {
   }
 }
 
-// 返回汉字拼音大写首字母
+/**
+ * 返回汉字拼音大写首字母
+ * @param str
+ * @returns {string}
+ */
 export function chineseToTitleCase(str) {
   const pinyin = require('tiny-pinyin')
   let result = ''

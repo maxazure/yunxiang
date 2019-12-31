@@ -3,14 +3,14 @@
     <el-button @click='add'>新品类 </el-button>
     <y-table :tableData='tableData' :pagination='pagination' @changePage4List='getList'>
       <template>
-        <el-table-column prop='catalog_id' label='品类编码'  ></el-table-column>
 
-        <el-table-column prop='name' label='品类名称'  ></el-table-column>
+        <el-table-column prop='name' label='品类'  ></el-table-column>
 
         <el-table-column prop='remark' label='备注'  ></el-table-column>
 
         <el-table-column prop='pid' label='上级ID'  ></el-table-column>
 
+        <el-table-column prop='catalog_id' label='品类编码'  ></el-table-column>
 
         <el-table-column label='操作' width='100px'>
           <template slot-scope='{row}'>
@@ -51,10 +51,10 @@
       },
 
       add() {
-        this.$router.push({ path: 'add' });
+        this.$router.push({ path: 'catalogs/add' });
       },
       edit(id) {
-        this.$router.push({ path: 'edit', query: { id: id } });
+        this.$router.push({ path: 'catalogs/edit', query: { id: id } });
       },
       del(id) {
         this.$confirm('是否删除?', '提示', {

@@ -76,26 +76,16 @@ export const constantRoutes = [
   },
 
   {
-    path: '/distribution',
+    path: '/infoManagement',
     component: Layout,
-    children: [{
-      path: 'index',
-      name: 'Distribution',
-      component: () => import('@/views/members/index'),
-      meta: { title: '导购分销', icon: 'tree' }
-    }]
+    meta: { title: '信息管理', icon: 'tab' },
+    children: [
+      ...catalogsRouter,
+      ...productsRouter
+    ]
   },
-
-  {
-    path: '/sitting',
-    component: Layout,
-    children: [{
-      path: 'index',
-      name: 'Sitting',
-      component: () => import('@/views/members/index'),
-      meta: { title: '设置', icon: 'tab' }
-    }]
-  },
+  sales_ordersRouter,
+  inventoriesRouter,
 
   {
     path: '/members',
@@ -121,10 +111,11 @@ export const constantRoutes = [
     }
     ]
   },
+
   {
     path: '/management',
     component: Layout,
-    meta: { title: '后台管理', icon: 'tab' },
+    meta: { title: '系统管理', icon: 'tab' },
     children: [{
       path: 'users',
       name: 'Users',
@@ -180,11 +171,19 @@ export const constantRoutes = [
       meta: { title: '添加' }
     }
     ]
+
   },
-  catalogsRouter,
-  productsRouter,
-  inventoriesRouter,
-  sales_ordersRouter,
+
+  {
+    path: '/sitting',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'Sitting',
+      component: () => import('@/views/members/index'),
+      meta: { title: '设置', icon: 'tab' }
+    }]
+  },
 
   // {
   //   path: '/form',

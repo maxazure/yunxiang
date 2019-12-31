@@ -311,3 +311,17 @@ method:{
 ### 总结
 * element 下拉框可编辑  filterable  +  @blur（tab键无效）
 * 添加属性$set(obj,name,value)
+## 2019/12/31
+### 任务
+* 修改自动生成款号/商品名称的bug
+* * 未生成就有默认值
+* * 自动生成的商品名称/款号无法通过表单校验
+* 勾选常年款后商品年份变为不可选
+### 总结
+* v-model默认利用名为 value 的 prop 和名为 input 的事件，可用model来修改
+```js
+ model: {
+    prop: 'checked',
+    event: 'change'
+  },
+```

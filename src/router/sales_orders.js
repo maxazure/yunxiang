@@ -9,7 +9,7 @@ const sales_ordersRouter = {
     path: 'index',
     name: 'sales_orders',
     component: () => import('@/views/sales_orders'),
-    meta: { title: '销售订单管理', icon: 'tree' }
+    meta: { title: '销售订单', icon: 'tree' }
   }, {
     path: 'edit',
     component: () => import('@/views/sales_orders/edit'),

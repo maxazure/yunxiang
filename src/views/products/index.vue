@@ -65,10 +65,10 @@
       },
 
       add() {
-        this.$router.push({ path: 'add' });
+        this.$router.push({ path: 'products/add' });
       },
       edit(id) {
-        this.$router.push({ path: 'edit', query: { id: id } });
+        this.$router.push({ path: 'products/edit', query: { id: id } });
       },
       del(id) {
         this.$confirm('是否删除?', '提示', {
