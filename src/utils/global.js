@@ -11,7 +11,7 @@ const product = {
     { value: '1', label: '女' },
     { value: '2', label: '中性' },
     { value: '3', label: '其他' }],
-  goods_season: [
+  product_sesson: [
     { value: '0', label: '春' },
     { value: '1', label: '夏' },
     { value: '2', label: '秋' },
@@ -29,6 +29,7 @@ const product = {
     { value: '4', label: '其他' }
   ]
 }
+
 export default {
   fieldTypes,
   product

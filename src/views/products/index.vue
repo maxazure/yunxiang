@@ -12,9 +12,9 @@
 
         <el-table-column prop="catalog_id" label="品类编码" />
 
-        <el-table-column prop="goods_year" label="商品年份" />
+        <el-table-column prop="product_year" label="商品年份" />
 
-        <el-table-column prop="goods_season" label="商品季" />
+        <el-table-column prop="product_sesson" label="商品季" />
 
         <el-table-column prop="fabric_id" label="面料" />
 

@@ -74,10 +74,10 @@
           <el-col :span="12">
             <el-row>
               <el-col :span="12">
-                <el-form-item label="商品年份:" prop="goods_year">
+                <el-form-item label="商品年份:" prop="product_year">
                   <component
                     is="el-date-picker"
-                    v-model="productForm.goods_year"
+                    v-model="productForm.product_year"
                     type="year"
                     format="yyyy"
                     value-format="yyyy"
@@ -98,10 +98,10 @@
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="商品季:" prop="goods_season">
+            <el-form-item label="商品季:" prop="product_sesson">
               <component
                 is="YSelect"
-                v-model="productForm.goods_season"
+                v-model="productForm.product_sesson"
                 :options="product_seasonOptions"
               />
             </el-form-item>
@@ -162,8 +162,8 @@ export default {
             trigger: 'blur'
           }
         ],
-        goods_year: [],
-        goods_season: [],
+        product_year: [],
+        product_sesson: [],
         fabric: [],
         detail: [],
         characteristic: [],
@@ -174,7 +174,7 @@ export default {
 
       },
       product_genderOptions: global.product.product_gender,
-      product_seasonOptions: global.product.goods_season,
+      product_seasonOptions: global.product.product_sesson,
       product_purcash_modelOptions: global.product.purcash_model,
       goodsYearDisable: false
     }
@@ -269,7 +269,7 @@ export default {
     },
     changePerennial(val) {
       this.goodsYearDisable = val
-      this.productForm.goods_year = null
+      this.productForm.product_year = null
     }
   }
 }
