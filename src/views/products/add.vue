@@ -10,10 +10,10 @@
       >
         <el-row>
           <el-col :span="8">
-            <el-form-item label="品牌:" prop="brand">
+            <el-form-item label="品牌:" prop="brand_id">
               <component
                 is="YSelect"
-                v-model="productForm.brand"
+                v-model="productForm.brand_id"
               />
             </el-form-item>
           </el-col>
@@ -116,6 +116,14 @@
             </el-form-item>
           </el-col>
 
+          <el-col :span="12">
+            <el-form-item label="描述:" prop="description">
+              <component
+                is="YInput"
+                v-model="productForm.description"
+              />
+            </el-form-item>
+          </el-col>
           <el-col :span="24">
             <el-form-item>
               <el-button @click="submit('productForm')">提交</el-button>
@@ -145,7 +153,7 @@ export default {
 
       rules: {
         product_name: [],
-        brand: [],
+        brand_id: [],
         product_gender: [],
         catalog_id: [
           {
@@ -161,7 +169,8 @@ export default {
         characteristic: [],
         edition_type: [],
         barcode: [],
-        shortno: []
+        shortno: [],
+        description: []
 
       },
       product_genderOptions: global.product.product_gender,
@@ -173,7 +182,7 @@ export default {
   computed: {
     sugShortno: {
       get() {
-        const brand = this.productForm.brand ? chineseToTitleCase(this.productForm.brand) : ''
+        const brand = this.productForm.brand_id ? chineseToTitleCase(this.productForm.brand_id) : ''
         const gender = this.productForm.product_gender ? this.productForm.product_gender : ''
         const no = '000'
         const catalog = this.productForm.catalog_id ? this.prefixInteger(this.productForm.catalog_id, 2) + no : ''
@@ -188,7 +197,7 @@ export default {
     sugProductName: {
       get() {
         // todo set brand select
-        const brand = this.productForm.brand ? this.productForm.brand : ''
+        const brand = this.productForm.brand_id ? this.productForm.brand_id : ''
         let gender = ''
         if (this.productForm.product_gender) {
           gender = this.product_genderOptions.find(item =>

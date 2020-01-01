@@ -10,10 +10,10 @@
       >
         <el-row>
           <el-col :span="8">
-            <el-form-item label="品牌:" prop="brand">
+            <el-form-item label="品牌:" prop="brand_id">
               <component
                 is="YSelect"
-                v-model="productForm.brand"
+                v-model="productForm.brand_id"
               />
             </el-form-item>
           </el-col>
@@ -108,10 +108,19 @@
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="面料:" prop="fabric">
+            <el-form-item label="面料:" prop="fabric_id">
               <component
                 is="YSelectInput"
-                v-model="productForm.fabric"
+                v-model="productForm.fabric_id"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item label="描述:" prop="description">
+              <component
+                is="YInput"
+                v-model="productForm.description"
               />
             </el-form-item>
           </el-col>
@@ -146,7 +155,7 @@ export default {
       //  rules
       rules: {
         product_name: [],
-        brand: [],
+        brand_id: [],
         product_gender: [],
         catalog_id: [
           {
@@ -157,7 +166,7 @@ export default {
         ],
         goods_year: [],
         goods_season: [],
-        fabric: [],
+        fabric_id: [],
         detail: [],
         characteristic: [],
         edition_type: [],
@@ -171,13 +180,7 @@ export default {
           }
         ],
         perennial: [],
-        description: [
-          {
-            required: true,
-            message: '请输入描述',
-            trigger: 'blur'
-          }
-        ]
+        description: []
       },
       product_genderOtions: global.product.product_gender,
       product_seasonOtions: global.product.goods_season,
