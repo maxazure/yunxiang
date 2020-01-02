@@ -10,21 +10,21 @@
 
       >
         <el-row>
-          
+
           <el-col :span="12">
             <el-form-item label='颜色名称:' prop='name'>
               <component  is='YInput'  v-model='pcolorForm.name'
                />
             </el-form-item>
           </el-col>
-          
+
           <el-col :span="12">
             <el-form-item label='颜色代码:' prop='code'>
               <component  is='YInput'  v-model='pcolorForm.code'
                />
             </el-form-item>
           </el-col>
-          
+
         <el-col :span="24">
         <el-form-item>
           <el-button @click="submit('pcolorForm')">提交</el-button>
@@ -48,9 +48,9 @@ export default {
     return {
       pcolorForm: {  },
     //  apiList
-  
-     
-     
+
+
+
 
       rules: {name:[
         {required:true,
@@ -67,9 +67,9 @@ export default {
   },
   created() {
     //    getApiList
-  
-     
-     
+
+
+
 
   },
   mounted() {},
@@ -77,7 +77,7 @@ export default {
     async api() {
       const res = await addPcolor(this.pcolorForm);
       if (res.code === '200') {
-      this.$router.push({ path: '/pcolors' });
+      this.$router.push({ path: '/infoManagement/pcolors' });
       }
     },
     async submit(pcolorForm) {
@@ -104,7 +104,7 @@ export default {
 
 
 back() {
-      this.$router.push({ path: '/pcolors' });
+      this.$router.push({ path: '/infoManagement' });
     }
   }
 };

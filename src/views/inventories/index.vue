@@ -1,6 +1,6 @@
 <template>
   <div class='app-container'>
-    <el-button @click='add'>新库存 </el-button>
+    <el-button @click='add'>入库 </el-button>
     <y-table :tableData='tableData' :pagination='pagination' @changePage4List='getList'>
       <template>
 
@@ -55,7 +55,7 @@
       },
 
       add() {
-        this.$router.push({ path: 'add' });
+        this.$router.push({ path: '/warehouse' });
       },
       edit(id) {
         this.$router.push({ path: 'edit', query: { id: id } });

@@ -9,6 +9,9 @@ import catalogsRouter from '@/router/catalogs'
 import inventoriesRouter from '@/router/inventories'
 import productsRouter from '@/router/products'
 import sales_ordersRouter from '@/router/sales_orders'
+import colorsRouter from '@/router/pcolors'
+import sizesRouter from '@/router/psizes'
+import fabricsRouter from '@/router/pfabrics'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -76,16 +79,21 @@ export const constantRoutes = [
   },
 
   {
-    path: '/infoManagement',
+    path: '/warehouse',
+    name: 'warehouse',
     component: Layout,
-    meta: { title: '信息管理', icon: 'tab' },
+    redirect: '/warehouse/index',
+    hidden: true,
     children: [
-      ...catalogsRouter,
-      ...productsRouter
-    ]
+      {
+        path: 'index',
+        name: 'warehouse',
+        component: () => import('@/views/warehouse'),
+        meta: { title: '入库', icon: 'tree' }
+      }]
   },
-  sales_ordersRouter,
   inventoriesRouter,
+  sales_ordersRouter,
 
   {
     path: '/members',
@@ -111,7 +119,18 @@ export const constantRoutes = [
     }
     ]
   },
-
+  {
+    path: '/infoManagement',
+    component: Layout,
+    meta: { title: '信息管理', icon: 'tab' },
+    children: [
+      ...productsRouter,
+      ...catalogsRouter,
+      ...colorsRouter,
+      ...sizesRouter,
+      ...fabricsRouter
+    ]
+  },
   {
     path: '/management',
     component: Layout,

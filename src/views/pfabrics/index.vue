@@ -3,9 +3,9 @@
     <el-button @click='add'>新面料 </el-button>
     <y-table :tableData='tableData' :pagination='pagination' @changePage4List='getList'>
       <template>
-        
+
         <el-table-column prop='name' label='名称'  ></el-table-column>
-        
+
         <el-table-column label='操作' width='100px'>
           <template slot-scope='{row}'>
             <el-button type='text' size='small' @click='edit(row.id)'>修改</el-button>
@@ -45,10 +45,10 @@
       },
 
       add() {
-        this.$router.push({ path: 'add' });
+        this.$router.push({ path: 'pfabrics/add' });
       },
       edit(id) {
-        this.$router.push({ path: 'edit', query: { id: id } });
+        this.$router.push({ path: 'pfabrics/edit', query: { id: id } });
       },
       del(id) {
         this.$confirm('是否删除?', '提示', {

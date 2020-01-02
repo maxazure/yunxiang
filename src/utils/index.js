@@ -152,7 +152,6 @@ export function numberToString(obj) {
         numberToString(obj[item])
       }
     })
-    console.log('numberToString', obj)
   }
 }
 

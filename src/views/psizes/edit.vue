@@ -9,13 +9,13 @@
         label-width='100px'
       >
         <el-row>
-          
+
           <el-col :span="12">
          <el-form-item label='名称:' prop='name'>
           <component  is='YInput'  v-model='psizeForm.name'
-           
 
-           
+
+
            />
         </el-form-item>
           </el-col>
@@ -44,8 +44,8 @@ export default {
     return {
     psizeForm: {},
   //  apiList
-  
-     
+
+
     //  rules
     rules: {name:[
       {required:true,
@@ -58,8 +58,8 @@ export default {
   created() {
     this.get()
   //    getApiList
-  
-   
+
+
 
   },
   mounted() {},
@@ -70,13 +70,13 @@ export default {
     },
 //    getApiList
 
-          
+
 
 
     async api() {
       const res = await putPsize(this.psizeForm.id,this.psizeForm);
       if(res.code === '200') {
-      this.$router.push({ path: '/psizes' });
+      this.$router.push({ path: '/infoManagement/psizes' });
       }
     },
     async submit(psizeForm) {
@@ -93,7 +93,7 @@ export default {
       });
     },
     back() {
-      this.$router.push({ path: '/psizes' });
+      this.$router.push({ path: '/infoManagement' });
     }
   }
 };

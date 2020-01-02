@@ -9,13 +9,13 @@
         label-width='100px'
       >
         <el-row>
-          
+
           <el-col :span="12">
          <el-form-item label='颜色名称:' prop='name'>
           <component  is='YInput'  v-model='pcolorForm.name'
-           
 
-           
+
+
            />
         </el-form-item>
           </el-col>
@@ -23,9 +23,9 @@
           <el-col :span="12">
          <el-form-item label='颜色代码:' prop='code'>
           <component  is='YInput'  v-model='pcolorForm.code'
-           
 
-           
+
+
            />
         </el-form-item>
           </el-col>
@@ -54,9 +54,9 @@ export default {
     return {
     pcolorForm: {},
   //  apiList
-  
-     
-     
+
+
+
     //  rules
     rules: {name:[
       {required:true,
@@ -74,9 +74,9 @@ export default {
   created() {
     this.get()
   //    getApiList
-  
-   
-   
+
+
+
 
   },
   mounted() {},
@@ -87,15 +87,15 @@ export default {
     },
 //    getApiList
 
-          
 
-          
+
+
 
 
     async api() {
       const res = await putPcolor(this.pcolorForm.id,this.pcolorForm);
       if(res.code === '200') {
-      this.$router.push({ path: '/pcolors' });
+      this.$router.push({ path: '/infoManagement/pcolors' });
       }
     },
     async submit(pcolorForm) {
@@ -112,7 +112,7 @@ export default {
       });
     },
     back() {
-      this.$router.push({ path: '/pcolors' });
+      this.$router.push({ path: '/infoManagement' });
     }
   }
 };

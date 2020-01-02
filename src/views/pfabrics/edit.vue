@@ -9,13 +9,13 @@
         label-width='100px'
       >
         <el-row>
-          
+
           <el-col :span="12">
          <el-form-item label='名称:' prop='name'>
           <component  is='YInput'  v-model='pfabricForm.name'
-           
 
-           
+
+
            />
         </el-form-item>
           </el-col>
@@ -44,8 +44,8 @@ export default {
     return {
     pfabricForm: {},
   //  apiList
-  
-     
+
+
     //  rules
     rules: {name:[
       {required:true,
@@ -58,8 +58,8 @@ export default {
   created() {
     this.get()
   //    getApiList
-  
-   
+
+
 
   },
   mounted() {},
@@ -70,13 +70,13 @@ export default {
     },
 //    getApiList
 
-          
+
 
 
     async api() {
       const res = await putPfabric(this.pfabricForm.id,this.pfabricForm);
       if(res.code === '200') {
-      this.$router.push({ path: '/pfabrics' });
+      this.$router.push({ path: '/infoManagement/pfabrics' });
       }
     },
     async submit(pfabricForm) {

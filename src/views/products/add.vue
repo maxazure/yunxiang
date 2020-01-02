@@ -124,11 +124,13 @@
               />
             </el-form-item>
           </el-col>
-          <el-col :span="24">
-            <el-form-item>
-              <el-button @click="submit('productForm')">提交</el-button>
-              <el-button @click="back">返回</el-button>
-            </el-form-item>
+          <el-col>
+            <div class="float-right">
+                <el-form-item>
+                  <el-button @click="submit('productForm')">提交</el-button>
+                  <el-button v-if="!warehouse" @click="back">返回</el-button>
+                </el-form-item>
+            </div>
           </el-col>
         </el-row>
       </el-form>
@@ -144,6 +146,7 @@ import { chineseToTitleCase } from '../../utils'
 
 export default {
   components: {},
+  props: { warehouse: { type: Boolean, default: false }},
   data() {
     return {
       productForm: { purcash_model: '0' },
@@ -184,7 +187,7 @@ export default {
       get() {
         const brand = this.productForm.brand_id ? chineseToTitleCase(this.productForm.brand_id) : ''
         const gender = this.productForm.product_gender ? this.productForm.product_gender : ''
-        const no = '000'
+        const no = '00'
         const catalog = this.productForm.catalog_id ? this.prefixInteger(this.productForm.catalog_id, 2) + no : ''
         const result = `${brand}${gender}${catalog}`
         this.$set(this.productForm, 'shortno', result)
@@ -229,7 +232,9 @@ export default {
   methods: {
     async api() {
       const res = await addProduct(this.productForm)
-      if (res.code === '200') {
+      if (this.warehouse) {
+        this.$emit('success')
+      } else {
         this.$router.push({ path: '/infoManagement/products' })
       }
     },

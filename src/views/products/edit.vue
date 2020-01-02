@@ -38,7 +38,7 @@
             <el-form-item label="商品名称:" prop="product_name">
               <component
                 is="YInput"
-                v-model="sugProductName"
+                v-model="productForm.product_name"
               />
             </el-form-item>
           </el-col>
@@ -47,7 +47,7 @@
             <el-form-item label="款号:" prop="shortno">
               <component
                 is="YInput"
-                v-model="sugShortno"
+                v-model="productForm.shortno"
               />
             </el-form-item>
           </el-col>
@@ -126,10 +126,12 @@
           </el-col>
 
           <el-col :span="24">
-            <el-form-item>
-              <el-button @click="submit('productForm')">提交</el-button>
-              <el-button @click="back">返回</el-button>
-            </el-form-item>
+            <div class="float-right">
+              <el-form-item>
+                <el-button @click="submit('productForm')">提交</el-button>
+                <el-button v-if="!warehouseForm" @click="back">返回</el-button>
+              </el-form-item>
+            </div>
           </el-col>
         </el-row>
       </el-form>
@@ -144,7 +146,7 @@ import request from '../../utils/request'
 import global from '../../utils/global'
 
 export default {
-  components: {},
+  props: { warehouseForm: Object },
   data() {
     return {
       productForm: {},
@@ -182,16 +184,21 @@ export default {
         perennial: [],
         description: []
       },
-      product_genderOtions: global.product.product_gender,
-      product_seasonOtions: global.product.product_sesson,
-      product_purcash_modelOtions: global.product.purcash_model,
-      goodsYearDisable: false
+      product_genderOptions: global.product.product_gender,
+      product_seasonOptions: global.product.product_sesson,
+      product_purcash_modelOptions: global.product.purcash_model,
+      goodsYearDisable: false,
+      routeId: this.$route.query.id
     }
   },
   created() {
-    this.get()
+    if (this.routeId) {
+      this.get()
+    }
+    if (this.warehouseForm) {
+      this.productForm = this.warehouseForm
+    }
     //    getApiList
-
     this.getcatalog_idList()
   },
   mounted() {
@@ -199,7 +206,7 @@ export default {
 
   methods: {
     async get() {
-      const response = await getProduct(this.$route.query.id)
+      const response = await getProduct(this.routeId)
       this.productForm = response.data
     },
     //    getApiList
@@ -213,7 +220,11 @@ export default {
 
     async api() {
       const res = await putProduct(this.productForm.id, this.productForm)
-      this.$router.push({ path: '/infoManagement/products' })
+      if (!this.warehouseForm) {
+        this.$router.push({ path: '/infoManagement/products' })
+      } else {
+        this.$emit('success')
+      }
     },
     async submit(productForm) {
       this.$refs.yForm.validate(valid => {
