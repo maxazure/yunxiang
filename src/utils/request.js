@@ -3,7 +3,7 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import { Loading } from 'element-ui'
-import {numberToString} from "@/utils/index";
+import { numberToString } from '@/utils/index'
 
 let loading = null
 let loadTotal = 0
@@ -42,7 +42,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    console.log(config)
+    console.log('config',config)
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -54,7 +54,7 @@ service.interceptors.request.use(
   },
   error => {
     // do something with request error
-    console.log(error) // for debug
+    console.log('configErr',error) // for debug
     return Promise.reject(error)
   }
 )
@@ -72,10 +72,10 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    const res = response.data
-    console.log('response',res)
-    // if the custom code is not 20000, it is judged as an error.
     ajaxAfter()
+    const res = response.data
+    console.log('response', res)
+    // if the custom code is not 20000, it is judged as an error.
 
     if (res.code !== 200) {
       Message({
@@ -104,7 +104,8 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    ajaxAfter()
+    console.log('res' + error) // for debug
     Message({
       message: error.message,
       type: 'error',
