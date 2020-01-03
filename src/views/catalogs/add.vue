@@ -118,7 +118,7 @@ export default {
     async api() {
       const res = await addCatalog(this.catalogForm);
       if (res.code === '200') {
-      this.$router.push({ path: '/catalogs' });
+      this.$router.push({ path: '/infoManagement/catalogs' });
       }
     },
     async submit(catalogForm) {
