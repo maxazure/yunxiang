@@ -76,7 +76,7 @@ export default {
     async api() {
       const res = await putBrand(this.brandForm.id,this.brandForm);
       if(res.code === '200') {
-      this.$router.push({ path: '/brands' });
+      this.$router.push({ path: '/infoManagement/brands' });
       }
     },
     async submit(brandForm) {
