@@ -42,7 +42,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    console.log('config',config)
+    console.log('request ', config)
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -54,7 +54,7 @@ service.interceptors.request.use(
   },
   error => {
     // do something with request error
-    console.log('configErr',error) // for debug
+    console.log('configErr', error) // for debug
     return Promise.reject(error)
   }
 )

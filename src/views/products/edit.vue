@@ -14,6 +14,8 @@
               <component
                 is="YSelect"
                 v-model="productForm.brand_id"
+                :options="brand_idOptions"
+
               />
             </el-form-item>
           </el-col>
@@ -112,6 +114,8 @@
               <component
                 is="YSelectInput"
                 v-model="productForm.fabric_id"
+                :options="fabric_idOptions"
+
               />
             </el-form-item>
           </el-col>
@@ -143,7 +147,7 @@
 import { getProduct, putProduct } from '@/api/product'
 
 import request from '../../utils/request'
-import global from '../../utils/global'
+import { mapGetters } from 'vuex'
 
 export default {
   props: { warehouseForm: Object },
@@ -151,8 +155,9 @@ export default {
     return {
       productForm: {},
       //  apiList
-
       catalog_idOptions: [],
+      brand_idOptions: [],
+      fabric_idOptions: [],
 
       //  rules
       rules: {
@@ -174,24 +179,19 @@ export default {
         edition_type: [],
         barcode: [],
         shortno: [],
-        purcash_model: [
-          {
-            required: true,
-            message: '请输入采购模式',
-            trigger: 'blur'
-          }
-        ],
+        purcash_model: [],
         perennial: [],
         description: []
       },
-      product_genderOptions: global.product.product_gender,
-      product_seasonOptions: global.product.product_sesson,
-      product_purcash_modelOptions: global.product.purcash_model,
+      product_genderOptions: [],
+      product_seasonOptions: [],
+      product_purcash_modelOptions: [],
       goodsYearDisable: false,
       routeId: this.$route.query.id
     }
   },
   created() {
+    this.init()
     if (this.routeId) {
       this.get()
     }
@@ -200,24 +200,42 @@ export default {
     }
     //    getApiList
     this.getcatalog_idList()
+    this.getbrand_idList()
+    this.getfabric_idList()
+  },
+  computed: {
+    ...mapGetters([
+      'selectConst'
+    ])
   },
   mounted() {
   },
-
   methods: {
+    init() {
+      this.product_genderOptions = this.selectConst.product_gender
+      this.product_seasonOptions = this.selectConst.product_season
+      this.product_purcash_modelOptions = this.selectConst.purcash_model
+    },
     async get() {
       const response = await getProduct(this.routeId)
       this.productForm = response.data
     },
     //    getApiList
 
-    async getcatalog_idList() {
-      const response = await request({ url: '/api/siteconfig/catalogs', method: 'get' })
-      response.data.map((option) => {
-        this.catalog_idOptions.push({ value: option.id, label: option.name })
-      })
+    async getbrand_idList() {
+      const response = await request({ url: '/api/siteconfig/brands', method: 'get' })
+      this.brand_idOptions = response.data
     },
 
+    async getcatalog_idList() {
+      const response = await request({ url: '/api/siteconfig/catalogs', method: 'get' })
+      this.catalog_idOptions = response.data
+    },
+
+    async getfabric_idList() {
+      const response = await request({ url: '/api/siteconfig/pfabrics', method: 'get' })
+      this.fabric_idOptions = response.data
+    },
     async api() {
       const res = await putProduct(this.productForm.id, this.productForm)
       if (!this.warehouseForm) {
@@ -246,6 +264,7 @@ export default {
       this.goodsYearDisable = val
       this.productForm.product_year = null
     }
+
   }
 }
 </script>

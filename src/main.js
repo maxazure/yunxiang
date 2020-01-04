@@ -61,12 +61,10 @@ Vue.component('YSwitch', YSwitch)
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-import global from '@/utils/global'
 
 new Vue({
   el: '#app',
   router,
   store,
-  global,
   render: h => h(App)
 })

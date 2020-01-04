@@ -22,7 +22,6 @@
 
         <el-table-column prop="shortno" label="款式编码" />
 
-        <el-table-column prop="description" label="描述" />
 
         <el-table-column label="操作" width="100px">
           <template slot-scope="{row}">

@@ -9,10 +9,10 @@
                 <span>款号:</span>
                 <el-input v-model="product_id" size="small" placeholder="请输入款号" @change="getProduct" />
                 <div class="float-right"><el-button v-show="editable" type="primary" @click="addProductVisible = true">新增款号</el-button>
-                  <el-button v-show="!editable" type="primary" @click="editProductVisible = true" plain>编辑信息</el-button></div>
+                  <el-button v-show="!editable" type="primary" plain @click="editProductVisible = true">编辑信息</el-button></div>
                 <span>{{ shortnoTips }}</span>
               </div>
-              <el-row  style="padding: 10px 0 0 0" type="flex" align="center">
+              <el-row style="padding: 10px 0 0 0" type="flex" align="center">
                 <el-col>{{ productForm.product_name }}</el-col>
                 <el-col>{{ productForm.product_gender }}</el-col>
                 <el-col>{{ productForm.catalog_id }}</el-col>
@@ -119,7 +119,6 @@ import editProduct from '../../views/products/edit'
 import yTable from '../../components/yTable'
 import { getProduct } from '../../api/product'
 import { Message } from 'element-ui'
-import global from '../../utils/global'
 import request from '../../utils/request'
 
 export default {
@@ -128,6 +127,7 @@ export default {
   },
   data() {
     return {
+      test: '',
       productForm: {},
       showForm: 'addProduct',
       tableData: [],
@@ -136,9 +136,16 @@ export default {
         pageSize: 10
       },
       product_id: '',
-      product_seasonOptions: global.product.product_sesson,
-
-      test: '',
+      product_seasonOptions: [
+        { value: '0', label: '春' },
+        { value: '1', label: '夏' },
+        { value: '2', label: '秋' },
+        { value: '3', label: '冬' },
+        { value: '5', label: '四季' },
+        { value: '6', label: '春秋冬' },
+        { value: '7', label: '春秋' },
+        { value: '8', label: '其他' }
+      ],
       shortnoTips: '',
       editable: true,
       addProductVisible: false,

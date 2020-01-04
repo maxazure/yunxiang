@@ -152,9 +152,7 @@ export default {
 
           async getinventory_idList(){
                 const response = await request({url:'/api/siteconfig/inventories',method:'get'})
-                response.data.map((option) => {
-                  this.inventory_idOptions.push({ value: option.id, label: option.name })
-                })
+                  this.inventory_idOptions = response.data
           },
 
 

@@ -55,7 +55,7 @@
       },
 
       add() {
-        this.$router.push({ path: '/warehouse' });
+        this.$router.push({ path: 'add' });
       },
       edit(id) {
         this.$router.push({ path: 'edit', query: { id: id } });

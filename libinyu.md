@@ -335,5 +335,8 @@ method:{
 * await漏写导致未返回数据就执行后面的操作
 ## 2020/01/03
 ### 任务
-* 使用localstorge+vuex+store将常量存到本地
+* 使用localstorge+vuex+store将常量api持久化到本地
+* 修改入库页面
 * 实现多列的二级目录
+### 总结
+* vuex.state初始化？

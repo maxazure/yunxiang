@@ -54,7 +54,8 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-import {login} from'@/api/user'
+import { login } from '@/api/user'
+import store from '../../store'
 export default {
   name: 'Login',
   data() {
@@ -108,10 +109,13 @@ export default {
     async handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/login', this.loginForm).then(async() => {
             this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
+            // 登录成功后初始化下拉api常量
+            const hasSelectApi = this.$store.getters.selectApi
+            if (!hasSelectApi) {
+              await this.$store.dispatch('localStorage/setSelectConst')
+            }
           }).catch(() => {
             this.loading = false
           })

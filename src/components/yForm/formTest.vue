@@ -162,15 +162,11 @@ export default {
     },
     async selectCompanies() {
       const res = await selectCompanies();
-      res.data.forEach(item => {
-        this.companies.push({ value: item.id, label: item.name });
-      });
+        this.companies = res.data;
     },
     async selectRoles() {
       const res = await selectRoles();
-      res.data.forEach(item => {
-        this.roles.push({ value: item.id, label: item.name });
-      });
+        this.roles.push = res.data;
     },
     back() {
       this.$router.push({ path: "/management/users" });

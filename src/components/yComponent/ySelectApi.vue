@@ -22,7 +22,7 @@ export default {
   methods: {
     async get() {
       const res = await request({ url: this.url, method: 'get' })
-      this.options = res.data
+      this.options.push = res.data
     },
     handleChange() {
       this.$emit('input', this.value)

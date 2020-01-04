@@ -84,9 +84,7 @@ export default {
         if (item.api) {
           this.$set(item, 'options', [])
           const res = await request({ url: item.api, method: 'get' })
-          res.data.map((option) => {
-            item.options.push({ value: option.id, label: option.name })
-          })
+          item.options = res.data
         }
       })
     }

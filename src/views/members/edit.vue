@@ -157,9 +157,7 @@
 
       async getgenderList(){
         const response = await request({url:'/api/siteconfig/roles',method:'get'})
-        response.data.map((option) => {
-          this.genderOptions.push({ value: option.id, label: option.name })
-        })
+        this.genderOptions=response.data
       },
 
 

@@ -14,6 +14,7 @@
               <component
                 is="YSelect"
                 v-model="productForm.brand_id"
+                :options="brand_idOptions"
               />
             </el-form-item>
           </el-col>
@@ -25,12 +26,20 @@
 
           <el-col :span="8">
             <el-form-item label="品类:" prop="catalog_id">
-              <component
-                is="YSelect"
-                v-model="productForm.catalog_id"
-                :options="catalog_idOptions"
-                :filterable="true"
-              />
+              <!--              <component-->
+              <!--                is="YSelect"-->
+              <!--                v-model="productForm.catalog_id"-->
+              <!--                :options="catalog_idOptions"-->
+              <!--                :filterable="true"-->
+              <!--              />-->
+              <el-popover
+                placement="bottom"
+                width="900"
+                trigger="click"
+              >
+                <SelectCatalog />
+                <el-button slot="reference">选择品类</el-button>
+              </el-popover>
             </el-form-item>
           </el-col>
 
@@ -112,6 +121,7 @@
               <component
                 is="YSelectInput"
                 v-model="productForm.fabric"
+                :options="fabric_idOptions"
               />
             </el-form-item>
           </el-col>
@@ -126,10 +136,10 @@
           </el-col>
           <el-col>
             <div class="float-right">
-                <el-form-item>
-                  <el-button @click="submit('productForm')">提交</el-button>
-                  <el-button v-if="!warehouse" @click="back">返回</el-button>
-                </el-form-item>
+              <el-form-item>
+                <el-button @click="submit('productForm')">提交</el-button>
+                <el-button v-if="!warehouse" @click="back">返回</el-button>
+              </el-form-item>
             </div>
           </el-col>
         </el-row>
@@ -141,19 +151,23 @@
 <script>
 import { addProduct } from '@/api/product'
 import request from '../../utils/request'
-import global from '../../utils/global'
 import { chineseToTitleCase } from '../../utils'
-
+import { mapGetters } from 'vuex'
+import SelectCatalog from '../../components/selectCatalog'
 export default {
-  components: {},
+  components: { SelectCatalog },
   props: { warehouse: { type: Boolean, default: false }},
   data() {
     return {
       productForm: { purcash_model: '0' },
       //  apiList
-
       catalog_idOptions: [],
-
+      brand_idOptions: [],
+      fabric_idOptions: [],
+      goodsYearDisable: false,
+      product_genderOptions: [],
+      product_seasonOptions: [],
+      product_purcash_modelOptions: [],
       rules: {
         product_name: [],
         brand_id: [],
@@ -174,18 +188,24 @@ export default {
         barcode: [],
         shortno: [],
         description: []
-
-      },
-      product_genderOptions: global.product.product_gender,
-      product_seasonOptions: global.product.product_sesson,
-      product_purcash_modelOptions: global.product.purcash_model,
-      goodsYearDisable: false
+      }
     }
   },
   computed: {
+    ...mapGetters([
+      'selectConst'
+    ]),
+
     sugShortno: {
       get() {
-        const brand = this.productForm.brand_id ? chineseToTitleCase(this.productForm.brand_id) : ''
+        // const brand = this.productForm.brand_id ? chineseToTitleCase(this.productForm.brand_id) : ''
+        let brand = ''
+        if (this.productForm.brand_id) {
+          const brandLabel = this.brand_idOptions.find(item =>
+            item.value === this.productForm.brand_id
+          ).label
+          brand = chineseToTitleCase(brandLabel)
+        }
         const gender = this.productForm.product_gender ? this.productForm.product_gender : ''
         const no = '00'
         const catalog = this.productForm.catalog_id ? this.prefixInteger(this.productForm.catalog_id, 2) + no : ''
@@ -199,8 +219,13 @@ export default {
     },
     sugProductName: {
       get() {
-        // todo set brand select
-        const brand = this.productForm.brand_id ? this.productForm.brand_id : ''
+        let brand = ''
+        if (this.productForm.brand_id) {
+          brand = this.brand_idOptions.find(item =>
+            item.value === this.productForm.brand_id
+          ).label
+        }
+
         let gender = ''
         if (this.productForm.product_gender) {
           gender = this.product_genderOptions.find(item =>
@@ -224,12 +249,22 @@ export default {
   },
   watch: {},
   created() {
+    // todo remove catalog list
     //    getApiList
     this.getcatalog_idList()
+    this.getbrand_idList()
+    this.getfabric_idList()
+    this.init()
   },
   mounted() {
   },
   methods: {
+    init() {
+      this.product_genderOptions = this.selectConst.product_gender
+      this.product_seasonOptions = this.selectConst.product_season
+      this.product_purcash_modelOptions = this.selectConst.purcash_model
+    },
+
     async api() {
       const res = await addProduct(this.productForm)
       if (this.warehouse) {
@@ -252,12 +287,19 @@ export default {
       })
     },
 
-    //    getApiList
+    async getbrand_idList() {
+      const response = await request({ url: '/api/siteconfig/brands', method: 'get' })
+      this.brand_idOptions = response.data
+    },
+
     async getcatalog_idList() {
       const response = await request({ url: '/api/siteconfig/catalogs', method: 'get' })
-      response.data.map((option) => {
-        this.catalog_idOptions.push({ value: option.id, label: option.name })
-      })
+      this.catalog_idOptions = response.data
+    },
+
+    async getfabric_idList() {
+      const response = await request({ url: '/api/siteconfig/pfabrics', method: 'get' })
+      this.fabric_idOptions = response.data
     },
 
     back() {
@@ -276,6 +318,7 @@ export default {
       this.goodsYearDisable = val
       this.productForm.product_year = null
     }
+
   }
 }
 </script>

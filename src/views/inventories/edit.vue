@@ -144,9 +144,7 @@ export default {
 
           async getsnList(){
                 const response = await request({url:'/api/siteconfig/sns',method:'get'})
-                response.data.map((option) => {
-                  this.snOptions.push({ value: option.id, label: option.name })
-                })
+                this.snOptions = response.data
           },
 
 
