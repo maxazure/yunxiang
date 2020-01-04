@@ -13,6 +13,11 @@ export default {
   data() {
     return { result: this.value }
   },
+  watch: {
+    value(val) {
+      this.result = val
+    }
+  },
   methods: {
     handleChange() {
       this.$emit('input', this.result)

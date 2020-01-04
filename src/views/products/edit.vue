@@ -15,7 +15,6 @@
                 is="YSelect"
                 v-model="productForm.brand_id"
                 :options="brand_idOptions"
-
               />
             </el-form-item>
           </el-col>
@@ -27,12 +26,19 @@
 
           <el-col :span="8">
             <el-form-item label="品类:" prop="catalog_id">
-              <component
-                is="YSelect"
-                v-model="productForm.catalog_id"
-                :options="catalog_idOptions"
-                :filterable="true"
-              />
+              <el-popover
+                placement="bottom"
+                width="900"
+                trigger="hover"
+                :disabled="showCatalog"
+              >
+                <SelectCatalog
+                  v-model="productForm.catalog_id"
+                  :catalog-id-options="catalog_idOptions"
+                  @input="handleSelectCatalog"
+                />
+                <el-button slot="reference" @click="showCatalog = false">{{ catalogPlaceholder }}</el-button>
+              </el-popover>
             </el-form-item>
           </el-col>
 
@@ -53,41 +59,27 @@
               />
             </el-form-item>
           </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="采购模式:" prop="purcash_model">
-              <component
-                is="YSelect"
-                v-model="productForm.purcash_model"
-                :options="product_purcash_modelOptions"
-              />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="原条码:" prop="barcode">
-              <component
-                is="YInput"
-                v-model="productForm.barcode"
-              />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="商品年份:" prop="product_year">
+          <el-col :span="24">
+            <el-row type="flex">
+              <el-col>
+                <el-form-item label="采购模式:" prop="purcash_model">
                   <component
-                    is="el-date-picker"
-                    v-model="productForm.product_year"
-                    type="year"
-                    format="yyyy"
-                    value-format="yyyy"
-                    :disabled="goodsYearDisable"
+                    is="YSelect"
+                    v-model="productForm.purcash_model"
+                    :options="product_purcash_modelOptions"
                   />
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+
+              <el-col>
+
+                <el-form-item label="商品年份:" prop="product_year">
+                  <y-select v-model="productForm.product_year" :options="productYearOptions" :disabled="goodsYearDisable" />
+
+                </el-form-item>
+
+              </el-col>
+              <el-col>
                 <el-form-item label="经典常年:" prop="perennial">
                   <component
                     is="YSwitch"
@@ -96,44 +88,50 @@
                   />
                 </el-form-item>
               </el-col>
+              <el-col>
+                <el-form-item label="商品季:" prop="product_season">
+                  <component
+                    is="YSelect"
+                    v-model="productForm.product_season"
+                    :options="product_seasonOptions"
+                  />
+                </el-form-item>
+              </el-col>
+
+              <el-col>
+                <el-form-item label="面料:" prop="fabric">
+                  <component
+                    is="YSelectInput"
+                    v-model="productForm.fabric_id"
+                    :options="fabric_idOptions"
+                  />
+                </el-form-item>
+              </el-col>
             </el-row>
           </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="商品季:" prop="product_sesson">
-              <component
-                is="YSelect"
-                v-model="productForm.product_sesson"
-                :options="product_seasonOptions"
-              />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="面料:" prop="fabric_id">
-              <component
-                is="YSelectInput"
-                v-model="productForm.fabric_id"
-                :options="fabric_idOptions"
-
-              />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="描述:" prop="description">
+          <el-col :span="24">
+            <el-form-item label="原款号:" prop="old_shortno">
               <component
                 is="YInput"
-                v-model="productForm.description"
+                v-model="productForm.old_shortno"
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="24">
+            <el-form-item label="备注:" prop="description">
+              <component
+                is="yTextarea"
+                v-model="productForm.description"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col>
             <div class="float-right">
               <el-form-item>
                 <el-button @click="submit('productForm')">提交</el-button>
-                <el-button v-if="!warehouseForm" @click="back">返回</el-button>
+                <el-button @click="back">返回</el-button>
               </el-form-item>
             </div>
           </el-col>
@@ -148,9 +146,11 @@ import { getProduct, putProduct } from '@/api/product'
 
 import request from '../../utils/request'
 import { mapGetters } from 'vuex'
+import SelectCatalog from '../../components/selectCatalog/index'
 
 export default {
-  props: { warehouseForm: Object },
+  components: { SelectCatalog },
+
   data() {
     return {
       productForm: {},
@@ -172,12 +172,12 @@ export default {
           }
         ],
         product_year: [],
-        product_sesson: [],
+        product_season: [],
         fabric_id: [],
         detail: [],
         characteristic: [],
         edition_type: [],
-        barcode: [],
+        old_shortno: [],
         shortno: [],
         purcash_model: [],
         perennial: [],
@@ -187,19 +187,16 @@ export default {
       product_seasonOptions: [],
       product_purcash_modelOptions: [],
       goodsYearDisable: false,
-      routeId: this.$route.query.id
+      catalogPlaceholder: '选择品类',
+      productYearOptions: [],
+
+      showCatalog: false
     }
   },
   created() {
+    this.get()
     this.init()
-    if (this.routeId) {
-      this.get()
-    }
-    if (this.warehouseForm) {
-      this.productForm = this.warehouseForm
-    }
     //    getApiList
-    this.getcatalog_idList()
     this.getbrand_idList()
     this.getfabric_idList()
   },
@@ -217,8 +214,12 @@ export default {
       this.product_purcash_modelOptions = this.selectConst.purcash_model
     },
     async get() {
-      const response = await getProduct(this.routeId)
+      const response = await getProduct(this.$route.query.id)
       this.productForm = response.data
+      // 先后顺序
+      this.getcatalog_idList()
+      this.goodsYearDisable = this.productForm.perennial
+      this.initYear()
     },
     //    getApiList
 
@@ -230,6 +231,7 @@ export default {
     async getcatalog_idList() {
       const response = await request({ url: '/api/siteconfig/catalogs', method: 'get' })
       this.catalog_idOptions = response.data
+      this.catalogPlaceholder = this.catalog_idOptions.find(item => item.value === this.productForm.catalog_id).label
     },
 
     async getfabric_idList() {
@@ -238,11 +240,7 @@ export default {
     },
     async api() {
       const res = await putProduct(this.productForm.id, this.productForm)
-      if (!this.warehouseForm) {
-        this.$router.push({ path: '/infoManagement/products' })
-      } else {
-        this.$emit('success')
-      }
+      this.$router.push({ path: '/infoManagement/products' })
     },
     async submit(productForm) {
       this.$refs.yForm.validate(valid => {
@@ -263,8 +261,19 @@ export default {
     changePerennial(val) {
       this.goodsYearDisable = val
       this.productForm.product_year = null
+    },
+    handleSelectCatalog(e) {
+      this.productForm.catalog_id = e.value
+      this.catalogPlaceholder = e.label
+      this.showCatalog = true
+    },
+    initYear() {
+      const nowyear = this.productForm.product_year ? this.productForm.product_year : new Date().getFullYear().toString()
+      const startYear = nowyear - 20
+      for (let i = 0; i < 60; i++) {
+        this.productYearOptions.push({ value: startYear + i, label: startYear + i })
+      }
     }
-
   }
 }
 </script>

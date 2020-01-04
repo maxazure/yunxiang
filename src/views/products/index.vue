@@ -14,11 +14,11 @@
 
         <el-table-column prop="product_year" label="商品年份" />
 
-        <el-table-column prop="product_sesson" label="商品季" />
+        <el-table-column prop="product_season" label="商品季" />
 
         <el-table-column prop="fabric_id" label="面料" />
 
-        <el-table-column prop="barcode" label="原款号" />
+        <el-table-column prop="old_shortno" label="原款号" />
 
         <el-table-column prop="shortno" label="款式编码" />
 

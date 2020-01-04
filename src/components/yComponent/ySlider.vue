@@ -13,6 +13,11 @@ export default {
       result: this.value
     }
   },
+  watch: {
+    value(val) {
+      this.result = val
+    }
+  },
   methods: {
     change() {
       this.$emit('input', this.result)

@@ -301,7 +301,7 @@ method:{
 * 修改element默认样式：
 * * 删除scoped；
 * * 使用类选择器+elment组件名（自定义类名无效），
-* elment时间选择器：只选择年份  value-format="yyyy" format="yyyy"
+* elment时间选择器：只选择年份  type="year" value-format="yyyy" format="yyyy"
 ## 2019/12/30
 ### 任务
 * 调整产品资料模块
@@ -336,7 +336,14 @@ method:{
 ## 2020/01/03
 ### 任务
 * 使用localstorge+vuex+store将常量api持久化到本地
-* 修改入库页面
-* 实现多列的二级目录
+* 修改入库页面布局
 ### 总结
-* vuex.state初始化？
+* todo：vuex.state初始化
+## 2020/01/04
+### 任务
+* 实现多列的二级目录
+* BUG：位于projects/add|edit&&inventories/add 的分类选择的Popover组件，隐藏之后，要触发两次才会再次出现
+* 实现年份选择组件
+* 测试并修改入库、添加、修改产品信息bug
+### 总结
+* 自动导入了错误的文件

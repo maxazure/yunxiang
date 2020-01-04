@@ -1,5 +1,10 @@
 <template>
-  <el-select v-model="result" placeholder="请选择" @change="change">
+  <el-select
+    v-model="result"
+    placeholder="请选择"
+    :disabled="disabled"
+    @change="change"
+  >
     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
   </el-select>
 </template>
@@ -8,6 +13,7 @@
 export default {
   components: {},
   props: {
+    disabled: { type: Boolean, default: false },
     value: String, config: Object,
     options: {
       type: Array,

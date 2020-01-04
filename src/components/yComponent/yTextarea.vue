@@ -9,7 +9,11 @@ export default {
     return { result: this.value }
   },
   computed: {},
-  watch: {},
+  watch: {
+    value(val) {
+      this.result = val
+    }
+  },
   created() {
   },
   mounted() {

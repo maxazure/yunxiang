@@ -17,6 +17,11 @@ export default {
   created() {
     this.get()
   },
+  watch: {
+    value(val) {
+      this.result = val
+    }
+  },
   mounted() {
   },
   methods: {

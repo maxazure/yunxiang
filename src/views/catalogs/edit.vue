@@ -9,13 +9,13 @@
         label-width='100px'
       >
         <el-row>
-          
+
           <el-col :span="12">
          <el-form-item label='品类:' prop='name'>
           <component  is='YInput'  v-model='catalogForm.name'
-           
 
-           
+
+
            />
         </el-form-item>
           </el-col>
@@ -23,9 +23,9 @@
           <el-col :span="12">
          <el-form-item label='备注:' prop='remark'>
           <component  is='YInput'  v-model='catalogForm.remark'
-           
 
-           
+
+
            />
         </el-form-item>
           </el-col>
@@ -33,9 +33,9 @@
           <el-col :span="12">
          <el-form-item label='上级ID:' prop='parent_id'>
           <component  is='YInput'  v-model='catalogForm.parent_id'
-           
 
-           
+
+
            />
         </el-form-item>
           </el-col>
@@ -43,9 +43,9 @@
           <el-col :span="12">
          <el-form-item label='品类编码:' prop='catalog_id'>
           <component  is='YInput'  v-model='catalogForm.catalog_id'
-           
 
-           
+
+
            />
         </el-form-item>
           </el-col>
@@ -53,9 +53,9 @@
           <el-col :span="12">
          <el-form-item label='深度:' prop='depth'>
           <component  is='YInput'  v-model='catalogForm.depth'
-           
 
-           
+
+
            />
         </el-form-item>
           </el-col>
@@ -84,12 +84,12 @@ export default {
     return {
     catalogForm: {},
   //  apiList
-  
-     
-     
-     
-     
-     
+
+
+
+
+
+
     //  rules
     rules: {name:[
       {required:true,
@@ -108,7 +108,7 @@ export default {
       ],
     catalog_id:[
       {required:true,
-        message:'请输入品类编码',
+        message:'请选择品类',
         trigger:'blur'},
       ],
     depth:[
@@ -122,12 +122,12 @@ export default {
   created() {
     this.get()
   //    getApiList
-  
-   
-   
-   
-   
-   
+
+
+
+
+
+
 
   },
   mounted() {},

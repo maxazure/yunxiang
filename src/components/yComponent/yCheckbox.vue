@@ -22,7 +22,12 @@ export default {
     label: '北京烤鸭'
   }] }},
   data() {
-    return { result: [] }
+    return { result: this.value }
+  },
+  watch: {
+    value(val) {
+      this.result = val
+    }
   },
   methods: {
     change() {
