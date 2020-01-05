@@ -1,35 +1,51 @@
 <template>
-  <div class="app-container">
-
-    home
+  <div class="card-container">
+        <test-form ref="form" :form="form" @submit="submitAfter">
+          <template slot="form">
+            <el-form-item label="地址:" prop="address">
+              <el-input v-model="form.address" />
+            </el-form-item>
+            <el-form-item label="啥:" prop="address">
+              <el-input v-model="form.some" />
+            </el-form-item>
+          </template>
+          <template slot="operate">
+            <el-button @click="submit">提交</el-button>
+            <el-button @click="back">返回</el-button>
+          </template>
+        </test-form>
+<!--    <select-year v-model="test" />-->
+<!--    <select-year />-->
   </div>
 </template>
 
 <script>
-import { numberToString } from '../../utils'
+import testForm from './testForm'
+import selectYear from '../../components/selectYear'
 
 export default {
+  components: { selectYear, testForm },
   data() {
     return {
+      form: {},
+      test: '2000'
     }
   },
-  created() {
-    this.init()
-  },
-  mounted() {},
   methods: {
-    init() {
-      const test = { name: 'name', age: 2, child: { name: 'child', age: 2 }}
-      const lits = ['name', 2, 'name']
-      console.log(lits)
-      numberToString(lits)
-    },
     back() {
-      this.$router.push({ path: '/management/users' })
+      history.back()
+    },
+    submit() {
+      this.$refs.form.submit()
+    },
+    submitAfter() {
+      console.log('提交成功')
     }
   }
 }
 </script>
+<style lang='scss' scope>
+  .card-container {
 
-<style scope>
+  }
 </style>
