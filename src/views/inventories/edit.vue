@@ -3,58 +3,86 @@
     <el-card class='box-card'>
       <h3>修改库存</h3>
       <el-form
-        ref='yForm'
-        :model='inventoryForm'
+        ref='inventoryEditForm'
+        :model='inventoryEditForm'
         :rules='rules'
         label-width='100px'
       >
         <el-row>
-
+          
           <el-col :span="12">
          <el-form-item label='sn（sku）:' prop='sn'>
-          <component  is='YSelect'  v-model='inventoryForm.sn'
-           :options="snOptions"  />
+          <component  is='YInput'  v-model='inventoryEditForm.sn'
+           :options="snOptions" 
+
+           
+           />
         </el-form-item>
           </el-col>
 
           <el-col :span="12">
          <el-form-item label='数量:' prop='num'>
-          <component  is='YInput'  v-model='inventoryForm.num'
-            />
+          <component  is='YInput'  v-model='inventoryEditForm.num'
+           
+
+           
+           />
         </el-form-item>
           </el-col>
 
           <el-col :span="12">
          <el-form-item label='颜色编号:' prop='color_id'>
-          <component  is='YInput'  v-model='inventoryForm.color_id'
-            />
+          <component  is='YInput'  v-model='inventoryEditForm.color_id'
+           
+
+           
+           />
         </el-form-item>
           </el-col>
 
           <el-col :span="12">
          <el-form-item label='产品编号:' prop='product_id'>
-          <component  is='YInput'  v-model='inventoryForm.product_id'
-            />
+          <component  is='YInput'  v-model='inventoryEditForm.product_id'
+           
+
+           
+           />
         </el-form-item>
           </el-col>
 
           <el-col :span="12">
-         <el-form-item label='尺码:' prop='size'>
-          <component  is='YInput'  v-model='inventoryForm.size'
-            />
+         <el-form-item label='尺码编号:' prop='size_id'>
+          <component  is='YInput'  v-model='inventoryEditForm.size_id'
+           
+
+           
+           />
         </el-form-item>
           </el-col>
 
           <el-col :span="12">
-         <el-form-item label='零售价:' prop='retail_price'>
-          <component  is='YInput'  v-model='inventoryForm.retail_price'
-            />
+         <el-form-item label='吊牌价:' prop='tag_price'>
+          <component  is='YInput'  v-model='inventoryEditForm.tag_price'
+           
+
+           
+           />
+        </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+         <el-form-item label='原条码:' prop='old_barcode'>
+          <component  is='YInput'  v-model='inventoryEditForm.old_barcode'
+           
+
+           
+           />
         </el-form-item>
           </el-col>
 
           <el-col :span="24">
         <el-form-item>
-          <el-button @click="submit('inventoryForm')">提交</el-button>
+          <el-button @click="submit">提交</el-button>
           <el-button @click='back'>返回</el-button>
         </el-form-item>
           </el-col>
@@ -74,17 +102,18 @@ export default {
   },
   data() {
     return {
-    inventoryForm: {},
+    inventoryEditForm: {},
   //  apiList
-
-
+  
+    
   snOptions:[],
-
-
-
-
-
-
+   
+     
+     
+     
+     
+     
+     
     //  rules
     rules: {sn:[
       {required:true,
@@ -106,15 +135,17 @@ export default {
         message:'请输入产品编号',
         trigger:'blur'},
       ],
-    size:[
+    size_id:[
       {required:true,
-        message:'请输入尺码',
+        message:'请输入尺码编号',
         trigger:'blur'},
       ],
-    retail_price:[
+    tag_price:[
       {required:true,
-        message:'请输入零售价',
+        message:'请输入吊牌价',
         trigger:'blur'},
+      ],
+    old_barcode:[
       ],
     }
         }
@@ -122,29 +153,29 @@ export default {
   created() {
     this.get()
   //    getApiList
-
-
+  
+  
     this.getsnList()
-
-
-
-
-
-
+   
+   
+   
+   
+   
+   
+   
 
   },
   mounted() {},
   methods: {
     async get() {
-      const response = await getInventory(this.$route.query.id);
-      this.inventoryForm = response.data;
+      const res = await getInventory(this.$route.query.id);
+      this.inventoryEditForm = res.data;
     },
 //    getApiList
 
-
           async getsnList(){
-                const response = await request({url:'/api/siteconfig/sns',method:'get'})
-                this.snOptions = response.data
+                const res = await request({url:'',method:'get'})
+                this.snOptions = res.data
           },
 
 
@@ -154,16 +185,14 @@ export default {
 
 
 
-
-
-
-
     async api() {
+      const res = await putInventory(this.inventoryEditForm.id,this.inventoryEditForm);
+      if(res.code === '200') {
       this.$router.push({ path: '/inventories' });
-      const res = await putInventory(this.inventoryForm.id,this.inventoryForm);
+      }
     },
-    async submit(inventoryForm) {
-      this.$refs.yForm.validate(valid => {
+    async submit() {
+      this.$refs.inventoryEditForm.validate(valid => {
         if (valid) {
           this.api();
           this.$message({
@@ -176,7 +205,7 @@ export default {
       });
     },
     back() {
-      this.$router.push({ path: '/inventories' });
+      history.back()
     }
   }
 };
