@@ -26,8 +26,8 @@
           <el-popover
             placement="bottom"
             width="900"
-            trigger="hover"
-            :disabled="showCatalog"
+            trigger="click"
+            v-model="showCatalog"
           >
             <SelectCatalog
               v-model="productForm.catalog_id"
@@ -299,7 +299,7 @@ export default {
     handleSelectCatalog(e) {
       this.productForm.catalog_id = e.value
       this.catalogPlaceholder = e.label
-      this.showCatalog = true
+      this.showCatalog = false
     }
 
   }

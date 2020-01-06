@@ -2,6 +2,8 @@
  * Created by PanJiaChen on 16/11/18.
  */
 
+import store from '@/store'
+
 /**
  * Parse the time to string
  * @param {(Object|string|number)} time
@@ -167,4 +169,23 @@ export function chineseToTitleCase(str) {
     result = result + pinyin.convertToPinyin(str[i])[0]
   }
   return result
+}
+
+/**
+ * 将对象中的常量属性转换为name_label添加到对象中并返回
+ *
+ * 以常量的value作为索引，需保证常量的value基0且有序
+ *
+ * @param form
+ */
+export function convertIdToLabel(form) {
+  for (const arg in form) {
+    if (store.getters.selectConst[arg]) {
+      const label = arg + '_label'
+      const index = form[arg]
+      const value = store.getters.selectConst[arg][index]
+      form[label] = value.label
+    }
+  }
+  return form
 }

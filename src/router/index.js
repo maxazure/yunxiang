@@ -108,6 +108,7 @@ export const constantRoutes = [
   {
     path: '/infoManagement',
     component: Layout,
+    redirect: '/infoManagement/products',
     meta: { title: '信息管理', icon: 'tab' },
     children: [
       ...productsRouter,

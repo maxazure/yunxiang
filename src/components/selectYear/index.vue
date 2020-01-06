@@ -7,18 +7,15 @@ export default {
   components: {},
   props: {
     value: {
-      type: String,
-      default() {
-        return new Date().getFullYear().toString()
-      }
+      type: String
     },
     disabled: Boolean
   },
   data() {
     return {
       result: this.value,
-      options: [],
-      once: true
+      options: []
+      // once: true
     }
   },
   computed: {},
@@ -26,25 +23,25 @@ export default {
     value: {
       handler(val) {
         this.result = val
-        // 只执行一次,否则每次修改后都会触发
-        // remove
-        if (this.once) {
-          this.initYear()
-          this.once = false
-        }
-      },
-      immediate: true
+        //     // 只执行一次,否则每次修改后都会触发
+        //     if (this.once) {
+        //       this.initYear()
+        //       this.once = false
+        //     }
+        //   immediate: true
+      }
     }
 
   },
   created() {
+    this.initYear()
   },
   mounted() {
   },
   methods: {
     initYear() {
       this.options = []
-      const startYear = this.result - 10
+      const startYear = new Date().getFullYear() - 10
       for (let i = 0; i < 20; i++) {
         this.options.push({ value: startYear + i, label: startYear + i })
       }
