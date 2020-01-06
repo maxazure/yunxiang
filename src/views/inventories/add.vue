@@ -1,33 +1,35 @@
 <template>
   <div class="warehouse app-container">
     <el-row class="body">
+      {{ inventoryAddForm }}
       <el-row class="row1">
         <el-card class="box-card" shadow="never" :body-style="{padding: '0px'}">
           <div slot="header" class="card-header clearfix">
             <el-col>
               <div>
                 <span>款号:</span>
-                <el-input v-model="product_id" size="small" placeholder="请输入款号" @change="getProduct" />
+                <el-input v-model="inventoryAddForm.product_id" size="small" placeholder="请输入款号" @change="getProduct" />
                 <div class="float-right">
-                  <el-button v-show="editable" type="primary" @click="addProductVisible = true">新增款号</el-button>
+                  <el-button v-show="isAdd" type="primary" @click="addProductVisible = true">新增款号</el-button>
                 </div>
                 <span>{{ shortnoTips }}</span>
               </div>
-              <el-row style="padding: 10px 0 0 0" type="flex" align="center">
-                <el-col>{{ editProductForm.product_name }}</el-col>
-                <el-col>{{ editProductForm.product_gender }}</el-col>
-                <el-col>{{ editProductForm.catalog_id }}</el-col>
-                <el-col>{{ editProductForm.product_year }}</el-col>
-                <el-col>{{ editProductForm.product_season }}</el-col>
-                <el-col>{{ editProductForm.brand_id }}</el-col>
-                <el-col>{{ editProductForm.price }}</el-col>
-              </el-row>
-              <el-row type="flex" align="center" class="">
-                <el-col>{{ editProductForm.fabric_id }}</el-col>
-                <el-col>{{ editProductForm.description }}</el-col>
-              </el-row>
-              <el-button v-show="!editable" type="primary" plain @click="editProductVisible = true">编辑信息</el-button>
-
+              <div v-if="!isAdd" class="editForminfo">
+                <el-row style="padding: 10px 0 0 0" type="flex" align="center">
+                  <el-col>商品名称：{{ editProductForm.product_name }}</el-col>
+                </el-row>
+                <el-row type="flex" align="center" class="">
+                  <el-col>商品性别：{{ editProductForm.product_gender_label }}</el-col>
+                  <el-col>品类：{{ editProductForm.catalog_id }}</el-col>
+                  <el-col>商品年份：{{ editProductForm.product_year }}</el-col>
+                  <el-col>商品季：{{ editProductForm.product_season_label }}</el-col>
+                  <el-col>品牌：{{ editProductForm.brand_id }}</el-col>
+                  <el-col>价格：{{ editProductForm.price }}</el-col>
+                  <el-col>面料：{{ editProductForm.fabric_id }}</el-col>
+                </el-row>
+                <el-col>描述：{{ editProductForm.description }}</el-col>
+              </div>
+              <el-button v-show="!isAdd" type="primary" plain @click="editProductVisible = true">编辑信息</el-button>
             </el-col>
           </div>
           <div class="form">
@@ -93,37 +95,40 @@
                 <el-col :span="18">
                   <el-form label-position="right" label-width="80px">
                     <el-form-item label="原条码:">
-                      <el-input />
+                      <el-input v-model="inventoryAddForm.old_barcode" />
                     </el-form-item>
                     <el-form-item label="颜色:">
-                      <el-select
-                        v-model="test"
-                        multiple
-                        filterable
-                        allow-create
-                        default-first-option
-                        placeholder="请选择标签"
+                      <select-input
+                        v-model="inventoryAddForm.color_id"
+                        :options="colorsOptions"
+                        @confirm="confirmColor"
                       >
-                        <!--                        <el-option-->
-                        <!--                          v-for="item in product_seasonOptions"-->
-                        <!--                          :key="item.value"-->
-                        <!--                          :label="item.label"-->
-                        <!--                          :value="item.value"-->
-                        <!--                        />-->
-                      </el-select>
+                        <template slot="text">
+                          <p>请输入颜色</p>
+                        </template>
+                      </select-input>
                     </el-form-item>
                     <el-form-item label="尺码:">
-                      <el-input />
+                      <select-input v-model="inventoryAddForm.size_id" :options="sizesOptions" @confirm="confirmSize">
+                        <template slot="text">
+                          <p>请输入尺码</p>
+                        </template>
+                      </select-input>
+
                     </el-form-item>
                     <el-form-item label="数量:">
-                      <el-input />
+                      <el-input v-model="inventoryAddForm.num" />
                     </el-form-item>
-                    <el-form-item label="价格:">
-                      <el-input />
+                    <el-form-item label="吊牌价:">
+                      <el-input v-model="inventoryAddForm.tag_price" />
                     </el-form-item>
                   </el-form>
                 </el-col>
-                <el-col :span="4">操作</el-col>
+                <el-col :span="4">
+
+                  <el-button type="primary" plain @click="addInventory">确认入库</el-button>
+
+                </el-col>
               </el-row>
             </el-card>
           </div>
@@ -138,10 +143,16 @@ import yTable from '../../components/yTable'
 import request from '../../utils/request'
 import addProductForm from '../../components/product/addForm'
 import EditProductForm from '../../components/product/editForm'
+import { convertIdToLabel } from '../../utils'
+import SelectInput from '../../components/select/selectInput'
+import { addPcolor } from '../../api/pcolor'
+import { addPsize } from '../../api/psize'
+import { addInventory } from '../../api/inventory'
 
 export default {
   components: {
-    yTable, addProductForm, EditProductForm
+    yTable, addProductForm, EditProductForm,
+    SelectInput
   },
   data() {
     return {
@@ -153,17 +164,20 @@ export default {
         pageNumber: 1,
         pageSize: 10
       },
-      product_id: '',
+
       shortnoTips: '',
-      editable: true,
+      isAdd: true,
       addProductVisible: false,
       editProductVisible: false,
-      editFormId: ''
+      editFormId: '',
+      inventoryAddForm: {},
+      colorsOptions: [],
+      sizesOptions: []
     }
   },
   computed: {},
   created() {
-
+    this.initList()
   },
   methods: {
     del(id) {
@@ -172,13 +186,14 @@ export default {
       const res = await request({ url: `api/products/finding?sn=${val}`, method: 'get' })
       if (!res.data) {
         this.shortnoTips = '款号不存在，请新增款号'
-        this.editable = true
+        this.isAdd = true
         this.editProductForm = {}
       } else {
         this.shortnoTips = ''
-        this.editable = false
+        this.isAdd = false
         this.editProductForm = res.data
         this.editFormId = res.data.id
+        convertIdToLabel(this.editProductForm)
       }
     },
 
@@ -196,6 +211,35 @@ export default {
     },
     submitEditForm() {
       this.$refs.editForm.submit()
+    },
+    async addInventory() {
+      const res = await addInventory(this.inventoryAddForm)
+      console.log(res)
+    },
+    initList() {
+      this.getColorsList()
+      this.getSizesList()
+    },
+    async getColorsList() {
+      const res = await request({ url: '/api/siteconfig/pcolors', methods: 'get' })
+      this.colorsOptions = res.data
+    },
+
+    async getSizesList() {
+      const res = await request({ url: '/api/siteconfig/psizes', methods: 'get' })
+      this.sizesOptions = res.data
+    },
+
+    async confirmColor(value, label) {
+      await addPcolor({ code: value, name: label })
+      this.colorsOptions.push({ value, label })
+      this.inventoryAddForm.color_id = value
+    },
+
+    async confirmSize(value, label) {
+      await addPsize({ code: value, name: label })
+      this.sizesOptions.push({ value, label })
+      this.inventoryAddForm.size_id = value
     }
   }
 }
@@ -215,6 +259,7 @@ export default {
         }
 
       }
+
       .table-wrapper {
         .table {
           padding: 0
