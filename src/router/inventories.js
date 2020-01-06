@@ -1,3 +1,6 @@
+
+
+
 import Layout from '@/layout'
 
 const inventoriesRouter = {
@@ -16,12 +19,14 @@ const inventoriesRouter = {
     hidden: true,
     meta: { title: '修改库存' }
   },
-  {
-    path: 'add',
-    component: () => import('@/views/inventories/add'),
-    hidden: true,
-    meta: { title: '添加库存' }
-  }
+    {
+      path: 'add',
+      component: () => import('@/views/inventories/add'),
+      hidden: true,
+      meta: { title: '添加库存' }
+    }
   ]
 }
+
+
 export default inventoriesRouter
