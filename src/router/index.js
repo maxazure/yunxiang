@@ -78,7 +78,31 @@ export const constantRoutes = [
       meta: { title: '收银台', icon: 'example' }
     }]
   },
-  inventoriesRouter,
+  // inventoriesRouter,
+  {
+    path: '/inventories',
+    // name: 'inventories',
+    // redirect: '/inventories/index',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'inventories',
+      component: () => import('@/views/inventories'),
+      meta: { title: '库存管理', icon: 'tree' }
+    }, {
+      path: 'edit',
+      component: () => import('@/views/inventories/edit'),
+      hidden: true,
+      meta: { title: '修改库存' }
+    },
+    {
+      path: 'add',
+      component: () => import('@/views/inventories/add'),
+      hidden: true,
+      meta: { title: '添加库存' }
+    }
+    ]
+  },
   sales_ordersRouter,
 
   {
@@ -210,7 +234,10 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
+  // 无#号
   // mode: 'history', // require service support
+  // default mode : hash  有#号
+  // mode: 'hash', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

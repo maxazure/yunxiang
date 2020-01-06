@@ -180,7 +180,7 @@ export function chineseToTitleCase(str) {
  */
 export function convertIdToLabel(form) {
   for (const arg in form) {
-    if (store.getters.selectConst[arg]) {
+    if (form[arg] && store.getters.selectConst[arg]) {
       const label = arg + '_label'
       const index = form[arg]
       const value = store.getters.selectConst[arg][index]

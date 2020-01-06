@@ -256,7 +256,7 @@ export default {
       this.$refs.yForm.validate(valid => {
         if (valid) {
           this.api()
-          this.$emit('submitAfter')
+          this.$emit('submitAfter', this.productForm)
           this.$message({
             message: '添加成功',
             type: 'success'

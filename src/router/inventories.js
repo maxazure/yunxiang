@@ -1,12 +1,10 @@
 
-
-
 import Layout from '@/layout'
 
 const inventoriesRouter = {
   path: '/inventories',
   name: 'inventories',
-  redirect: '/inventories/index',
+  // redirect: '/inventories/index',
   component: Layout,
   children: [{
     path: 'index',
@@ -19,14 +17,13 @@ const inventoriesRouter = {
     hidden: true,
     meta: { title: '修改库存' }
   },
-    {
-      path: 'add',
-      component: () => import('@/views/inventories/add'),
-      hidden: true,
-      meta: { title: '添加库存' }
-    }
+  {
+    path: 'add',
+    component: () => import('@/views/inventories/add'),
+    hidden: true,
+    meta: { title: '添加库存' }
+  }
   ]
 }
-
 
 export default inventoriesRouter
