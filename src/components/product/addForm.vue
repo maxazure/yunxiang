@@ -24,10 +24,10 @@
       <el-col :span="8">
         <el-form-item label="品类:" prop="catalog_id">
           <el-popover
+            v-model="showCatalog"
             placement="bottom"
             width="900"
             trigger="click"
-            v-model="showCatalog"
           >
             <SelectCatalog
               v-model="productForm.catalog_id"
@@ -251,16 +251,17 @@ export default {
 
     async api() {
       const res = await addProduct(this.productForm)
+      this.$emit('submitAfter', this.productForm)
+      this.$message({
+        message: '添加成功',
+        type: 'success'
+      })
     },
+
     async submit(productForm) {
       this.$refs.yForm.validate(valid => {
         if (valid) {
           this.api()
-          this.$emit('submitAfter', this.productForm)
-          this.$message({
-            message: '添加成功',
-            type: 'success'
-          })
         } else {
           return false
         }

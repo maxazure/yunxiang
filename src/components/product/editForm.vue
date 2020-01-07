@@ -232,16 +232,17 @@ export default {
     },
     async api() {
       const res = await putProduct(this.productForm.id, this.productForm)
+      this.$emit('submitAfter', this.productForm)
+      this.$message({
+        message: '修改成功',
+        type: 'success'
+      })
+
     },
     async submit(productForm) {
       this.$refs.yForm.validate(valid => {
         if (valid) {
           this.api()
-          this.$emit('submitAfter', this.productForm)
-          this.$message({
-            message: '修改成功',
-            type: 'success'
-          })
         } else {
           return false
         }

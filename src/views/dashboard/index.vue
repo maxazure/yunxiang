@@ -1,73 +1,54 @@
 <template>
-  <div class="app-container">
-    <el-button type="primary" @click="set">set</el-button>
-    <el-button type="primary" @click="get">get</el-button>
-    <el-table
-      :data="tableData"
-      style="width: 100%"
-    >
-      <el-table-column
-        prop="date"
-        label="日期"
-        width="180"
-      />
-      <el-table-column
-        prop="name"
-        label="姓名"
-        width="180"
-      />
-      <el-table-column
-        prop="address"
-        label="地址"
-      />
-    </el-table>
+  <div class="dashboard app-container">
+    <el-row   type="flex">
+      <el-col v-for="i in 4" :key="i">
+        <el-card class="box-card">
+          <el-row class="card-header">
+            <el-col :span="18" class="title">title</el-col>
+            <el-col :span="6" class="icon">icon</el-col>
+          </el-row>
+          <el-row>
+            <el-col class="num">$123.456</el-col>
+          </el-row>
+          <el-row class="card-desc">
+            <el-col>
+              周同比12%
+            </el-col>
+          </el-row>
+          <el-row class="card-ft">
+            <el-col>日销售额</el-col>
+          </el-row>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col>
+        <el-card class="box-card">
+          <div v-for="o in 4" :key="o" class="text item">
+            {{ '列表内容 ' + o }}
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { Message } from 'element-ui'
 
-export default {
-  data() {
-    return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'selectApi'
-    ])
-  },
-  created() {
-  },
-  methods: {
+export default {}
+</script>
+<style lang="scss" scoped>
+  @import "~@/styles/variables.scss";
 
-    set() {
-      this.$store.dispatch('localStorage/setSelectConst')
-    },
-    get() {
-      Message({
-        message: this.$store.state.localStorage.all,
-        duration: 3 * 1000
-      })
+  .dashboard{
+    background-color: $colorBgGrey;
+    min-height: 100vh;
+    .box-card{
+      margin:10px;
+      .num{
+        font-size: 30px;
+      }
     }
   }
-}
-</script>
+
+</style>

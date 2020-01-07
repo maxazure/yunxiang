@@ -213,15 +213,10 @@ method:{
 ```
 <component v-bind:is="currentTabComponent"></component>
 ```
-## 2019/12/16
-### 总结
-* 防抖与节流lodash
-* * 防抖：_.debounce(func, [wait=0], [options={}])  
-* * 节流：_.throttle(func, [wait=0], [options={}])
 
 ## 2019/12/16
 ### 任务
-* 拖拽插件
+* 实现拖拽
 ### 总结
 * vuedragable同一列内无法移动----->field.id undefine---->拖拽事件获取的element为空----------->？？？
 * * 更换插件Sortable.js--->拖拽子组件变成父组件---->阻止pinterdown事件传播.stop ---->子组件拖拽不触发---->？？？
@@ -231,6 +226,9 @@ method:{
 * * monitorEvents(document.querySelector(".field-item"), 'click' )事件监听
 * * unmonitorEvents(document.querySelector(".el-card"))取消监听
 * * getEventListeners(document.querySelector(".col0"))获取监听的事件
+* 防抖与节流lodash
+* * 防抖：_.debounce(func, [wait=0], [options={}])  
+* * 节流：_.throttle(func, [wait=0], [options={}])
 ## 2019/12/17
 ### 任务
 * 拖拽
@@ -275,7 +273,6 @@ method:{
 * token有效期导致500
 * 修改组件配置
 ###总结
-
 ## 2019/12/24
 ### 任务
 * 梳理业务流程，添加对应字段
@@ -348,7 +345,7 @@ method:{
 * 测试并修改入库、添加、修改产品信息bug
 ### 总结
 * 自动导入了错误的文件
-## 2012/01/06
+## 2020/01/06
 ### 任务
 * 重构入库和添加、修改产品产品信息
 * 修复Popover组件，显示与隐藏的bug
@@ -359,3 +356,14 @@ method:{
 * popover通过 value/v-model：Boolean	控制是否显示，
 * * 无法通过其他元素的点击事件触发=》Vue实际已触发显示事件，并且因为点击的是其他元素，还触发了隐藏事件，导致未显示就已经消失
 * 组件嵌套过深导入响应式失效=>this.$set(obj,args,value)/this.forceUpdate()
+## 2020/01/07
+### 任务
+* 生成器中的字段提交了含有空字符串（""）的表单，导致生成器if判断时出错=》""=>null
+* npm run dev Cannot find module '@/store' in 'src/util/index' 
+* * 分离vuex与util，js调用改成组件调用
+* 熟悉uni-app
+### 总结
+* 直接调用其他组件的方法:other.methods.function()，其他组件只有methods、data等，没有生命周期，没有Vuex.store
+* mixins混入：复用其他组件，什么都有
+* 绑定一个返回对象的计算属性
+

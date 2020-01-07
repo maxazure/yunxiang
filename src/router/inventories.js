@@ -4,7 +4,7 @@ import Layout from '@/layout'
 const inventoriesRouter = {
   path: '/inventories',
   name: 'inventories',
-  // redirect: '/inventories/index',
+  redirect: '/inventories/index',
   component: Layout,
   children: [{
     path: 'index',

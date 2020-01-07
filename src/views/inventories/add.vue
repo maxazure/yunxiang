@@ -1,6 +1,5 @@
 <template>
   <div class="warehouse app-container">
-    {{ tableData }}
     <el-row class="body">
       <el-row class="row1">
         <el-card class="box-card" shadow="never" :body-style="{padding: '0px'}">
@@ -14,7 +13,6 @@
                   size="small"
                   placeholder="请输入款号"
                   @change="getProduct"
-                  @keydown.enter="getProduct"
                 />
                 <span>{{ shortnoTips }}</span>
                 <el-button
@@ -87,11 +85,18 @@
             <el-card shadow="never">
               <el-row>
                 <el-col :span="18">
-                  <el-form label-position="right" label-width="80px" size="small">
+                  <el-form
+                    ref="inventoryAddForm"
+                    :rules="rules"
+                    :model="inventoryAddForm"
+                    size="small"
+                    label-position="right"
+                    label-width="80px"
+                  >
                     <h4 class="">库存信息</h4>
                     <el-row type="flex">
                       <el-col>
-                        <el-form-item label="颜色:">
+                        <el-form-item label="颜色:" prop="color_id">
                           <select-input
                             v-model="inventoryAddForm.color_id"
                             :options="colorsOptions"
@@ -104,7 +109,7 @@
                         </el-form-item>
                       </el-col>
                       <el-col>
-                        <el-form-item label="尺码:">
+                        <el-form-item label="尺码:" prop="size_id">
                           <select-input
                             v-model="inventoryAddForm.size_id"
                             :options="sizesOptions"
@@ -118,24 +123,24 @@
                         </el-form-item>
                       </el-col>
                       <el-col>
-                        <el-form-item label="数量:">
-                          <el-input v-model="inventoryAddForm.num" />
+                        <el-form-item label="数量:" prop="num">
+                          <el-input v-model.number="inventoryAddForm.num" />
                         </el-form-item>
                       </el-col>
                       <el-col>
-                        <el-form-item label="吊牌价:">
+                        <el-form-item label="吊牌价:" prop="tag_price">
                           <el-input v-model="inventoryAddForm.tag_price" />
                         </el-form-item>
                       </el-col>
                     </el-row>
                     <el-row type="flex">
                       <el-col>
-                        <el-form-item label="条码:">
+                        <el-form-item label="条码:" prop="sn">
                           <el-input v-model="inventoryAddForm.sn" />
                         </el-form-item>
                       </el-col>
                       <el-col>
-                        <el-form-item label="原条码:">
+                        <el-form-item label="原条码:" prop="old_barcode">
                           <el-input v-model="inventoryAddForm.old_barcode" />
                         </el-form-item>
                       </el-col>
@@ -150,10 +155,15 @@
           </div>
 
           <div v-show="!isAdd" class="table-wrapper">
-            <y-table :table-data="tableData" :pagination="pagination">
+            <y-table
+              :table-data="showTableData"
+              :pagination="pagination"
+            >
               <template>
 
-                <el-table-column prop="sn" label="sn（sku）" />
+                <el-table-column prop="id" label="序号" />
+
+                <el-table-column prop="sn" label="条码" />
 
                 <el-table-column prop="num" label="数量" />
 
@@ -189,19 +199,73 @@ import request from '../../utils/request'
 import addProductForm from '../../components/product/addForm'
 import EditProductForm from '../../components/product/editForm'
 import SelectInput from '../../components/select/selectInput'
-import { convertIdToLabel } from '../../utils'
+import selectConst from '../../components/store/selectConst'
 import { addPcolor } from '../../api/pcolor'
 import { addPsize } from '../../api/psize'
 import { addInventory, delInventory } from '../../api/inventory'
 
 export default {
+
   components: {
     yTable, addProductForm, EditProductForm,
     SelectInput
   },
+  mixins: [selectConst],
   data() {
     return {
-
+      rules: {
+        sn: [
+          {
+            required: true,
+            message: '请输入条码',
+            trigger: 'blur'
+          }
+        ],
+        num: [
+          {
+            required: true,
+            message: '请输入数量',
+            trigger: 'blur'
+          },
+          {
+            pattern: /^[1-9]\d*$/,
+            message: '请输入正确的数量'
+          }
+        ],
+        color_id: [
+          {
+            required: true,
+            message: '请输入颜色编号',
+            trigger: 'blur'
+          }
+        ],
+        product_id: [
+          {
+            required: true,
+            message: '请输入产品编号',
+            trigger: 'blur'
+          }
+        ],
+        size_id: [
+          {
+            required: true,
+            message: '请输入尺码编号',
+            trigger: 'blur'
+          }
+        ],
+        tag_price: [
+          {
+            required: true,
+            message: '请输入吊牌价',
+            trigger: 'blur'
+          },
+          {
+            pattern: /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/,
+            message: '请输入正确的吊牌价'
+          }
+        ],
+        old_barcode: []
+      },
       productForm: { purcash_model: '0' },
       editProductForm: {},
       tableData: [],
@@ -209,7 +273,6 @@ export default {
         pageNumber: 1,
         pageSize: 10
       },
-
       shortnoTips: '',
       isAdd: true,
       addProductVisible: false,
@@ -220,8 +283,20 @@ export default {
       sizesOptions: []
     }
   },
-  computed: {},
-
+  computed: {
+    showTableData() {
+      return this.tableData.slice(
+        (this.pagination.pageNumber - 1) * this.pagination.pageSize,
+        this.pagination.pageNumber * this.pagination.pageSize)
+    }
+  },
+  watch: {
+    tableData: {
+      handler() {
+        this.pagination.total = this.tableData.length
+      }
+    }
+  },
   created() {
     this.initList()
   },
@@ -237,8 +312,7 @@ export default {
         this.isAdd = false
         this.editProductForm = res.data
         this.editFormId = res.data.id
-
-        convertIdToLabel(this.editProductForm)
+        this.convertIdToLabel(this.editProductForm)
       }
     },
 
@@ -248,10 +322,8 @@ export default {
     },
     submitAfterAdd(form) {
       this.addProductVisible = false
-      // bug 赋值后无法输入
-      // this.inventoryAddForm.product_id = form.shortno
       this.$set(this.inventoryAddForm, 'product_id', form.shortno)
-      // 添加后马上是查询不到=》数据库未插入成功=》延迟请求
+      // 添加后马上查询是查询不到=》数据库未插入成功=》延迟请求
       setTimeout(() => {
         this.getProduct(form.shortno)
       }
@@ -260,7 +332,7 @@ export default {
     submitAfterEdit(editForm) {
       this.editProductForm = editForm
       this.editProductVisible = false
-      convertIdToLabel(this.editProductForm)
+      this.convertIdToLabel(this.editProductForm)
     },
     submitAddForm() {
       this.$refs.addForm.submit()
@@ -269,12 +341,25 @@ export default {
       this.$refs.editForm.submit()
     },
     async addInventory() {
-      const res = await addInventory(this.inventoryAddForm)
-      this.$message({
-        type: 'success',
-        message: '添加成功!'
+      this.$refs.inventoryAddForm.validate(async(valid) => {
+        if (valid) {
+          const res = await addInventory(this.inventoryAddForm)
+          // 正序
+          // this.tableData.push(res.data)
+          // 逆序
+          this.tableData.unshift(res.data)
+          this.inventoryAddForm.num = null
+          this.inventoryAddForm.sn = null
+          this.inventoryAddForm.old_barcode = null
+
+          this.$message({
+            message: '添加成功',
+            type: 'success'
+          })
+        } else {
+          return false
+        }
       })
-      this.tableData.push(res.data)
     },
     initList() {
       this.getColorsList()
@@ -343,7 +428,6 @@ export default {
         .el-input {
           width: 200px
         }
-
       }
 
       .table-wrapper {
@@ -352,6 +436,5 @@ export default {
         }
       }
     }
-
   }
 </style>
