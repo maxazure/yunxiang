@@ -376,6 +376,7 @@ method:{
 * 官网的demo缺少css
 * 各种样式不生效=》不用
 * 跳转的到tab页使用switchTab
+* export与import {name}和export default与import customlizesName的区别
 ## 2020/01/09
 ### 任务
 * 编写常用的代码片段（布局样式）
