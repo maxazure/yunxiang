@@ -379,5 +379,8 @@ method:{
 * export与import {name}和export default与import customlizesName的区别
 ## 2020/01/09
 ### 任务
-* 编写常用的代码片段（布局样式）
+* 编写常用的uni-app代码片段（布局样式）
+* 编写添加商品、订单结算、退换货界面布局
+* BUG：uni-scancode扫码接口不支持H5且安卓扫码返回错误结果
 ### 总结
+* flex布局
