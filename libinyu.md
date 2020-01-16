@@ -421,3 +421,15 @@ method:{
 ### 总结
 * h5生效而app样式错乱：scoped
 * props属性命名冲突required
+## 2020/01/15
+###任务
+* 对接及编写小票详情页面
+* 导入ThorUI组件、css、request
+###总结
+* 全局混入 main.js  =>Vue.mixin({methods:{go(){}}})
+## 2020/01/16
+### 任务
+* 对接及编写小票详情页面
+* 使用ThorUI重构小票详情页面、确认顾客、会员信息页面
+### 总结
+* 熟悉ThorUI
