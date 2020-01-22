@@ -446,3 +446,11 @@ method:{
 * 对接按款、按色、按码、按件批量修改库存指定价格的需求
 ### 总结
 * 沟通的重要性
+## 2020/01/23 - 2020/01/31
+### 任务
+* 重构收银服务-支付页面
+### 总结
+* uni-app补充d.ts：先执行 npm init，然后npm i @types/uni-app -D
+* padding不能为负
+* overflow:hidden
+* js引用类型
