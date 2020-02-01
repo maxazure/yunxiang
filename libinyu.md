@@ -449,8 +449,12 @@ method:{
 ## 2020/01/23 - 2020/01/31
 ### 任务
 * 重构收银服务-支付页面
+* 重构商品管理、添加商品页面
+* 编写下拉组件、单选按钮组件
 ### 总结
 * uni-app补充d.ts：先执行 npm init，然后npm i @types/uni-app -D
 * padding不能为负
-* overflow:hidden
+* 超出边界无法显示：overflow:visible
 * js引用类型
+* text-align:right
+* css动画无效=》使用他人组件注意组件定义参数类型
