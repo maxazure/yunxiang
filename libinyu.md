@@ -451,6 +451,7 @@ method:{
 * 重构收银服务-支付页面
 * 重构商品管理、添加商品页面
 * 编写下拉组件、单选按钮组件
+* 重构库存CRUD页面
 ### 总结
 * uni-app补充d.ts：先执行 npm init，然后npm i @types/uni-app -D
 * padding不能为负
@@ -458,3 +459,19 @@ method:{
 * js引用类型
 * text-align:right
 * css动画无效=》使用他人组件注意组件定义参数类型
+## 2020/02/17
+### 任务
+* 技术选型 uniapp+ThorUI、mpvue+vant、原生+vant、wepy+vant对比
+### 总结
+* mpvue+vant
+## 2020/02/18
+### 任务
+* 初始化项目mpvue+vant
+### 总结
+* 微信开发工具稳定版十分不稳定（可选RC版、测试版）
+## 2020/02/19
+### 任务
+* 编写首页、个人中心静态页面
+* 迁移ThorUI部分组件
+### 总结
+* mpvue编译到dist时不会自动清理旧的文件，导致不能实时更新到微信开发工具
