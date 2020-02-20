@@ -475,3 +475,28 @@ method:{
 * 迁移ThorUI部分组件
 ### 总结
 * mpvue编译到dist时不会自动清理旧的文件，导致不能实时更新到微信开发工具
+## 2020/02/20
+### 任务
+* 商品分类页面（移植自Thor小程序原生版）
+* 会员码展示页
+---
+* 温馨提示页面
+### 总结
+* 路由跳转的url参数
+  绝对路径："/xxx"
+  相对父级路径："../xxx"
+  相对同级路径："./xxx"
+* mpvue与原生的区别(移植小程序原生组件注意事项)
+
+|                   | 原生小程序                   | Vue                                     |
+| ----------------- | --------------------------------- | --------------------------------------- |
+| 数据绑定      | class={{xxx}}                     | :class="xxx"                            |
+| 事件绑定      | bindtap                           | @tap                                    |
+| 循环for         | wx:for="{{list}}" key="{{index}}" | v-for="(item,index) of list" :key=index |
+| 条件渲染if    | wx:if                             | v-if                                    |
+| 赋值          | this.setdata(key, value)          | this.key = value                        |
+| data写法          | data:{}                           | data(){return{}}                        |
+| methods包裹     | 可有可无                      | 需要                                  |
+| 响应事件event的值 | event.data                        | event.mp.data                           |
+| catchtap事件    | catchtap                          | @tap.stop()或@click.stop()             |
+
