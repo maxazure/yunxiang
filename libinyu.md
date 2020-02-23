@@ -499,4 +499,10 @@ method:{
 | methods包裹     | 可有可无                      | 需要                                  |
 | 响应事件event的值 | event.data                        | event.mp.data                           |
 | catchtap事件    | catchtap                          | @tap.stop()或@click.stop()             |
-
+## 2020/02/23
+### 任务
+* 搜索页、商品列表页
+---
+* 商品详情页
+### 总结
+* 组件props、data数据无法渲染：升级mpvue1.0.11=>mpvue2.0
