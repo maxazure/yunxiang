@@ -495,9 +495,10 @@ method:{
 | 循环for         | wx:for="{{list}}" key="{{index}}" | v-for="(item,index) of list" :key=index |
 | 条件渲染if    | wx:if                             | v-if                                    |
 | 赋值          | this.setdata(key, value)          | this.key = value                        |
+| 取值          | this.data.xxx         | this.xxx                       |
 | data写法          | data:{}                           | data(){return{}}                        |
 | methods包裹     | 可有可无                      | 需要                                  |
-| 响应事件event的值 | event.data                        | event.mp.data                           |
+| 响应事件event的值 | event.detail.xxx                        | event.mp.detail.xxx                          |
 | catchtap事件    | catchtap                          | @tap.stop()或@click.stop()             |
 ## 2020/02/23
 ### 任务
@@ -506,3 +507,8 @@ method:{
 * 商品详情页
 ### 总结
 * 组件props、data数据无法渲染：升级mpvue1.0.11=>mpvue2.0
+## 2020/02/24
+### 任务
+* 增加购物车页、结算订单页、地址页、地址编辑页
+### 总结
+* 父组件的插槽中无法获取遍历（item、index）的数据（tui-swiper-action），原因未知
