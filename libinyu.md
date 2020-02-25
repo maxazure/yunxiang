@@ -516,4 +516,6 @@ method:{
 ### 任务
 * 添加收货地址页、已完成订单、订单详情页
 ### 总结
-* 
+* :hover="false"与hover="false"的区别：传参数据类型不同，
+  组件中接收到的参数false[Boolean]  与 "false"[String]的区别
+  =》而"false"[Stirng] == true导致组件内判断错误
