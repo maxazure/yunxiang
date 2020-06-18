@@ -116,7 +116,90 @@ export const constantRoutes = [
       ...catalogsRouter,
       ...colorsRouter,
       ...sizesRouter,
-      ...fabricsRouter
+      ...fabricsRouter,
+
+      //
+      {
+        path: '/members',
+        name: 'members',
+        redirect: '/members/index',
+        component: Layout,
+        children: [{
+          path: 'index',
+          name: 'members',
+          component: () => import('@/views/members'),
+          meta: { title: '会员管理', icon: 'tree' },
+          children: [{
+            path: 'index',
+            name: 'members',
+            component: () => import('@/views/members'),
+            meta: { title: '会员管理', icon: 'tree' },
+            children: [{
+              path: 'index',
+              name: 'members',
+              component: () => import('@/views/members'),
+              meta: { title: '会员管理', icon: 'tree' },
+              children: [{
+                path: 'index',
+                name: 'members',
+                component: () => import('@/views/members'),
+                meta: { title: '会员管理', icon: 'tree' }
+              }, {
+                path: 'edit',
+                component: () => import('@/views/members/edit'),
+                hidden: true,
+                meta: { title: '修改会员' }
+              },
+              {
+                path: 'add',
+                component: () => import('@/views/members/add'),
+                hidden: true,
+                meta: { title: '添加会员' }
+              }
+              ]
+
+            }, {
+              path: 'edit',
+              component: () => import('@/views/members/edit'),
+              hidden: true,
+              meta: { title: '修改会员' }
+            },
+            {
+              path: 'add',
+              component: () => import('@/views/members/add'),
+              hidden: true,
+              meta: { title: '添加会员' }
+            }
+            ]
+
+          }, {
+            path: 'edit',
+            component: () => import('@/views/members/edit'),
+            hidden: true,
+            meta: { title: '修改会员' }
+          },
+          {
+            path: 'add',
+            component: () => import('@/views/members/add'),
+            hidden: true,
+            meta: { title: '添加会员' }
+          }
+          ]
+
+        }, {
+          path: 'edit',
+          component: () => import('@/views/members/edit'),
+          hidden: true,
+          meta: { title: '修改会员' }
+        },
+        {
+          path: 'add',
+          component: () => import('@/views/members/add'),
+          hidden: true,
+          meta: { title: '添加会员' }
+        }
+        ]
+      }
     ]
   },
   {
